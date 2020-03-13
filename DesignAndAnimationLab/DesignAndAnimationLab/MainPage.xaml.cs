@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DesignAndAnimationLab.Demos.GooeyButtonDemo;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace DesignAndAnimationLab
         public MainPage()
         {
             this.InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(GooeyButtonDemoPage));
         }
     }
 }
