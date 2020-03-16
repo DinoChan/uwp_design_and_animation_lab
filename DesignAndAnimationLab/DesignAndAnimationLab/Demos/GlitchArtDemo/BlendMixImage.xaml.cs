@@ -30,43 +30,56 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             var _compositor = Window.Current.Compositor;
 
-            var _imageBrush = _compositor.CreateSurfaceBrush();
-            var _imageBrush2= _compositor.CreateSurfaceBrush();
+            var _foregroundBrush = _compositor.CreateSurfaceBrush();
+            var _backgroundBrush = _compositor.CreateSurfaceBrush();
             // The loadedSurface has a size of 0x0 till the image has been been downloaded, decoded and loaded to the surface. We can assign the surface to the CompositionSurfaceBrush and it will show up once the image is loaded to the surface.
             var _loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/sea.jpg"));
-            _imageBrush.Surface = _loadedSurface;
+            _foregroundBrush.Surface = _loadedSurface;
+            _foregroundBrush.Offset = new Vector2(10, 0);
             var _loadedSurface2 = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/sea.jpg"));
-            _imageBrush2.Surface = _loadedSurface;
-            _imageBrush2.Offset = new Vector2(10, 0);
+            _backgroundBrush.Surface = _loadedSurface2;
+            _backgroundBrush.Offset = new Vector2(0, 0);
 
 
             var foregroundColorEffect = new BlendEffect()
             {
-                Mode = BlendEffectMode.LighterColor,
+                Mode = BlendEffectMode.Lighten,
                 Foreground = new CompositionEffectSourceParameter("Main"),
                 Background = new CompositionEffectSourceParameter("Tint"),
-            }; 
-             var effectFactory = _compositor.CreateEffectFactory(foregroundColorEffect);
+            };
+            var effectFactory = _compositor.CreateEffectFactory(foregroundColorEffect);
             var foreground = effectFactory.CreateBrush();
-            foreground.SetSourceParameter("Main", _imageBrush);
+            foreground.SetSourceParameter("Main", _foregroundBrush);
             foreground.SetSourceParameter("Tint", _compositor.CreateColorBrush(Colors.Cyan));
-      
+
+            var backgroundColorEffect = new BlendEffect()
+            {
+                Mode = BlendEffectMode.Lighten,
+                Foreground = new CompositionEffectSourceParameter("Main"),
+                Background = new CompositionEffectSourceParameter("Tint"),
+            };
+            effectFactory = _compositor.CreateEffectFactory(backgroundColorEffect);
+            var background = effectFactory.CreateBrush();
+            background.SetSourceParameter("Main", _backgroundBrush);
+            background.SetSourceParameter("Tint", _compositor.CreateColorBrush(Colors.Red));
+
             var graphicsEffect = new BlendEffect()
             {
-                Mode = BlendEffectMode.Screen,
+                Mode = BlendEffectMode.Darken,
                 Foreground = new CompositionEffectSourceParameter("Main"),
                 Background = new CompositionEffectSourceParameter("Tint"),
             };
 
-             effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
+            effectFactory = _compositor.CreateEffectFactory(graphicsEffect);
             var brush = effectFactory.CreateBrush();
-            brush.SetSourceParameter("Main", foreground);
-            //brush.SetSourceParameter("Tint", _imageBrush2);
+            brush.SetSourceParameter("Main", background);
+            brush.SetSourceParameter("Tint", foreground);
 
             var _imageVisual = _compositor.CreateSpriteVisual();
+        
             _imageVisual.Brush = brush;
-            _imageVisual.Size = new Vector2(578, 384);
-           
+            _imageVisual.Size = new Vector2(800, 384);
+
 
             ElementCompositionPreview.SetElementChildVisual(Background, _imageVisual);
         }
