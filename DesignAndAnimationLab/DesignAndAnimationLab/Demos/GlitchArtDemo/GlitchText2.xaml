@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DesignAndAnimationLab.Demos.GlitchArtDemo.GlitchText"
+﻿<UserControl x:Class="DesignAndAnimationLab.Demos.GlitchArtDemo.GlitchText2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DesignAndAnimationLab.Demos.GlitchArtDemo"
@@ -8,7 +8,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid Background="White">
+    <Grid Background="Black">
         <Rectangle x:Name="TextBackground" Height="110" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

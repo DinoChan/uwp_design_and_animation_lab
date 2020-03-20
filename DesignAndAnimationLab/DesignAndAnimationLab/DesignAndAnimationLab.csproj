@@ -122,6 +122,9 @@
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
     <Compile Include="Controls\GooeyButtonItemsPanel.cs" />
+    <Compile Include="Demos\GlitchArtDemo\GlitchText2.xaml.cs">
+      <DependentUpon>GlitchText2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\GlitchArtDemo\GlitchText.xaml.cs">
       <DependentUpon>GlitchText.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\GooeyButtonItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Demos\GlitchArtDemo\GlitchText2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -11,7 +11,7 @@
     <Grid>
         <controls:WrapPanel>
             <!--<local:BlendMixImage />-->
-            <local:GlitchText  Height="400"
+            <local:GlitchText2  Height="400"
                                Width="800" />
         </controls:WrapPanel>
     </Grid>

@@ -35,7 +35,8 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             {
                 Text = "TextAnimation",
                 FontSize = 90,
-                Size = new Vector2(800, 110),
+                Width=800,
+                Height=110,
                 FontColor = Colors.Red
             };
 
@@ -43,7 +44,8 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             {
                 Text = "TextAnimation",
                 FontSize = 90,
-                Size = new Vector2(800, 110),
+                Width = 800,
+                Height = 110,
                 FontColor = Colors.Cyan
             };
 

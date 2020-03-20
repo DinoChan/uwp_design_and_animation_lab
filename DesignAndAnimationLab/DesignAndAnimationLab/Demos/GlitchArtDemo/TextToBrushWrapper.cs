@@ -13,6 +13,7 @@ using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 {
@@ -36,45 +37,29 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             {
                 DrawSurface();
             }));
+            RegisterPropertyChangedCallback(BackgroundProperty, new DependencyPropertyChangedCallback((s, e) =>
+            {
+                DrawSurface();
+            }));
+            RegisterPropertyChangedCallback(HeightProperty, new DependencyPropertyChangedCallback((s, e) =>
+            {
+                if (double.IsNaN(Height) || double.IsNaN(Width) || Width == 0 || Height == 0)
+                    return;
+
+                DrawingSurface.Resize(new Windows.Graphics.SizeInt32 { Width = (int)Width, Height = (int)Height });
+                DrawSurface();
+            }));
+
+            RegisterPropertyChangedCallback(WidthProperty, new DependencyPropertyChangedCallback((s, e) =>
+            {
+                if (double.IsNaN(Height) || double.IsNaN(Width) || Width == 0 || Height == 0)
+                    return;
+
+                DrawingSurface.Resize(new Windows.Graphics.SizeInt32 { Width = (int)Width, Height = (int)Height });
+                DrawSurface();
+            }));
         }
 
-
-        /// <summary>
-        /// 获取或设置Size的值
-        /// </summary>
-        public Vector2 Size
-        {
-            get => (Vector2)GetValue(SizeProperty);
-            set => SetValue(SizeProperty, value);
-        }
-
-        /// <summary>
-        /// 标识 Size 依赖属性。
-        /// </summary>
-        public static readonly DependencyProperty SizeProperty =
-            DependencyProperty.Register(nameof(Size), typeof(Vector2), typeof(TextToBrushWrapper), new PropertyMetadata(default(Vector2), OnSizeChanged));
-
-        private static void OnSizeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            var oldValue = (Vector2)args.OldValue;
-            var newValue = (Vector2)args.NewValue;
-            if (oldValue == newValue)
-                return;
-
-            var target = obj as TextToBrushWrapper;
-            target?.OnSizeChanged(oldValue, newValue);
-        }
-
-        /// <summary>
-        /// Size 属性更改时调用此方法。
-        /// </summary>
-        /// <param name="oldValue">Size 属性的旧值。</param>
-        /// <param name="newValue">Size 属性的新值。</param>
-        protected virtual void OnSizeChanged(Vector2 oldValue, Vector2 newValue)
-        {
-            DrawingSurface.Resize(new Windows.Graphics.SizeInt32 { Width = (int)newValue.X, Height = (int)newValue.Y });
-            DrawSurface();
-        }
 
         /// <summary>
         /// 获取或设置OutlineColor的值
@@ -302,11 +287,11 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
         protected void DrawSurface()
         {
-            if (Size.X == 0 || Size.Y == 0 || string.IsNullOrWhiteSpace(Text) || DrawingSurface == null)
+            if (double.IsNaN(Height) || double.IsNaN(Width) || Width == 0 || Height == 0 || string.IsNullOrWhiteSpace(Text) || DrawingSurface == null)
                 return;
 
-            var width = (float)Size.X;
-            var height = (float)Size.Y;
+            var width = (float)Width;
+            var height = (float)Height;
 
             DrawSurfaceCore(DrawingSurface, width, height);
         }
@@ -316,14 +301,18 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             using (var session = CanvasComposition.CreateDrawingSession(drawingSurface))
             {
                 session.Clear(Colors.Transparent);
+                if (Background is SolidColorBrush solidColorBrush)
+                    session.FillRectangle(new Windows.Foundation.Rect(0, 0, width, height), solidColorBrush.Color);
+
+
                 using (var textFormat = new CanvasTextFormat()
                 {
                     FontSize = (float)FontSize,
                     Direction = CanvasTextDirection.LeftToRightThenTopToBottom,
-                    VerticalAlignment = CanvasVerticalAlignment.Center,
+                    VerticalAlignment = CanvasVerticalAlignment.Top,
                     HorizontalAlignment = CanvasHorizontalAlignment.Center,
                     FontWeight = FontWeight,
-                    FontFamily = FontFamily.Source
+                    FontFamily = FontFamily.Source,
                 })
                 {
                     using (var textLayout = new CanvasTextLayout(session, Text, textFormat, width, height))
