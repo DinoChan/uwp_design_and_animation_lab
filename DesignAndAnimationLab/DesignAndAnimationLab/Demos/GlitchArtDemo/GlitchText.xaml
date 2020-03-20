@@ -9,6 +9,6 @@
     d:DesignWidth="400">
 
     <Grid Background="Black">
-        <Rectangle x:Name="TextBackground" Margin="20"/>
+        <Rectangle x:Name="TextBackground" Height="110" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

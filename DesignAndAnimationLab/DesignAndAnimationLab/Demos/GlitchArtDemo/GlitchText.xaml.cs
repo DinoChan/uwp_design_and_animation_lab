@@ -34,22 +34,22 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             var backgroundWrapper = new TextToBrushWrapper
             {
                 Text = "TextAnimation",
-                FontSize = 100,
-                Size = new Vector2(800, 400),
+                FontSize = 90,
+                Size = new Vector2(800, 110),
                 FontColor = Colors.Red
             };
 
             var foregroundWrapper = new TextToBrushWrapper
             {
                 Text = "TextAnimation",
-                FontSize = 100,
-                Size = new Vector2(800, 400),
+                FontSize = 90,
+                Size = new Vector2(800, 110),
                 FontColor = Colors.Cyan
             };
 
             var _imageVisual = Compositor.CreateSpriteVisual();
             _imageVisual.Brush = CreateBrush(backgroundWrapper.Brush, foregroundWrapper.Brush, BlendEffectMode.Lighten);
-            _imageVisual.Size = new Vector2(800, 400);
+            _imageVisual.Size = new Vector2(800, 110);
 
             var containerVisual = Compositor.CreateContainerVisual();
             containerVisual.Children.InsertAtBottom(_imageVisual);
@@ -57,7 +57,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             var lineVisual = Compositor.CreateSpriteVisual();
             lineVisual.Brush = Compositor.CreateColorBrush(Colors.Black);
-            lineVisual.Size = new Vector2(800, 1);
+            lineVisual.Size = new Vector2(800, 2);
             containerVisual.Children.InsertAtTop(lineVisual);
 
             ElementCompositionPreview.SetElementChildVisual(TextBackground, containerVisual);
@@ -65,19 +65,11 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
               {
                   StartOfficeAnimation(backgroundWrapper.Brush, TimeSpan.FromSeconds(0.95), TimeSpan.Zero);
                   StartOfficeAnimation(foregroundWrapper.Brush, TimeSpan.FromSeconds(1.1), TimeSpan.FromSeconds(0.2));
+                  StartOfficeAnimation(lineVisual, TimeSpan.FromSeconds(10), TimeSpan.Zero);
               };
         }
 
-        private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush(string uri, Color color)
-        {
-            var compositor = Window.Current.Compositor;
-            var loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/sea.jpg"));
-            var compositionSurfaceBrush = compositor.CreateSurfaceBrush();
-            compositionSurfaceBrush.Surface = loadedSurface;
-            var compositionBrush = CreateBrush(compositionSurfaceBrush, compositor.CreateColorBrush(color), BlendEffectMode.Lighten);
-            return (compositionBrush, compositionSurfaceBrush);
-        }
-
+      
         private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
         {
             var compositor = Window.Current.Compositor;
@@ -95,6 +87,30 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             return compositionBrush;
         }
 
+        private void StartOfficeAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
+        {
+            var offsetAnimation = Compositor.CreateVector3KeyFrameAnimation();
+            offsetAnimation.Duration = duration;
+            offsetAnimation.DelayTime = delay;
+            offsetAnimation.IterationBehavior = AnimationIterationBehavior.Forever;
+            var easing = Compositor.CreateCubicBezierEasingFunction(new Vector2(0.1f, 0.9f), new Vector2(0.2f, 1f));
+            void addKey(float key, float top)
+            {
+                offsetAnimation.InsertKeyFrame(key, new Vector3(0, top, 0), easing);
+            };
+
+            addKey(.9f, 95);
+            addKey(.14f, 20);
+            addKey(.18f, 105);
+            addKey(.22f, 3);
+            addKey(.32f, 80);
+            addKey(.34f, 30);
+            addKey(.4f, 65);
+            addKey(.43f, 18);
+            addKey(.99f, 75);
+            visual.StartAnimation(nameof(CompositionSurfaceBrush.Offset), offsetAnimation);
+        }
+
         private void StartOfficeAnimation(CompositionSurfaceBrush brush, TimeSpan duration, TimeSpan delay)
         {
             var offsetAnimation = Compositor.CreateVector2KeyFrameAnimation();
@@ -104,7 +120,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             void addKey(float key, float top, float left)
             {
-                offsetAnimation.InsertKeyFrame(key, new Vector2(top, left));
+                offsetAnimation.InsertKeyFrame(key, new Vector2(top * 2.5f, left * 2.5f));
             };
             addKey(.1f, -0.4f, -1.1f);
             addKey(.2f, 0.4f, -0.2f);
