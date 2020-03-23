@@ -8,7 +8,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid Background="White">
+    <Grid Background="Black">
         <Rectangle x:Name="TextBackground" Height="110" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

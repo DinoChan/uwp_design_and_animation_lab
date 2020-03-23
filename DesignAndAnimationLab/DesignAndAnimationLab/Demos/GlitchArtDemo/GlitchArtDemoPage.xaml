@@ -8,11 +8,16 @@
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <controls:WrapPanel>
-            <!--<local:BlendMixImage />-->
-            <local:GlitchText2  Height="400"
-                               Width="800" />
-        </controls:WrapPanel>
+    <Grid Background="Black">
+        <ScrollViewer Background="Transparent"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel HorizontalAlignment="Center">
+                <local:GlitchText2  Height="400"
+                                    Width="800" />
+                <local:BlendMixImage Height="384" />
+                <local:GlitchText  Height="400"
+                                   Width="800" />
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

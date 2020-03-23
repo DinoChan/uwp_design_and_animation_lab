@@ -10,6 +10,6 @@
     d:DesignWidth="400">
 
     <Grid Background="White">
-        <Rectangle x:Name="Background" Margin="20"/>
+        <Rectangle x:Name="Background" />
     </Grid>
 </UserControl>

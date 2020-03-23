@@ -6,9 +6,81 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      Background="{ThemeResource SystemControlChromeMediumLowAcrylicWindowMediumBrush}">
 
-    <Grid>
+    <Page.Resources>
+        
+        <Style x:Key="ExampleListTextBlockStyle"
+               TargetType="TextBlock"
+               BasedOn="{StaticResource TitleTextBlockStyle}">
+            <Setter Property="VerticalAlignment"
+                    Value="Bottom" />
+            <Setter Property="TextWrapping"
+                    Value="Wrap" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontSize"
+                    Value="22" />
+            <Setter Property="LineHeight"
+                    Value="30" />
+        </Style>
+        
+        <DataTemplate x:Key="ItemTemplate">
+            <StackPanel Width="300"
+                  Margin="10">
+                <Image>
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding ThumbnailWide}"
+                                     DecodePixelWidth="300"
+                                     DecodePixelHeight="150" />
+                    </Image.Source>
+                </Image>
+                <TextBlock Text="{Binding Name}"
+                           HorizontalAlignment="Center"
+                           Style="{StaticResource ExampleListTextBlockStyle}"
+                           Margin="20" />
+            </StackPanel>
+        </DataTemplate>
 
-    </Grid>
+    </Page.Resources>
+
+    <ScrollViewer x:Name="scrollViewer"
+                  Background="Transparent"
+                  VerticalScrollMode="Enabled">
+
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="textBlock"
+                       Grid.Row="0"
+                       Style="{StaticResource HeaderTextBlockStyle}"
+                       TextWrapping="WrapWholeWords"
+                       Margin="0,0,0,10"
+                       FontFamily="Global User Interface">Design And Animation Lab</TextBlock>
+            <GridView x:Name="gridView"
+                      Grid.Row="1"
+                      ItemsSource="{Binding Definitions}"
+                      VerticalContentAlignment="Top"
+                      ItemClick="GridView_ItemClick"
+                      SelectionMode="None"
+                      IsItemClickEnabled="True"
+                      ItemTemplate="{StaticResource ItemTemplate}">
+                <GridView.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition IsStaggeringEnabled="true" />
+                    </TransitionCollection>
+                </GridView.ItemContainerTransitions>
+                <GridView.DataContext>
+                    <local:ExampleDefinitions />
+                </GridView.DataContext>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
+        </Grid>
+    </ScrollViewer>
 </Page>

@@ -30,8 +30,8 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             var _compositor = Window.Current.Compositor;
 
-            var (foreground, foregroundBrush) = CreateBrush("ms-appx:///Assets/Images/sea.jpg", Colors.Cyan);
-            var (background, backgroundBrush) = CreateBrush("ms-appx:///Assets/Images/sea.jpg", Colors.Red);
+            var (foreground, foregroundBrush) = CreateBrush(Colors.Cyan);
+            var (background, backgroundBrush) = CreateBrush(Colors.Red);
             foregroundBrush.Offset = new Vector2(10, 0);
 
             var brush = CreateBrush(foreground, background, BlendEffectMode.Darken);
@@ -42,10 +42,10 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             ElementCompositionPreview.SetElementChildVisual(Background, _imageVisual);
         }
 
-        private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush(string uri, Color color)
+        private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush( Color color)
         {
             var compositor = Window.Current.Compositor;
-            var loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/sea.jpg"));
+            var loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/sea2.jpg"));
             var compositionSurfaceBrush = compositor.CreateSurfaceBrush();
             compositionSurfaceBrush.Surface = loadedSurface;
             var compositionBrush = CreateBrush(compositionSurfaceBrush, compositor.CreateColorBrush(color), BlendEffectMode.Lighten);

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -32,62 +33,49 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
         {
             this.InitializeComponent();
 
-            var textWrapper = new TextToBrushWrapper
+            var redBrushWrapper = new TextToBrushWrapper
             {
                 Text = "TextAnimation",
                 FontSize = 90,
                 Width = 800,
                 Height = 110,
                 FontColor = Colors.White,
-                Background= new SolidColorBrush(Colors.Black)
+                Background = new SolidColorBrush(Colors.Black),
+                ShadowBlurAmount = 0,
+                ShadowOffsetX = 2,
+                ShadowColor = Color.FromArgb(230, 255, 0, 0)
             };
-            textWrapper.Brush.VerticalAlignmentRatio = 0;
-            var backgroundWrapper = new TextToBrushWrapper
-            {
-                Text = "TextAnimation",
-                FontSize = 90,
-                Width = 800,
-                Height = 110,
-                FontColor = Color.FromArgb(230, 255, 0, 0)
-            };
-            backgroundWrapper.Brush.Offset = new Vector2(2f, 0);
-            backgroundWrapper.Brush.VerticalAlignmentRatio = 0;
+            redBrushWrapper.Brush.VerticalAlignmentRatio = 0;
 
-            var redBrush= CreateBrush(backgroundWrapper.Brush, textWrapper.Brush,  BlendEffectMode.Screen);
+            var redBrush = redBrushWrapper.Brush;
 
-            var textWrapper2 = new TextToBrushWrapper
+            var blueBrushWrapper = new TextToBrushWrapper
             {
                 Text = "TextAnimation",
                 FontSize = 90,
                 Width = 800,
                 Height = 110,
                 FontColor = Colors.White,
-                Background = new SolidColorBrush(Colors.Black)
+                Background = new SolidColorBrush(Colors.Black),
+                ShadowBlurAmount = 0,
+                ShadowOffsetX = -2,
+                ShadowColor = Color.FromArgb(204, 0, 255, 255)
             };
-            textWrapper2.Brush.Offset = new Vector2(-5f, 0);
-            var foregroundWrapper = new TextToBrushWrapper
-            {
-                Text = "TextAnimation",
-                FontSize = 90,
-                Width = 800,
-                Height = 110,
-                FontColor = Color.FromArgb(204, 0, 255, 255)
-            };
-            foregroundWrapper.Brush.Offset = new Vector2(-7f, 0);
-            foregroundWrapper.Brush.VerticalAlignmentRatio = 0;
-            textWrapper2.Brush.VerticalAlignmentRatio = 0;
+            blueBrushWrapper.Brush.Offset = new Vector2(-7f, 0);
+            blueBrushWrapper.Brush.VerticalAlignmentRatio = 0;
 
-            var blueBrush = CreateBrush(foregroundWrapper.Brush, textWrapper2.Brush, BlendEffectMode.Screen);
+            var blueBrush = blueBrushWrapper.Brush;
 
-            var _imageVisual = Compositor.CreateSpriteVisual();
-            _imageVisual.Brush =   CreateBrush( redBrush, blueBrush,BlendEffectMode.Multiply);
-            _imageVisual.Size = new Vector2(800, 110);
-            
+
             var containerVisual = Compositor.CreateContainerVisual();
-            containerVisual.Children.InsertAtBottom(_imageVisual);
+
+            var foregroundVisual = Compositor.CreateSpriteVisual();
+            foregroundVisual.Brush = CreateBrush(redBrush, blueBrush, BlendEffectMode.Multiply);
+            foregroundVisual.Size = new Vector2(800, 110);
+            containerVisual.Children.InsertAtBottom(foregroundVisual);
 
 
-            var textWrapper3 = new TextToBrushWrapper
+            var whiteBrushWrapper = new TextToBrushWrapper
             {
                 Text = "TextAnimation",
                 FontSize = 90,
@@ -97,7 +85,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             };
 
             var textVisual = Compositor.CreateSpriteVisual();
-            textVisual.Brush = textWrapper3.Brush;
+            textVisual.Brush = whiteBrushWrapper.Brush;
             textVisual.Size = new Vector2(800, 110);
             containerVisual.Children.InsertAtBottom(textVisual);
 
@@ -107,14 +95,27 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             containerVisual.Children.InsertAtTop(lineVisual);
 
             ElementCompositionPreview.SetElementChildVisual(TextBackground, containerVisual);
-            Loaded += (s, e) =>
+            Loaded +=async (s, e) =>
               {
-                  StartHeightAnimation(backgroundWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
-                  StartHeightAnimation(textWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
-                  StartHeightAnimation(foregroundWrapper, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
-                  StartHeightAnimation(textWrapper2, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
+                  StartHeightAnimation(redBrushWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
+                  StartHeightAnimation(blueBrushWrapper, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
                   StartOfficeAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
+
+                  //var words = new List<string> { "铁血", "热血", "冷血" };
+                  //int index = 0;
+                  //while (true)
+                  //{
+                  //    redBrushWrapper.Text = "铁血 热血 冷血";// words[index % 3];
+                  //    blueBrushWrapper.Text = "铁血 热血 冷血";// words[index % 3];
+                  //    whiteBrushWrapper.Text = "铁血 热血 冷血"; //words[index % 3];
+                  //    index++;
+                  //    await Task.Delay(TimeSpan.FromSeconds(3));
+                  //}
               };
+
+         
+
+         
         }
 
 
@@ -155,9 +156,9 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             visual.StartAnimation(nameof(CompositionSurfaceBrush.Offset), offsetAnimation);
         }
 
-      
 
-        private void StartHeightAnimation(TextToBrushWrapper brush,List<(double,double)> keyFrames, TimeSpan duration, TimeSpan delay)
+
+        private void StartHeightAnimation(TextToBrushWrapper brush, List<(double, double)> keyFrames, TimeSpan duration, TimeSpan delay)
         {
             var storyboard = new Storyboard();
 
@@ -168,12 +169,12 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             foreach (var item in keyFrames)
             {
-                animation.KeyFrames.Add(new LinearDoubleKeyFrame { KeyTime = duration / 100 * item.Item1, Value = item.Item2});
+                animation.KeyFrames.Add(new LinearDoubleKeyFrame { KeyTime = duration / 100 * item.Item1, Value = item.Item2 });
             }
 
             storyboard.Children.Add(animation);
             storyboard.RepeatBehavior = RepeatBehavior.Forever;
-         
+
             storyboard.BeginTime = delay;
             storyboard.Begin();
         }

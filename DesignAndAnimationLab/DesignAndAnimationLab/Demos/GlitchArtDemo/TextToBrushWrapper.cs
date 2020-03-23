@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Composition;
@@ -317,17 +318,39 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
                 {
                     using (var textLayout = new CanvasTextLayout(session, Text, textFormat, width, height))
                     {
-                        DrawText(session, textLayout);
+                        var fullSizeGeometry = CanvasGeometry.CreateRectangle(session, 0, 0, width, height);
+                        var textGeometry = CanvasGeometry.CreateText(textLayout);
+                        var finalGeometry = fullSizeGeometry.CombineWith(textGeometry, Matrix3x2.Identity, CanvasGeometryCombine.Exclude);
+                        using (var layer = session.CreateLayer(1, fullSizeGeometry))
+                        {
+                            using (var bitmap = new CanvasRenderTarget(session, width, height))
+                            {
+                                using (var bitmapSession = bitmap.CreateDrawingSession())
+                                {
+                                    DrawText(bitmapSession, textLayout, ShadowColor);
+                                }
+                                using (var blur = new GaussianBlurEffect
+                                {
+                                    BlurAmount = (float)ShadowBlurAmount,
+                                    Source = bitmap,
+                                    BorderMode = EffectBorderMode.Hard
+                                })
+                                {
+                                    session.DrawImage(blur, (float)ShadowOffsetX, (float)ShadowOffsetY);
+                                }
+                            }
+                        }
+                        DrawText(session, textLayout, FontColor);
                     }
                 }
             }
         }
 
 
-        protected void DrawText(CanvasDrawingSession session, CanvasTextLayout textLayout)
+        protected void DrawText(CanvasDrawingSession session, CanvasTextLayout textLayout, Color color)
         {
             if (ShowNonOutlineText)
-                session.DrawTextLayout(textLayout, 0, 0, FontColor);
+                session.DrawTextLayout(textLayout, 0, 0, color);
 
             using (var textGeometry = CanvasGeometry.CreateText(textLayout))
             {
@@ -339,5 +362,151 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             }
         }
 
+        /// <summary>
+        /// 获取或设置BlurAmount的值
+        /// </summary>
+        public double ShadowBlurAmount
+        {
+            get => (double)GetValue(ShadowBlurAmountProperty);
+            set => SetValue(ShadowBlurAmountProperty, value);
+        }
+
+        /// <summary>
+        /// 标识 BlurAmount 依赖属性。
+        /// </summary>
+        public static readonly DependencyProperty ShadowBlurAmountProperty =
+            DependencyProperty.Register(nameof(ShadowBlurAmount), typeof(double), typeof(TextToBrushWrapper), new PropertyMetadata(10d, OnShadowBlurAmountChanged));
+
+        private static void OnShadowBlurAmountChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var oldValue = (double)args.OldValue;
+            var newValue = (double)args.NewValue;
+            if (oldValue == newValue)
+                return;
+
+            var target = obj as TextToBrushWrapper;
+            target?.OnShadowBlurAmountChanged(oldValue, newValue);
+        }
+
+        /// <summary>
+        /// BlurAmount 属性更改时调用此方法。
+        /// </summary>
+        /// <param name="oldValue">BlurAmount 属性的旧值。</param>
+        /// <param name="newValue">BlurAmount 属性的新值。</param>
+        protected virtual void OnShadowBlurAmountChanged(double oldValue, double newValue)
+        {
+            DrawSurface();
+        }
+
+
+        /// <summary>
+        /// 获取或设置ShadowOffsetX的值
+        /// </summary>
+        public double ShadowOffsetX
+        {
+            get => (double)GetValue(ShadowOffsetXProperty);
+            set => SetValue(ShadowOffsetXProperty, value);
+        }
+
+        /// <summary>
+        /// 标识 ShadowOffsetX 依赖属性。
+        /// </summary>
+        public static readonly DependencyProperty ShadowOffsetXProperty =
+            DependencyProperty.Register(nameof(ShadowOffsetX), typeof(double), typeof(TextToBrushWrapper), new PropertyMetadata(default(double), OnShadowOffsetXChanged));
+
+        private static void OnShadowOffsetXChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var oldValue = (double)args.OldValue;
+            var newValue = (double)args.NewValue;
+            if (oldValue == newValue)
+                return;
+
+            var target = obj as TextToBrushWrapper;
+            target?.OnShadowOffsetXChanged(oldValue, newValue);
+        }
+
+        /// <summary>
+        /// ShadowOffsetX 属性更改时调用此方法。
+        /// </summary>
+        /// <param name="oldValue">ShadowOffsetX 属性的旧值。</param>
+        /// <param name="newValue">ShadowOffsetX 属性的新值。</param>
+        protected virtual void OnShadowOffsetXChanged(double oldValue, double newValue)
+        {
+            DrawSurface();
+        }
+
+
+        /// <summary>
+        /// 获取或设置ShadowOffsetY的值
+        /// </summary>
+        public double ShadowOffsetY
+        {
+            get => (double)GetValue(ShadowOffsetYProperty);
+            set => SetValue(ShadowOffsetYProperty, value);
+        }
+
+        /// <summary>
+        /// 标识 ShadowOffsetY 依赖属性。
+        /// </summary>
+        public static readonly DependencyProperty ShadowOffsetYProperty =
+            DependencyProperty.Register(nameof(ShadowOffsetY), typeof(double), typeof(TextToBrushWrapper), new PropertyMetadata(default(double), OnShadowOffsetYChanged));
+
+        private static void OnShadowOffsetYChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var oldValue = (double)args.OldValue;
+            var newValue = (double)args.NewValue;
+            if (oldValue == newValue)
+                return;
+
+            var target = obj as TextToBrushWrapper;
+            target?.OnShadowOffsetYChanged(oldValue, newValue);
+        }
+
+        /// <summary>
+        /// ShadowOffsetY 属性更改时调用此方法。
+        /// </summary>
+        /// <param name="oldValue">ShadowOffsetY 属性的旧值。</param>
+        /// <param name="newValue">ShadowOffsetY 属性的新值。</param>
+        protected virtual void OnShadowOffsetYChanged(double oldValue, double newValue)
+        {
+            DrawSurface();
+        }
+
+
+        /// <summary>
+        /// 获取或设置ShadowColor的值
+        /// </summary>
+        public Color ShadowColor
+        {
+            get => (Color)GetValue(ShadowColorProperty);
+            set => SetValue(ShadowColorProperty, value);
+        }
+
+        /// <summary>
+        /// 标识 ShadowColor 依赖属性。
+        /// </summary>
+        public static readonly DependencyProperty ShadowColorProperty =
+            DependencyProperty.Register(nameof(ShadowColor), typeof(Color), typeof(TextToBrushWrapper), new PropertyMetadata(Colors.Black, OnShadowColorChanged));
+
+        private static void OnShadowColorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var oldValue = (Color)args.OldValue;
+            var newValue = (Color)args.NewValue;
+            if (oldValue == newValue)
+                return;
+
+            var target = obj as TextToBrushWrapper;
+            target?.OnShadowColorChanged(oldValue, newValue);
+        }
+
+        /// <summary>
+        /// ShadowColor 属性更改时调用此方法。
+        /// </summary>
+        /// <param name="oldValue">ShadowColor 属性的旧值。</param>
+        /// <param name="newValue">ShadowColor 属性的新值。</param>
+        protected virtual void OnShadowColorChanged(Color oldValue, Color newValue)
+        {
+            DrawSurface();
+        }
     }
 }
