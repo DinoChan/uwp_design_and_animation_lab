@@ -11,13 +11,16 @@
     <Grid Background="Black">
         <ScrollViewer Background="Transparent"
                       VerticalScrollBarVisibility="Auto">
-            <StackPanel HorizontalAlignment="Center">
-                <local:GlitchText2  Height="400"
-                                    Width="800" />
-                <local:BlendMixImage Height="384" />
+            <controls:WrapPanel  HorizontalAlignment="Center">
+                <local:BlendMixImage Height="384" Width="800" />
                 <local:GlitchText  Height="400"
                                    Width="800" />
-            </StackPanel>
+                
+                <local:GlitchText2  Height="400"
+                                    Width="800"
+                                   />
+            
+            </controls:WrapPanel>
         </ScrollViewer>
     </Grid>
 </Page>

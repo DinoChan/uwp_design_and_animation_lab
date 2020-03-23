@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Media;
 
 namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 {
-    class TextToBrushWrapper : Control
+    public class TextToBrushWrapper : Control
     {
         private Compositor Compositor => Window.Current.Compositor;
 
