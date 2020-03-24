@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -25,33 +24,80 @@ using Windows.UI.Xaml.Shapes;
 
 namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 {
-    public sealed partial class GlitchText2 : UserControl
+    public sealed partial class GlitchText3 : UserControl
     {
         private Compositor Compositor => Window.Current.Compositor;
-        public string Text { get; }
 
-        public GlitchText2()
+        public GlitchText3()
         {
             this.InitializeComponent();
 
-            Text = "TextAnimation";
+            var textWrapper = new TextToBrushWrapper
+            {
+                Text = "TextAnimation",
+                FontSize = 90,
+                Width = 800,
+                Height = 110,
+                FontColor = Colors.White,
+                Background = new SolidColorBrush(Colors.Black)
+            };
+            textWrapper.Brush.VerticalAlignmentRatio = 0;
+            var backgroundWrapper = new TextToBrushWrapper
+            {
+                Text = "TextAnimation",
+                FontSize = 90,
+                Width = 800,
+                Height = 110,
+                FontColor = Color.FromArgb(230, 255, 0, 0)
+            };
+            backgroundWrapper.Brush.Offset = new Vector2(2f, 0);
+            backgroundWrapper.Brush.VerticalAlignmentRatio = 0;
 
-            var redBrushWrapper = CreateTextToBrushWrapper(2, Color.FromArgb(230, 255, 0, 0));
-            //redBrushWrapper.Height = 1;
-            var blueBrushWrapper = CreateTextToBrushWrapper(-2, Color.FromArgb(204, 0, 255, 255));
-            blueBrushWrapper.Brush.Offset = new Vector2(-7f, 0);
+            var redBrush = CreateBrush(backgroundWrapper.Brush, textWrapper.Brush, BlendEffectMode.Screen);
+
+            var textWrapper2 = new TextToBrushWrapper
+            {
+                Text = "TextAnimation",
+                FontSize = 90,
+                Width = 800,
+                Height = 110,
+                FontColor = Colors.White,
+                Background = new SolidColorBrush(Colors.Black)
+            };
+            textWrapper2.Brush.Offset = new Vector2(-5f, 0);
+            var foregroundWrapper = new TextToBrushWrapper
+            {
+                Text = "TextAnimation",
+                FontSize = 90,
+                Width = 800,
+                Height = 110,
+                FontColor = Color.FromArgb(204, 0, 255, 255)
+            };
+            foregroundWrapper.Brush.Offset = new Vector2(-7f, 0);
+            foregroundWrapper.Brush.VerticalAlignmentRatio = 0;
+            textWrapper2.Brush.VerticalAlignmentRatio = 0;
+
+            var blueBrush = CreateBrush(foregroundWrapper.Brush, textWrapper2.Brush, BlendEffectMode.Screen);
+
+            var _imageVisual = Compositor.CreateSpriteVisual();
+            _imageVisual.Brush = CreateBrush(redBrush, blueBrush, BlendEffectMode.Multiply);
+            _imageVisual.Size = new Vector2(800, 110);
 
             var containerVisual = Compositor.CreateContainerVisual();
-            var foregroundVisual = Compositor.CreateSpriteVisual();
-            foregroundVisual.Brush = CreateBrush(blueBrushWrapper.Brush, redBrushWrapper.Brush, BlendEffectMode.Multiply);
-            foregroundVisual.Size = new Vector2(800, 110);
-            containerVisual.Children.InsertAtBottom(foregroundVisual);
+            containerVisual.Children.InsertAtBottom(_imageVisual);
 
 
-            var whiteBrushWrapper = CreateTextToBrushWrapper(0, Colors.White);
+            var textWrapper3 = new TextToBrushWrapper
+            {
+                Text = "TextAnimation",
+                FontSize = 90,
+                Width = 800,
+                Height = 110,
+                FontColor = Colors.White
+            };
 
             var textVisual = Compositor.CreateSpriteVisual();
-            textVisual.Brush = whiteBrushWrapper.Brush;
+            textVisual.Brush = textWrapper3.Brush;
             textVisual.Size = new Vector2(800, 110);
             containerVisual.Children.InsertAtBottom(textVisual);
 
@@ -62,31 +108,14 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             ElementCompositionPreview.SetElementChildVisual(TextBackground, containerVisual);
             Loaded += (s, e) =>
-             {
-                 StartHeightAnimation(redBrushWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
-                 StartHeightAnimation(blueBrushWrapper, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
-                 StartOfficeAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
-             };
-        }
-
-        public TextToBrushWrapper CreateTextToBrushWrapper(double shadowOffsetX, Color shadowColor)
-        {
-            var result = new TextToBrushWrapper
             {
-                Text = Text,
-                FontSize = 90,
-                Width = 800,
-                Height = 110,
-                FontColor = Colors.White,
-                Background = new SolidColorBrush(Colors.Black),
-                ShadowBlurAmount = 0,
-                ShadowOffsetX = shadowOffsetX,
-                ShadowColor = shadowColor
+                StartHeightAnimation(backgroundWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
+                StartHeightAnimation(textWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
+                StartHeightAnimation(foregroundWrapper, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
+                StartHeightAnimation(textWrapper2, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
+                StartOfficeAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
             };
-            result.Brush.VerticalAlignmentRatio = 0;
-            return result;
         }
-
 
 
         private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
