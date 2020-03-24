@@ -1,4 +1,5 @@
 ﻿using DesignAndAnimationLab.Demos.GlitchArtDemo;
+using DesignAndAnimationLab.Demos;
 using DesignAndAnimationLab.Demos.GooeyButtonDemo;
 using System;
 using System.Collections.Generic;
@@ -43,10 +44,11 @@ namespace DesignAndAnimationLab
 
     public class ExampleDefinitions
     {
-        static ExampleDefinition[] definitions =
-        {
-          new   ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
-          new   ExampleDefinition("Glitch Art", typeof(GlitchArtDemoPage)),
+        public static ExampleDefinition[] Definitions { get; } = {
+          new ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
+          new ExampleDefinition("Glitch Art", typeof(GlitchArtDemoPage)),
+          new ExampleDefinition("Blend Mix Image", typeof(BlendMixImage)),
+          new ExampleDefinition("Blend Mix Text", typeof(BlendMixText)),
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),
             //new ExampleDefinition("Mandelbrot", typeof(Mandelbrot)),
@@ -100,7 +102,5 @@ namespace DesignAndAnimationLab
             //new ExampleDefinition("Developer Tools", typeof(DeveloperTools)),
             //new ExampleDefinition("About", typeof(About)),
         };
-
-        public static ExampleDefinition[] Definitions { get { return definitions; } }
     }
 }

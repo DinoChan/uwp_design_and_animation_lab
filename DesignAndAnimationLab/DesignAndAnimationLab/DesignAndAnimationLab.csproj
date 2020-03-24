@@ -122,13 +122,16 @@
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
     <Compile Include="Controls\GooeyButtonItemsPanel.cs" />
+    <Compile Include="Demos\BlendMixText\BlendMixText.xaml.cs">
+      <DependentUpon>BlendMixText.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\GlitchArtDemo\GlitchText2.xaml.cs">
       <DependentUpon>GlitchText2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Demos\GlitchArtDemo\GlitchText.xaml.cs">
       <DependentUpon>GlitchText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Demos\GlitchArtDemo\BlendMixImage.xaml.cs">
+    <Compile Include="Demos\BlendMixImage\BlendMixImage.xaml.cs">
       <DependentUpon>BlendMixImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Demos\GlitchArtDemo\GlitchArtDemoPage.xaml.cs">
@@ -166,6 +169,8 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Thumbnails\BlendMixImage.png" />
+    <Content Include="Thumbnails\BlendMixText.png" />
     <Content Include="Thumbnails\GlitchArt.png" />
     <Content Include="Thumbnails\GooeyButton.png" />
   </ItemGroup>
@@ -182,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Demos\BlendMixText\BlendMixText.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Demos\GlitchArtDemo\GlitchText2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -190,7 +199,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Demos\GlitchArtDemo\BlendMixImage.xaml">
+    <Page Include="Demos\BlendMixImage\BlendMixImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

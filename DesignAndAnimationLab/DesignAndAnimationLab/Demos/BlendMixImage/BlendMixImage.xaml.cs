@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
-namespace DesignAndAnimationLab.Demos.GlitchArtDemo
+namespace DesignAndAnimationLab.Demos
 {
     public sealed partial class BlendMixImage : UserControl
     {
@@ -28,10 +28,16 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
         {
             this.InitializeComponent();
 
-            var _compositor = Window.Current.Compositor;
 
-            var (foreground, foregroundBrush) = CreateBrush(Colors.Cyan);
-            var (background, backgroundBrush) = CreateBrush(Colors.Red);
+            ElementCompositionPreview.SetElementChildVisual(Background, CreateVisual("sea.jpg"));
+            ElementCompositionPreview.SetElementChildVisual(Background2, CreateVisual("sea2.jpg"));
+        }
+
+        private SpriteVisual CreateVisual(string imageName)
+        {
+            var _compositor = Window.Current.Compositor;
+            var (foreground, foregroundBrush) = CreateBrush(imageName, Colors.Cyan);
+            var (background, backgroundBrush) = CreateBrush(imageName, Colors.Red);
             foregroundBrush.Offset = new Vector2(10, 0);
 
             var brush = CreateBrush(foreground, background, BlendEffectMode.Darken);
@@ -39,13 +45,14 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             var _imageVisual = _compositor.CreateSpriteVisual();
             _imageVisual.Brush = brush;
             _imageVisual.Size = new Vector2(800, 384);
-            ElementCompositionPreview.SetElementChildVisual(Background, _imageVisual);
+            return _imageVisual;
+
         }
 
-        private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush( Color color)
+        private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush(string imageName, Color color)
         {
             var compositor = Window.Current.Compositor;
-            var loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/sea2.jpg"));
+            var loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/" + imageName));
             var compositionSurfaceBrush = compositor.CreateSurfaceBrush();
             compositionSurfaceBrush.Surface = loadedSurface;
             var compositionBrush = CreateBrush(compositionSurfaceBrush, compositor.CreateColorBrush(color), BlendEffectMode.Lighten);

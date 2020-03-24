@@ -12,8 +12,7 @@
         <ScrollViewer Background="Transparent"
                       VerticalScrollBarVisibility="Auto">
             <controls:WrapPanel  HorizontalAlignment="Center">
-                <local:BlendMixImage Height="384"
-                                     Width="800" />
+               
                 <local:GlitchText  Height="400"
                                    Width="800" />
 
