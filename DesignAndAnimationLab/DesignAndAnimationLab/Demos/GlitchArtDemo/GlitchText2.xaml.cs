@@ -47,7 +47,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             foregroundVisual.Size = new Vector2(800, 110);
             containerVisual.Children.InsertAtBottom(foregroundVisual);
 
-
             var whiteBrushWrapper = CreateTextToBrushWrapper(0, Colors.White);
 
             var textVisual = Compositor.CreateSpriteVisual();

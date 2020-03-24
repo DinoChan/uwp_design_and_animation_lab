@@ -35,17 +35,17 @@ namespace DesignAndAnimationLab.Demos
 
         private SpriteVisual CreateVisual(string imageName)
         {
-            var _compositor = Window.Current.Compositor;
+            var compositor = Window.Current.Compositor;
             var (foreground, foregroundBrush) = CreateBrush(imageName, Colors.Cyan);
             var (background, backgroundBrush) = CreateBrush(imageName, Colors.Red);
             foregroundBrush.Offset = new Vector2(10, 0);
 
             var brush = CreateBrush(foreground, background, BlendEffectMode.Darken);
 
-            var _imageVisual = _compositor.CreateSpriteVisual();
-            _imageVisual.Brush = brush;
-            _imageVisual.Size = new Vector2(800, 384);
-            return _imageVisual;
+            var imageVisual = compositor.CreateSpriteVisual();
+            imageVisual.Brush = brush;
+            imageVisual.Size = new Vector2(800, 384);
+            return imageVisual;
 
         }
 

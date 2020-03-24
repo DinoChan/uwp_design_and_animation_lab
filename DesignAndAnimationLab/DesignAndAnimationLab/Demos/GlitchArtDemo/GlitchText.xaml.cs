@@ -49,12 +49,12 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
                 FontColor = Colors.Cyan
             };
 
-            var _imageVisual = Compositor.CreateSpriteVisual();
-            _imageVisual.Brush = CreateBrush(backgroundWrapper.Brush, foregroundWrapper.Brush, BlendEffectMode.Lighten);
-            _imageVisual.Size = new Vector2(800, 110);
+            var imageVisual = Compositor.CreateSpriteVisual();
+            imageVisual.Brush = CreateBrush(backgroundWrapper.Brush, foregroundWrapper.Brush, BlendEffectMode.Lighten);
+            imageVisual.Size = new Vector2(800, 110);
 
             var containerVisual = Compositor.CreateContainerVisual();
-            containerVisual.Children.InsertAtBottom(_imageVisual);
+            containerVisual.Children.InsertAtBottom(imageVisual);
 
 
             var lineVisual = Compositor.CreateSpriteVisual();
