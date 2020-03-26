@@ -62,9 +62,10 @@ namespace DesignAndAnimationLab.Demos
             var redBrushWrapper = CreateTextToBrushWrapper(blendEffectMode.ToString(), Colors.Red);
             var blueBrushWrapper = CreateTextToBrushWrapper(blendEffectMode.ToString(), Colors.Cyan);
             blueBrushWrapper.Brush.Offset = new Vector2(-4f, 0);
+            var blueMaskBrush = CreateGradientBrush();
 
             var textVisual = Compositor.CreateSpriteVisual();
-            textVisual.Brush = CreateBrush(blueBrushWrapper.Brush, redBrushWrapper.Brush, blendEffectMode);
+            textVisual.Brush = CreateBrush(blueMaskBrush, blueBrushWrapper.Brush, blendEffectMode);
             textVisual.Size = new Vector2(400, 70);
             var background = new Rectangle { Height = 70, Width = 400 };
 
@@ -72,6 +73,22 @@ namespace DesignAndAnimationLab.Demos
             Root.Children.Add(background);
         }
 
+        private CompositionLinearGradientBrush CreateGradientBrush()
+        {
+            var gradientBrush = Compositor.CreateLinearGradientBrush();
+            gradientBrush.StartPoint = new Vector2(0.5f, 0); ;
+            gradientBrush.EndPoint = new Vector2(0.5f, 1);
+
+            var startGradientStop = Compositor.CreateColorGradientStop();
+            startGradientStop.Offset = 0.49f;
+            startGradientStop.Color = Colors.White;
+            var endGradientStop = Compositor.CreateColorGradientStop();
+            endGradientStop.Offset = 0.5f;
+            endGradientStop.Color = Colors.Transparent;
+            gradientBrush.ColorStops.Add(startGradientStop);
+            gradientBrush.ColorStops.Add(endGradientStop);
+            return gradientBrush;
+        }
 
         public TextToBrushWrapper CreateTextToBrushWrapper(string text, Windows.UI.Color fontColor)
         {

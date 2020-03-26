@@ -125,6 +125,9 @@
     <Compile Include="Demos\BlendMixText\BlendMixText.xaml.cs">
       <DependentUpon>BlendMixText.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\GlitchArtDemo\GlitchArtWithManyWordsDemoPage.xaml.cs">
+      <DependentUpon>GlitchArtWithManyWordsDemoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\GlitchArtDemo\GlitchText3.xaml.cs">
       <DependentUpon>GlitchText3.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\mask.png" />
     <Content Include="Assets\Images\sea.jpg" />
     <Content Include="Assets\Images\sea2.jpg" />
     <Content Include="Properties\Default.rd.xml" />
@@ -175,6 +179,7 @@
     <Content Include="Thumbnails\BlendMixImage.png" />
     <Content Include="Thumbnails\BlendMixText.png" />
     <Content Include="Thumbnails\GlitchArt.png" />
+    <Content Include="Thumbnails\GlitchArtManyWords.png" />
     <Content Include="Thumbnails\GooeyButton.png" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +196,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Demos\BlendMixText\BlendMixText.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Demos\GlitchArtDemo\GlitchArtWithManyWordsDemoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

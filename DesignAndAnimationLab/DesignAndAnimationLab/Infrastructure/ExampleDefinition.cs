@@ -47,6 +47,7 @@ namespace DesignAndAnimationLab
         public static ExampleDefinition[] Definitions { get; } = {
           new ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
           new ExampleDefinition("Glitch Art", typeof(GlitchArtDemoPage)),
+          new ExampleDefinition("Glitch Art Many Words", typeof(GlitchArtWithManyWordsDemoPage)),
           new ExampleDefinition("Blend Mix Image", typeof(BlendMixImage)),
           new ExampleDefinition("Blend Mix Text", typeof(BlendMixText)),
             //// Visual demos.
