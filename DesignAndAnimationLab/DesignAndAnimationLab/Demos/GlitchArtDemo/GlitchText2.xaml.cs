@@ -64,7 +64,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
              {
                  StartHeightAnimation(redBrushWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
                  StartHeightAnimation(blueBrushWrapper, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
-                 StartOfficeAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
+                 StartOffsetAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
              };
         }
 
@@ -105,7 +105,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             return compositionBrush;
         }
 
-        private void StartOfficeAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
+        private void StartOffsetAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
         {
             var offsetAnimation = Compositor.CreateVector3KeyFrameAnimation();
             offsetAnimation.Duration = duration;

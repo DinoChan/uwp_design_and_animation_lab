@@ -65,9 +65,9 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             ElementCompositionPreview.SetElementChildVisual(TextBackground, containerVisual);
             Loaded += (s, e) =>
               {
-                  StartOfficeAnimation(backgroundWrapper.Brush, TimeSpan.FromSeconds(0.95), TimeSpan.Zero);
-                  StartOfficeAnimation(foregroundWrapper.Brush, TimeSpan.FromSeconds(1.1), TimeSpan.FromSeconds(0.2));
-                  StartOfficeAnimation(lineVisual, TimeSpan.FromSeconds(10), TimeSpan.Zero);
+                  StartOffsetAnimation(backgroundWrapper.Brush, TimeSpan.FromSeconds(0.95), TimeSpan.Zero);
+                  StartOffsetAnimation(foregroundWrapper.Brush, TimeSpan.FromSeconds(1.1), TimeSpan.FromSeconds(0.2));
+                  StartOffsetAnimation(lineVisual, TimeSpan.FromSeconds(10), TimeSpan.Zero);
               };
         }
 
@@ -89,7 +89,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             return compositionBrush;
         }
 
-        private void StartOfficeAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
+        private void StartOffsetAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
         {
             var offsetAnimation = Compositor.CreateVector3KeyFrameAnimation();
             offsetAnimation.Duration = duration;
@@ -113,7 +113,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             visual.StartAnimation(nameof(CompositionSurfaceBrush.Offset), offsetAnimation);
         }
 
-        private void StartOfficeAnimation(CompositionSurfaceBrush brush, TimeSpan duration, TimeSpan delay)
+        private void StartOffsetAnimation(CompositionSurfaceBrush brush, TimeSpan duration, TimeSpan delay)
         {
             var offsetAnimation = Compositor.CreateVector2KeyFrameAnimation();
             offsetAnimation.Duration = duration;
