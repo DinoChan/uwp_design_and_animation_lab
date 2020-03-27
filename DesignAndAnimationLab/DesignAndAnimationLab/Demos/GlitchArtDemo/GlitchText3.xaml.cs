@@ -68,7 +68,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             {
                 //StartHeightAnimation(redBrushWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
                 StartHeightAnimation(blueBrushWrapper, new List<(double, double)>() { (18, 110), (20, 112.5), (25, 110) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
-                StartOfficeAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
+                StartOffseteAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
                 StartScaleAnimation(redMaskBrush, new List<(float, float)>() { (0, 0.01f), (.20f, .73f), (.60f, .14f), (1, .95f) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
                 StartScaleAnimation(blueMaskBrush, new List<(float, float)>() { (0, 1), (.20f, 1), (.35f, .27f), (.50f, .91f), (.60f, .45f), (.70f, .77f), (.80f, .5f), (1, 0) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
                 var words = new List<string> { "鉄血  鉄血  鉄血", "熱血  熱血  熱血", "冷血  冷血  冷血" };
@@ -145,7 +145,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             return (compositionBrush, opacityBrush);
         }
 
-        private void StartOfficeAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
+        private void StartOffseteAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
         {
             var offsetAnimation = Compositor.CreateVector3KeyFrameAnimation();
             offsetAnimation.Duration = duration;

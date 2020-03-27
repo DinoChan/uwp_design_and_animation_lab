@@ -13,27 +13,12 @@
                       VerticalScrollBarVisibility="Auto">
             <controls:WrapPanel  HorizontalAlignment="Center">
                
-                <!--<local:GlitchText  Height="400"
+                <local:GlitchText  Height="400"
                                    Width="800" />
 
                 <local:GlitchText2  Height="400"
-                                    Width="800" />-->
-                <!--<local:GlitchText2  Height="400"
-                                    Width="720" />-->
-                <local:GlitchText3  Height="200"
-                                    Width="720" />
-                <local:GlitchText3  Height="200"
-                                    Width="720" />
-                <local:GlitchText3  Height="200"
-                                    Width="720" />
-                <local:GlitchText3  Height="200"
-                                    Width="720" />
-                <local:GlitchText3  Height="200"
-                                    Width="720" />
-                <local:GlitchText3  Height="200"
-                                    Width="720" />
-                <local:GlitchText3  Height="200"
-                                    Width="720" />
+                                    Width="800" />
+               
             </controls:WrapPanel>
         </ScrollViewer>
     </Grid>
