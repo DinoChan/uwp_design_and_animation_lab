@@ -125,6 +125,9 @@
     <Compile Include="Demos\BlendMixText\BlendMixText.xaml.cs">
       <DependentUpon>BlendMixText.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\CokeCan\CokeCan.xaml.cs">
+      <DependentUpon>CokeCan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\GlitchArtDemo\GlitchArtWithManyWordsDemoPage.xaml.cs">
       <DependentUpon>GlitchArtWithManyWordsDemoPage.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\coke-can.png" />
+    <Content Include="Assets\Images\coke-label.jpg" />
     <Content Include="Assets\Images\mask.png" />
     <Content Include="Assets\Images\sea.jpg" />
     <Content Include="Assets\Images\sea2.jpg" />
@@ -198,6 +203,10 @@
     <Page Include="Demos\BlendMixText\BlendMixText.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Demos\CokeCan\CokeCan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Demos\GlitchArtDemo\GlitchArtWithManyWordsDemoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -251,6 +260,7 @@
       <Version>1.24.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
