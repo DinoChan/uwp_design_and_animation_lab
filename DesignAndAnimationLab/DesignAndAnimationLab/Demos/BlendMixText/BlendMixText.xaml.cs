@@ -65,7 +65,7 @@ namespace DesignAndAnimationLab.Demos
             var blueMaskBrush = CreateGradientBrush();
 
             var textVisual = Compositor.CreateSpriteVisual();
-            textVisual.Brush = CreateBrush(blueMaskBrush, blueBrushWrapper.Brush, blendEffectMode);
+            textVisual.Brush = CreateBrush(blueBrushWrapper.Brush, redBrushWrapper.Brush, blendEffectMode);
             textVisual.Size = new Vector2(400, 70);
             var background = new Rectangle { Height = 70, Width = 400 };
 

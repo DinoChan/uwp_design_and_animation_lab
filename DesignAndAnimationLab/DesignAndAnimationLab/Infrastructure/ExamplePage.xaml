@@ -26,7 +26,12 @@ Licensed under the MIT License. See LICENSE.txt in the project root for license 
                     Command="{Binding NavigationHelper.GoBackCommand, ElementName=page}" 
                     Margin="39,59,39,59" VerticalAlignment="Center" 
                     Style="{StaticResource NavigationBackButtonNormalStyle}"/>
-            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
+            <TextBlock Style="{StaticResource HeaderTextBlockStyle}"
+                       Margin="24"
+                       FontWeight="Bold"
+                       FontFamily="Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,sans-serif"
+                       FontSize="16"
+                       VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
         </StackPanel>
         
         <Grid x:Name="exampleContent" Grid.Row="1"/>

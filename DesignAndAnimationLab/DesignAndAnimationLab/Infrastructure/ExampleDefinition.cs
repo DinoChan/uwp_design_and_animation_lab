@@ -6,19 +6,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DesignAndAnimationLab.Demos.BubbleButton;
 
 namespace DesignAndAnimationLab
 {
     public class ExampleDefinition
     {
-        public ExampleDefinition(string name, Type control)
+        public ExampleDefinition(string name, Type control) : this(name, control, null)
+        {
+        }
+
+        public ExampleDefinition(string name, Type control, Uri inspiredBy)
         {
             Name = name;
             Control = control;
+            InspiredBy = inspiredBy;
         }
 
         public string Name { get; private set; }
         public Type Control { get; private set; }
+
+        public Uri InspiredBy { get; private set; }
 
         public override string ToString()
         {
@@ -50,6 +58,7 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Glitch Art Many Words", typeof(GlitchArtWithManyWordsDemoPage)),
           new ExampleDefinition("Blend Mix Image", typeof(BlendMixImage)),
           new ExampleDefinition("Blend Mix Text", typeof(BlendMixText)),
+          new ExampleDefinition("Bubble Button", typeof(BubbleButtonDemo),new Uri("https://github.com/cnbluefire/BubbleButton")),
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),
             //new ExampleDefinition("Mandelbrot", typeof(Mandelbrot)),

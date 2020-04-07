@@ -119,15 +119,20 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\VisualExtensions.cs" />
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
     <Compile Include="Controls\GooeyButtonItemsPanel.cs" />
     <Compile Include="Demos\BlendMixText\BlendMixText.xaml.cs">
       <DependentUpon>BlendMixText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Demos\CokeCan\CokeCan.xaml.cs">
-      <DependentUpon>CokeCan.xaml</DependentUpon>
+    <Compile Include="Demos\BubbleButton\Bubble.cs" />
+    <Compile Include="Demos\BubbleButton\BubbleButtonDemo.xaml.cs">
+      <DependentUpon>BubbleButtonDemo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\BubbleButton\BubbleView.cs" />
+    <Compile Include="Demos\BubbleButton\SimpleShadowPanel.cs" />
     <Compile Include="Demos\GlitchArtDemo\GlitchArtWithManyWordsDemoPage.xaml.cs">
       <DependentUpon>GlitchArtWithManyWordsDemoPage.xaml</DependentUpon>
     </Compile>
@@ -168,8 +173,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Images\coke-can.png" />
-    <Content Include="Assets\Images\coke-label.jpg" />
     <Content Include="Assets\Images\mask.png" />
     <Content Include="Assets\Images\sea.jpg" />
     <Content Include="Assets\Images\sea2.jpg" />
@@ -183,6 +186,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Thumbnails\BlendMixImage.png" />
     <Content Include="Thumbnails\BlendMixText.png" />
+    <Content Include="Thumbnails\BubbleButton.png" />
     <Content Include="Thumbnails\GlitchArt.png" />
     <Content Include="Thumbnails\GlitchArtManyWords.png" />
     <Content Include="Thumbnails\GooeyButton.png" />
@@ -204,7 +208,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Demos\CokeCan\CokeCan.xaml">
+    <Page Include="Demos\BubbleButton\BubbleButtonDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,6 +245,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\BubbleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\BubbleButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

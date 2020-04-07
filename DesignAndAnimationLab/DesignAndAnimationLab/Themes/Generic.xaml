@@ -6,6 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Controls/GooeyButton.xaml" />
         <ResourceDictionary Source="/Controls/GooeyButtonItem.xaml" />
+        <ResourceDictionary Source="/Themes/BubbleButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
