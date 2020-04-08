@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DesignAndAnimationLab.Demos.BubbleButton;
+using DesignAndAnimationLab.Demos.LikeButtons;
 
 namespace DesignAndAnimationLab
 {
@@ -59,6 +60,8 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Blend Mix Image", typeof(BlendMixImage)),
           new ExampleDefinition("Blend Mix Text", typeof(BlendMixText)),
           new ExampleDefinition("Bubble Button", typeof(BubbleButtonDemo),new Uri("https://github.com/cnbluefire/BubbleButton")),
+          new ExampleDefinition("Bubble Button", typeof(LikeButtonsDemo)),
+
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),
             //new ExampleDefinition("Mandelbrot", typeof(Mandelbrot)),

@@ -155,6 +155,12 @@
     <Compile Include="Demos\GooeyButtonDemo\GooeyButtonDemoPage.xaml.cs">
       <DependentUpon>GooeyButtonDemoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\LikeButtons\LikeButtonsDemo.xaml.cs">
+      <DependentUpon>LikeButtonsDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\LikeButtons\MattHenleysLikeButton.xaml.cs">
+      <DependentUpon>MattHenleysLikeButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\ExampleDefinition.cs" />
     <Compile Include="Infrastructure\ExamplePage.xaml.cs">
       <DependentUpon>ExamplePage.xaml</DependentUpon>
@@ -173,6 +179,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\heart.png" />
     <Content Include="Assets\Images\mask.png" />
     <Content Include="Assets\Images\sea.jpg" />
     <Content Include="Assets\Images\sea2.jpg" />
@@ -237,6 +244,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Demos\GooeyButtonDemo\GooeyButtonDemoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\LikeButtons\LikeButtonsDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\LikeButtons\MattHenleysLikeButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
