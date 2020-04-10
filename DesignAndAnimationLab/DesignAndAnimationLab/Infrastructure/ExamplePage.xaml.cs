@@ -45,8 +45,9 @@ namespace DesignAndAnimationLab
                 this.DataContext = example;
                 if (example.Control != null)
                 {
-                    var control = Activator.CreateInstance(example.Control);
-                    this.exampleContent.Children.Add((UIElement)control);
+                    var control = Activator.CreateInstance(example.Control) as FrameworkElement;
+                    this.RequestedTheme = control.RequestedTheme;
+                    this.exampleContent.Children.Add(control);
                 }                
             }
         }

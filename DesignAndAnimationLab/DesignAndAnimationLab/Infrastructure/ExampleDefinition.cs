@@ -60,7 +60,8 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Blend Mix Image", typeof(BlendMixImage)),
           new ExampleDefinition("Blend Mix Text", typeof(BlendMixText)),
           new ExampleDefinition("Bubble Button", typeof(BubbleButtonDemo),new Uri("https://github.com/cnbluefire/BubbleButton")),
-          new ExampleDefinition("Bubble Button", typeof(LikeButtonsDemo)),
+          new ExampleDefinition("Heart Button", typeof(MattHenleysLikeButton)),
+          new ExampleDefinition("Walking Cat", typeof(WalkingCat)),
 
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),

@@ -161,6 +161,9 @@
     <Compile Include="Demos\LikeButtons\MattHenleysLikeButton.xaml.cs">
       <DependentUpon>MattHenleysLikeButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\WalkingCat\WalkingCat.xaml.cs">
+      <DependentUpon>WalkingCat.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\ExampleDefinition.cs" />
     <Compile Include="Infrastructure\ExamplePage.xaml.cs">
       <DependentUpon>ExamplePage.xaml</DependentUpon>
@@ -183,6 +186,7 @@
     <Content Include="Assets\Images\mask.png" />
     <Content Include="Assets\Images\sea.jpg" />
     <Content Include="Assets\Images\sea2.jpg" />
+    <Content Include="Assets\Images\tuna_sprite.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -197,6 +201,8 @@
     <Content Include="Thumbnails\GlitchArt.png" />
     <Content Include="Thumbnails\GlitchArtManyWords.png" />
     <Content Include="Thumbnails\GooeyButton.png" />
+    <Content Include="Thumbnails\HeartButton.png" />
+    <Content Include="Thumbnails\WalkingCat.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -252,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Demos\LikeButtons\MattHenleysLikeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\WalkingCat\WalkingCat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
