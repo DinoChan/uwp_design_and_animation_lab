@@ -161,6 +161,9 @@
     <Compile Include="Demos\LikeButtons\MattHenleysLikeButton.xaml.cs">
       <DependentUpon>MattHenleysLikeButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\TransparentCube\TransparentCube.xaml.cs">
+      <DependentUpon>TransparentCube.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\WalkingCat\WalkingCat.xaml.cs">
       <DependentUpon>WalkingCat.xaml</DependentUpon>
     </Compile>
@@ -258,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Demos\LikeButtons\MattHenleysLikeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\TransparentCube\TransparentCube.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,70 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:DesignAndAnimationLab.Demos.TransparentCube"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Custom="using:System.Numerics"
+             x:Class="DesignAndAnimationLab.Demos.TransparentCube"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="600">
+
+    <Grid>
+
+        <Grid Width="300"
+              Height="300"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Grid.Transform3D>
+                <CompositeTransform3D RotationY="15"
+                                      RotationZ="0"
+                                      RotationX="15" />
+            </Grid.Transform3D>
+
+
+            <Rectangle Fill="Red"
+                       Opacity="0.5">
+                <Rectangle.Transform3D>
+                    <CompositeTransform3D RotationY="90"
+                                           />
+                </Rectangle.Transform3D>
+
+
+               
+
+            </Rectangle>
+            <Rectangle Fill="#FF3C0D33"
+                       Opacity="0.5">
+                <Rectangle.Transform3D>
+                    <CompositeTransform3D RotationY="90"
+                                          TranslateX="300" />
+                </Rectangle.Transform3D>
+            </Rectangle>
+
+            <Rectangle Fill="#FF3C0D33"
+                       Opacity="0.5">
+                <Rectangle.Transform3D>
+                    <CompositeTransform3D RotationX="-90"/>
+                </Rectangle.Transform3D>
+            </Rectangle>
+            <Rectangle Fill="Green"
+                       Opacity="0.5">
+                <Rectangle.Transform3D>
+                    <CompositeTransform3D TranslateZ="300" />
+                </Rectangle.Transform3D>
+            </Rectangle>
+            <Rectangle Fill="Yellow"
+                       Opacity="0.5">
+                <Rectangle.Transform3D>
+                    <CompositeTransform3D RotationX="-90"
+                                          TranslateY="300" />
+                </Rectangle.Transform3D>
+            </Rectangle>
+            <Rectangle Fill="#FF1C3C81"
+                       Opacity="0.5" />
+
+
+
+        </Grid>
+    </Grid>
+</UserControl>

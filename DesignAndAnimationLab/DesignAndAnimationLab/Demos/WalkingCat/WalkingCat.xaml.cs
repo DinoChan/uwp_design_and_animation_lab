@@ -46,7 +46,7 @@ namespace DesignAndAnimationLab.Demos
                 };
                 keyFrames.KeyFrames.Add(keyFrame);
             }
-
+            storyboard.SpeedRatio = 0.2;
             storyboard.Children.Add(keyFrames);
             storyboard.Begin();
         }
