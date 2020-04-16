@@ -4,65 +4,68 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:Custom="using:System.Numerics"
+             xmlns:media3D="using:Windows.UI.Xaml.Media.Media3D"
              x:Class="DesignAndAnimationLab.Demos.TransparentCube"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="600">
 
     <Grid>
-
+        <Grid.Transform3D>
+            <media3D:PerspectiveTransform3D />
+        </Grid.Transform3D>
         <Grid Width="300"
               Height="300"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
             <Grid.Transform3D>
-                <CompositeTransform3D RotationY="15"
-                                      RotationZ="0"
-                                      RotationX="15" />
+                <media3D:CompositeTransform3D RotationX="15" />
             </Grid.Transform3D>
 
 
             <Rectangle Fill="Red"
                        Opacity="0.5">
                 <Rectangle.Transform3D>
-                    <CompositeTransform3D RotationY="90"
-                                           />
-                </Rectangle.Transform3D>
-
-
-               
-
-            </Rectangle>
-            <Rectangle Fill="#FF3C0D33"
-                       Opacity="0.5">
-                <Rectangle.Transform3D>
-                    <CompositeTransform3D RotationY="90"
-                                          TranslateX="300" />
+                    <media3D:CompositeTransform3D RotationY="-90" />
                 </Rectangle.Transform3D>
             </Rectangle>
 
-            <Rectangle Fill="#FF3C0D33"
+            <Rectangle Fill="Aqua"
                        Opacity="0.5">
                 <Rectangle.Transform3D>
-                    <CompositeTransform3D RotationX="-90"/>
+                    <media3D:CompositeTransform3D RotationY="-90"
+                                                  TranslateX="300" />
+                </Rectangle.Transform3D>
+            </Rectangle>
+
+
+            <Rectangle Fill="Lavender"
+                       Opacity="0.5">
+                <Rectangle.Transform3D>
+                    <media3D:CompositeTransform3D RotationX="90" />
                 </Rectangle.Transform3D>
             </Rectangle>
             <Rectangle Fill="Green"
                        Opacity="0.5">
                 <Rectangle.Transform3D>
-                    <CompositeTransform3D TranslateZ="300" />
+                    <media3D:CompositeTransform3D TranslateZ="-300" />
                 </Rectangle.Transform3D>
             </Rectangle>
             <Rectangle Fill="Yellow"
                        Opacity="0.5">
                 <Rectangle.Transform3D>
-                    <CompositeTransform3D RotationX="-90"
-                                          TranslateY="300" />
+                    <media3D:CompositeTransform3D RotationX="90"
+                                                  TranslateY="300" />
                 </Rectangle.Transform3D>
             </Rectangle>
-            <Rectangle Fill="#FF1C3C81"
-                       Opacity="0.5" />
-
+            <Grid>
+                <Rectangle Fill="#FF1C3C81"
+                           Opacity="0.9" />
+                <TextBlock Text="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="96" />
+            </Grid>
 
 
         </Grid>
