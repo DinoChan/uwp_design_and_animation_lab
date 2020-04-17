@@ -62,6 +62,7 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Bubble Button", typeof(BubbleButtonDemo),new Uri("https://github.com/cnbluefire/BubbleButton")),
           new ExampleDefinition("Heart Button", typeof(MattHenleysLikeButton)),
           new ExampleDefinition("Walking Cat", typeof(WalkingCat)),
+          new ExampleDefinition("Transparent Cube", typeof(TransparentCube)),
 
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),
