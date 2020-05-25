@@ -208,7 +208,7 @@
     <Content Include="Thumbnails\GlitchArt.png" />
     <Content Include="Thumbnails\GlitchArtManyWords.png" />
     <Content Include="Thumbnails\GooeyButton.png" />
-    <Content Include="Thumbnails\HeartButton.png" />
+    <Content Include="Thumbnails\TwitterLikeButton.png" />
     <Content Include="Thumbnails\TransparentCube.png" />
     <Content Include="Thumbnails\WalkingCat.png" />
   </ItemGroup>
