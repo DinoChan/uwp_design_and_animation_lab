@@ -124,6 +124,7 @@
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
     <Compile Include="Controls\GooeyButtonItemsPanel.cs" />
+    <Compile Include="Controls\ProgressButton.cs" />
     <Compile Include="Demos\BlendMixText\BlendMixText.xaml.cs">
       <DependentUpon>BlendMixText.xaml</DependentUpon>
     </Compile>
@@ -165,6 +166,9 @@
       <DependentUpon>LiquidFill.xaml</DependentUpon>
     </Compile>
     <Compile Include="Demos\LiquidFill\WaveCircle.cs" />
+    <Compile Include="Demos\ThreeActionsWithOneClick\ThreeActionsWithOneClick.xaml.cs">
+      <DependentUpon>ThreeActionsWithOneClick.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\TransparentCube\TransparentCube.xaml.cs">
       <DependentUpon>TransparentCube.xaml</DependentUpon>
     </Compile>
@@ -270,6 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Demos\LiquidFill\LiquidFill.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\ThreeActionsWithOneClick\ThreeActionsWithOneClick.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
