@@ -7,44 +7,161 @@ using Windows.UI.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 
 namespace DesignAndAnimationLab
 {
+    [TemplateVisualState(Name = StateNormal, GroupName = GroupCommon)]
+    [TemplateVisualState(Name = StatePointerOver, GroupName = GroupCommon)]
+    [TemplateVisualState(Name = StatePressed, GroupName = GroupCommon)]
+    [TemplateVisualState(Name = StateDisabled, GroupName = GroupCommon)]
     public class ProgressButton : RangeBase
     {
 
+        internal const string StateNormal = "Normal";
+        internal const string StatePointerOver = "PointerOver";
+        internal const string StatePressed = "Pressed";
+        internal const string StateDisabled = "Disabled";
+        internal const string GroupCommon = "CommonStates";
+        internal const string StateFocused = "Focused";
+
+
+        private bool _isPointerCaptured;
+
+
         public ProgressButton()
         {
-            _gestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
+            DefaultStyleKey = typeof(ProgressButton);
+            //_gestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
             IsEnabledChanged += OnIsEnabledChanged;
+
+            //_gestureRecognizer.Holding -= gestureRecognizer_Holding;
+            //_gestureRecognizer.Tapped -= gestureRecognizer_Tapped;
+            //_gestureRecognizer.Holding += gestureRecognizer_Holding;
+            //_gestureRecognizer.Tapped += gestureRecognizer_Tapped;
+          
+
         }
 
+        public bool IsPressed { get; private set; }
 
-        private bool _isAnimateBegin = false;
-        GestureRecognizer _gestureRecognizer = new GestureRecognizer();
-        private bool _isPointerCaptured;
-        public event EventHandler Click;
-        public event EventHandler<bool> Hold;
+        public bool IsPointerOver { get; private set; }
 
-        public bool IsChecked
+        public event RoutedEventHandler Click;
+
+        protected override void OnApplyTemplate()
         {
-            get { return (bool)GetValue(IsCheckedProperty); }
-            set { SetValue(IsCheckedProperty, value); }
+            base.OnApplyTemplate();
+            UpdateVisualState(false);
         }
 
-        // Using a DependencyProperty as the backing store for IsCheck.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register("IsChecked", typeof(bool), typeof(ProgressButton), new PropertyMetadata(false, new PropertyChangedCallback(IsCheck_Changed)));
-
-        private static void IsCheck_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        internal void UpdateVisualState(bool useTransitions = true)
         {
-            bool v = (bool)e.NewValue;
-            var instance = d as ProgressButton;
-            if (v)
-                VisualStateManager.GoToState(instance, "Checked", true);
+            if (IsEnabled == false)
+                VisualStateManager.GoToState(this, StateDisabled, useTransitions);
+            else if (IsPressed)
+                VisualStateManager.GoToState(this, StatePressed, useTransitions);
+            else if (IsPointerOver)
+                VisualStateManager.GoToState(this, StatePointerOver, useTransitions);
             else
-                VisualStateManager.GoToState(instance, "Default", true);
+                VisualStateManager.GoToState(this, StateNormal, useTransitions);
         }
+
+
+
+        protected override void OnPointerPressed(PointerRoutedEventArgs e)
+        {
+            base.OnPointerPressed(e);
+            if (e.Handled)
+                return;
+
+            if (IsEnabled == false)
+                return;
+
+            e.Handled = true;
+            _isPointerCaptured = CapturePointer(e.Pointer);
+            if (_isPointerCaptured == false)
+                return;
+
+            IsPressed = true;
+            Focus(FocusState.Pointer);
+            UpdateVisualState();
+            //var ps = e.GetIntermediatePoints(null);
+            //if (ps != null && ps.Count > 0)
+            //{
+            //    _gestureRecognizer.ProcessDownEvent(ps[0]);
+            //    e.Handled = true;
+            //}
+        }
+
+        protected override void OnPointerReleased(PointerRoutedEventArgs e)
+        {
+            base.OnPointerReleased(e);
+            if (e.Handled)
+                return;
+
+            if (IsEnabled == false)
+                return;
+
+            e.Handled = true;
+
+            IsPressed = false;
+            ReleasePointerCapture(e.Pointer);
+            _isPointerCaptured = false;
+            UpdateVisualState();
+            //var ps = e.GetIntermediatePoints(null);
+            //if (ps != null && ps.Count > 0)
+            //{
+            //    _gestureRecognizer.ProcessUpEvent(ps[0]);
+            //    e.Handled = true;
+            //    _gestureRecognizer.CompleteGesture();
+            //}
+        }
+
+
+
+        protected override void OnPointerMoved(PointerRoutedEventArgs e)
+        {
+            base.OnPointerMoved(e);
+            if (_isPointerCaptured == false)
+                return;
+
+            var position = e.GetCurrentPoint(this).Position;
+            if (position.X < 0 || position.Y < 0 || position.X > ActualWidth || position.Y > ActualHeight)
+                IsPressed = false;
+            else
+                IsPressed = true;
+
+            UpdateVisualState();
+        }
+
+        protected override void OnPointerEntered(PointerRoutedEventArgs e)
+        {
+            base.OnPointerEntered(e);
+            IsPointerOver = true;
+            UpdateVisualState();
+        }
+
+        protected override void OnPointerExited(PointerRoutedEventArgs e)
+        {
+            base.OnPointerExited(e);
+            IsPointerOver = false;
+            UpdateVisualState();
+        }
+
+        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!IsEnabled)
+            {
+                IsPressed = false;
+                IsPointerOver = false;
+                _isPointerCaptured = false;
+            }
+            UpdateVisualState();
+        }
+
+
+
 
         public string Icon
         {
@@ -56,122 +173,7 @@ namespace DesignAndAnimationLab
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register("Icon", typeof(string), typeof(ProgressButton), new PropertyMetadata(""));
 
-      
 
-
-        public bool CanHolding
-        {
-            get { return (bool)GetValue(CanHoldingProperty); }
-            set { SetValue(CanHoldingProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for CanHolding.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CanHoldingProperty =
-            DependencyProperty.Register("CanHolding", typeof(bool), typeof(ProgressButton), new PropertyMetadata(false));
-
-
-        private void PressStoryBoard_Completed(object sender, object e)
-        {
-            Hold?.Invoke(this, true);
-            ShowBubble();
-            PressProgressBar.Visibility = Visibility.Collapsed;
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            _gestureRecognizer.Holding -= gestureRecognizer_Holding;
-            _gestureRecognizer.Tapped -= gestureRecognizer_Tapped;
-            _gestureRecognizer.Holding += gestureRecognizer_Holding;
-            _gestureRecognizer.Tapped += gestureRecognizer_Tapped;
-        }
-
-        private void gestureRecognizer_Tapped(GestureRecognizer sender, TappedEventArgs args)
-        {
-            Click?.Invoke(this, EventArgs.Empty);
-        }
-
-        void gestureRecognizer_Holding(GestureRecognizer sender, HoldingEventArgs args)
-        {
-            if (Hold != null && CanHolding)
-            {
-                if (args.HoldingState == HoldingState.Started)
-                {
-                    PressProgressBar.Visibility = Visibility.Visible;
-                    if (!_isAnimateBegin)
-                    {
-                        _isAnimateBegin = true;
-                        PressStoryBoard.Begin();
-                    }
-                }
-                else
-                {
-                    _isAnimateBegin = false;
-                    PressStoryBoard.Stop();
-                    PressProgressBar.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-        private void Grid_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            if (e.Handled)
-                return;
-
-            if (IsEnabled == false)
-                return;
-
-            e.Handled = true;
-            _isPointerCaptured = IconContainer.CapturePointer(e.Pointer);
-            if (_isPointerCaptured == false)
-                return;
-
-            Focus(FocusState.Pointer);
-            var ps = e.GetIntermediatePoints(null);
-            if (ps != null && ps.Count > 0)
-            {
-                _gestureRecognizer.ProcessDownEvent(ps[0]);
-                e.Handled = true;
-            }
-        }
-
-        private void Grid_PointerMoved(object sender, PointerRoutedEventArgs e)
-        {
-            _gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
-            e.Handled = true;
-        }
-
-        private void Grid_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            if (e.Handled)
-                return;
-
-            if (IsEnabled == false)
-                return;
-
-            ReleasePointerCapture(e.Pointer);
-            _isPointerCaptured = false;
-
-            var ps = e.GetIntermediatePoints(null);
-            if (ps != null && ps.Count > 0)
-            {
-                _gestureRecognizer.ProcessUpEvent(ps[0]);
-                e.Handled = true;
-                _gestureRecognizer.CompleteGesture();
-            }
-        }
-
-        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (!IsEnabled)
-            {
-                _isPointerCaptured = false;
-            }
-        }
-
-
-        public void ShowBubble()
-        {
-            //BubbleView.IsBubbing = true;
-        }
 
 
     }
