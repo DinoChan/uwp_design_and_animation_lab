@@ -11,63 +11,35 @@ using Windows.UI.Xaml.Input;
 
 namespace DesignAndAnimationLab
 {
+    [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = IdleStateName)]
+    [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = InProgressStateName)]
+    [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = CompletedStateName)]
+    [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = FaultedStateName)]
+
     [TemplateVisualState(Name = StateNormal, GroupName = GroupCommon)]
     [TemplateVisualState(Name = StatePointerOver, GroupName = GroupCommon)]
     [TemplateVisualState(Name = StatePressed, GroupName = GroupCommon)]
     [TemplateVisualState(Name = StateDisabled, GroupName = GroupCommon)]
-    public class ProgressButton : RangeBase
+    public partial class ProgressButton : RangeBase
     {
-
-        internal const string StateNormal = "Normal";
-        internal const string StatePointerOver = "PointerOver";
-        internal const string StatePressed = "Pressed";
-        internal const string StateDisabled = "Disabled";
-        internal const string GroupCommon = "CommonStates";
-        internal const string StateFocused = "Focused";
-
-
         private bool _isPointerCaptured;
-
 
         public ProgressButton()
         {
             DefaultStyleKey = typeof(ProgressButton);
-            //_gestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
             IsEnabledChanged += OnIsEnabledChanged;
-
-            //_gestureRecognizer.Holding -= gestureRecognizer_Holding;
-            //_gestureRecognizer.Tapped -= gestureRecognizer_Tapped;
-            //_gestureRecognizer.Holding += gestureRecognizer_Holding;
-            //_gestureRecognizer.Tapped += gestureRecognizer_Tapped;
-          
-
         }
-
-        public bool IsPressed { get; private set; }
-
-        public bool IsPointerOver { get; private set; }
-
-        public event RoutedEventHandler Click;
 
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            UpdateVisualState(false);
+            UpdateVisualStates(false);
         }
 
-        internal void UpdateVisualState(bool useTransitions = true)
+        protected virtual void OnStateChanged(ProgressState oldValue, ProgressState newValue)
         {
-            if (IsEnabled == false)
-                VisualStateManager.GoToState(this, StateDisabled, useTransitions);
-            else if (IsPressed)
-                VisualStateManager.GoToState(this, StatePressed, useTransitions);
-            else if (IsPointerOver)
-                VisualStateManager.GoToState(this, StatePointerOver, useTransitions);
-            else
-                VisualStateManager.GoToState(this, StateNormal, useTransitions);
+            UpdateVisualStates(true);
         }
-
-
 
         protected override void OnPointerPressed(PointerRoutedEventArgs e)
         {
@@ -85,13 +57,7 @@ namespace DesignAndAnimationLab
 
             IsPressed = true;
             Focus(FocusState.Pointer);
-            UpdateVisualState();
-            //var ps = e.GetIntermediatePoints(null);
-            //if (ps != null && ps.Count > 0)
-            //{
-            //    _gestureRecognizer.ProcessDownEvent(ps[0]);
-            //    e.Handled = true;
-            //}
+            UpdateVisualStates();
         }
 
         protected override void OnPointerReleased(PointerRoutedEventArgs e)
@@ -108,17 +74,8 @@ namespace DesignAndAnimationLab
             IsPressed = false;
             ReleasePointerCapture(e.Pointer);
             _isPointerCaptured = false;
-            UpdateVisualState();
-            //var ps = e.GetIntermediatePoints(null);
-            //if (ps != null && ps.Count > 0)
-            //{
-            //    _gestureRecognizer.ProcessUpEvent(ps[0]);
-            //    e.Handled = true;
-            //    _gestureRecognizer.CompleteGesture();
-            //}
+            UpdateVisualStates();
         }
-
-
 
         protected override void OnPointerMoved(PointerRoutedEventArgs e)
         {
@@ -132,21 +89,55 @@ namespace DesignAndAnimationLab
             else
                 IsPressed = true;
 
-            UpdateVisualState();
+            UpdateVisualStates();
         }
 
         protected override void OnPointerEntered(PointerRoutedEventArgs e)
         {
             base.OnPointerEntered(e);
             IsPointerOver = true;
-            UpdateVisualState();
+            UpdateVisualStates();
         }
 
         protected override void OnPointerExited(PointerRoutedEventArgs e)
         {
             base.OnPointerExited(e);
             IsPointerOver = false;
-            UpdateVisualState();
+            UpdateVisualStates();
+        }
+
+        private void UpdateVisualStates(bool useTransitions = true)
+        {
+            string progressState;
+            switch (State)
+            {
+                case ProgressState.Idle:
+                    progressState = IdleStateName;
+                    break;
+                case ProgressState.InProgress:
+                    progressState = InProgressStateName;
+                    break;
+                case ProgressState.Completed:
+                    progressState = CompletedStateName;
+                    break;
+                case ProgressState.Faulted:
+                    progressState = FaultedStateName;
+                    break;
+                default:
+                    progressState = IdleStateName;
+                    break;
+            }
+
+            VisualStateManager.GoToState(this, progressState, useTransitions);
+
+            if (IsEnabled == false)
+                VisualStateManager.GoToState(this, StateDisabled, useTransitions);
+            else if (IsPressed)
+                VisualStateManager.GoToState(this, StatePressed, useTransitions);
+            else if (IsPointerOver)
+                VisualStateManager.GoToState(this, StatePointerOver, useTransitions);
+            else
+                VisualStateManager.GoToState(this, StateNormal, useTransitions);
         }
 
         private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -157,24 +148,8 @@ namespace DesignAndAnimationLab
                 IsPointerOver = false;
                 _isPointerCaptured = false;
             }
-            UpdateVisualState();
+
+            UpdateVisualStates();
         }
-
-
-
-
-        public string Icon
-        {
-            get { return (string)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(string), typeof(ProgressButton), new PropertyMetadata(""));
-
-
-
-
     }
 }

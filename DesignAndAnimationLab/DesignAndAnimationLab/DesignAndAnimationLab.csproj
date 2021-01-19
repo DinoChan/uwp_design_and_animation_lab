@@ -124,7 +124,10 @@
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
     <Compile Include="Controls\GooeyButtonItemsPanel.cs" />
+    <Compile Include="Controls\ProgressButton.Constants.cs" />
     <Compile Include="Controls\ProgressButton.cs" />
+    <Compile Include="Controls\ProgressButton.Properties.cs" />
+    <Compile Include="Controls\ProgressState.cs" />
     <Compile Include="Demos\BlendMixText\BlendMixText.xaml.cs">
       <DependentUpon>BlendMixText.xaml</DependentUpon>
     </Compile>
