@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DesignAndAnimationLab.Demos
 {
-    public sealed partial class ThreeActionsWithOneClick : UserControl
+    public sealed partial class ThreeActionsWithOneClick 
     {
         public ThreeActionsWithOneClick()
         {

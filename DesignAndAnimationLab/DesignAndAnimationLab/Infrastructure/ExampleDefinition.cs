@@ -54,6 +54,7 @@ namespace DesignAndAnimationLab
     public class ExampleDefinitions
     {
         public static ExampleDefinition[] Definitions { get; } = {
+          new ExampleDefinition("Three Actions With One Click", typeof(ThreeActionsWithOneClick)),
           new ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
           new ExampleDefinition("Glitch Art", typeof(GlitchArtDemoPage)),
           new ExampleDefinition("Glitch Art Many Words", typeof(GlitchArtWithManyWordsDemoPage)),
