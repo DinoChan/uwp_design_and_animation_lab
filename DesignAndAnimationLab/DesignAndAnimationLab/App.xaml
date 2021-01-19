@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/BubbleButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="Icon">/Assets/Fonts/Richasy_BiliBili.ttf#Richasy_BiliBili</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

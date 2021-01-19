@@ -1,23 +1,54 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:local="using:DesignAndAnimationLab"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
-                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
+                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations">
+
+
+    <SolidColorBrush x:Key="NormalTextColor"
+                     Color="#2E2F33" />
+    <SolidColorBrush x:Key="PrimaryColor"
+                     Color="#ED5B8C" />
+    <SolidColorBrush x:Key="LineColor"
+                     Color="#E1E1E1" />
+    <SolidColorBrush x:Key="TransparentBackground"
+                     Color="Transparent"
+                     Opacity="0.01" />
+
+    <ControlTemplate x:Key="CompletedTemplate"
+                     TargetType="ContentControl">
+        <Grid x:Name="CompletedElement"
+              Opacity="1"
+              Margin="-2">
+            <control:DropShadowPanel OffsetX="0"
+                                     OffsetY="0"
+                                     BlurRadius="8"
+                                     Color="#ED5B8C"
+                                     VerticalContentAlignment="Stretch"
+                                     HorizontalContentAlignment="Stretch">
+                <Ellipse x:Name="CompletedRectangle"
+                         Fill="{StaticResource PrimaryColor}" />
+            </control:DropShadowPanel>
+        </Grid>
+    </ControlTemplate>
+
     <Style TargetType="local:ProgressButton">
         <Setter Property="Background"
-                Value="{ThemeResource ButtonBackground}" />
+                Value="{StaticResource TransparentBackground}" />
         <Setter Property="Foreground"
-                Value="{ThemeResource ButtonForeground}" />
+                Value="{StaticResource NormalTextColor}" />
         <Setter Property="BorderBrush"
                 Value="#FFCCCCCC" />
         <Setter Property="BorderThickness"
-                Value="{ThemeResource ButtonBorderThemeThickness}" />
+                Value="{StaticResource LineColor}" />
+        <Setter Property="FontSize"
+                Value="18" />
         <Setter Property="Padding"
-                Value="8,4,8,4" />
-        <Setter Property="HorizontalAlignment"
-                Value="Left" />
-        <Setter Property="VerticalAlignment"
+                Value="1" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="FontFamily"
                 Value="{ThemeResource ContentControlThemeFontFamily}" />
@@ -30,327 +61,83 @@
         <Setter Property="FocusVisualMargin"
                 Value="-3" />
         <Setter Property="Height"
-                Value="40" />
+                Value="50" />
         <Setter Property="Width"
-                Value="40" />
+                Value="50" />
+        <Setter Property="Maximum"
+                Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:ProgressButton">
                     <Grid x:Name="RootGrid">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <Storyboard>
-                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="PointerOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="#AA000000" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FaultedIcon"
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="#AAFFFFFF" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CompletedIcon"
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="#AAFFFFFF" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="#AA000000" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FaultedIcon"
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="#AAFFFFFF" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CompletedIcon"
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="#AAFFFFFF" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Rectangle"
-                                                                       Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{ThemeResource ButtonBackgroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Rectangle"
-                                                                       Storyboard.TargetProperty="StrokeBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{ThemeResource ButtonBorderBrushDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{ThemeResource ButtonForegroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver" />
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ProgressStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Started">
-                                        <Storyboard>
-                                            <DoubleAnimation BeginTime="0:0:0.0"
-                                                             Duration="0:0:0.1"
-                                                             To="0"
-                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                             Storyboard.TargetName="ContentPresenter">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseIn" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation BeginTime="0:0:0"
-                                                             Duration="0:0:0.7"
-                                                             To="1"
-                                                             Storyboard.TargetProperty="(local:RectangleToEllipseBehavior.Progress)"
-                                                             Storyboard.TargetName="RectangleToEllipseBehavior"
-                                                             EnableDependentAnimation="True">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuinticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation BeginTime="0:0:0"
-                                                             Duration="0:0:0.7"
-                                                             To="1"
-                                                             Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Progress)"
-                                                             Storyboard.TargetName="AdjustToSquareBehavior"
-                                                             EnableDependentAnimation="True">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuinticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                           Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.7">
-                                                    <DiscreteObjectKeyFrame.Value>
-                                                        <Visibility>Collapsed</Visibility>
-                                                    </DiscreteObjectKeyFrame.Value>
-                                                </DiscreteObjectKeyFrame>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <DoubleAnimation BeginTime="0:0:0.7"
-                                                             Duration="0:0:0.2"
-                                                             To="1"
-                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                             Storyboard.TargetName="Ellipse">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseIn" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </VisualTransition>
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Completed">
-                                        <Storyboard>
-                                            <DoubleAnimation BeginTime="0:0:0.0"
-                                                             Duration="0:0:0.2"
-                                                             To="1"
-                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                             Storyboard.TargetName="CompletedElement">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseIn" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-
-                                        </Storyboard>
-                                    </VisualTransition>
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Faulted">
-                                        <Storyboard>
-                                            <DoubleAnimation BeginTime="0:0:0.0"
-                                                             Duration="0:0:0.2"
-                                                             To="1"
-                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                             Storyboard.TargetName="FaultedElement">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseIn" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Ellipse"
-                                                                           Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0"
-                                                                        Value="MediumVioletRed" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualTransition>
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Ready">
-                                        <Storyboard>
-                                            <DoubleAnimation BeginTime="0:0:0.5"
-                                                             Duration="0:0:0.2"
-                                                             To="1"
-                                                             Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                             Storyboard.TargetName="ContentPresenter">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseIn" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation BeginTime="0:0:0"
-                                                             Duration="0:0:0.7"
-                                                             To="0"
-                                                             Storyboard.TargetProperty="(local:RectangleToEllipseBehavior.Progress)"
-                                                             Storyboard.TargetName="RectangleToEllipseBehavior"
-                                                             EnableDependentAnimation="True">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuinticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation BeginTime="0:0:0"
-                                                             Duration="0:0:0.7"
-                                                             To="0"
-                                                             Storyboard.TargetProperty="(local:AdjustToSquareBehavior.Progress)"
-                                                             Storyboard.TargetName="AdjustToSquareBehavior"
-                                                             EnableDependentAnimation="True">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuinticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                           Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
-                                                    <DiscreteObjectKeyFrame.Value>
-                                                        <Visibility>Visible</Visibility>
-                                                    </DiscreteObjectKeyFrame.Value>
-                                                </DiscreteObjectKeyFrame>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualTransition>
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Ready" />
-                                <VisualState x:Name="Started">
-                                    <VisualState.Setters>
-                                        <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
-                                                Value="1" />
-                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Progress)"
-                                                Value="1" />
-                                        <Setter Target="ContentPresenter.(UIElement.Opacity)"
-                                                Value="0" />
-                                        <Setter Target="Ellipse.(UIElement.Opacity)"
-                                                Value="1" />
-                                        <Setter Target="ContentPresenter.Visibility"
-                                                Value="Collapsed" />
-                                    </VisualState.Setters>
-
-                                </VisualState>
+                                <VisualState x:Name="Idle" />
+                                <VisualState x:Name="InProgress" />
                                 <VisualState x:Name="Completed">
                                     <VisualState.Setters>
-                                        <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
-                                                Value="1" />
-                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Progress)"
-                                                Value="1" />
-                                        <Setter Target="ContentPresenter.(UIElement.Opacity)"
-                                                Value="0" />
-                                        <Setter Target="CompletedElement.(UIElement.Opacity)"
-                                                Value="1" />
-                                        <Setter Target="Ellipse.(UIElement.Opacity)"
+                                        <Setter Target="RootBorder.BorderBrush"
+                                                Value="Transparent" />
+                                        <Setter Target="ContentControl.Foreground"
+                                                Value="White" />
+                                        <Setter Target="CompletedElement.Opacity"
                                                 Value="1" />
                                     </VisualState.Setters>
                                 </VisualState>
-
-                                <VisualState x:Name="Faulted">
-                                    <VisualState.Setters>
-                                        <Setter Target="RectangleToEllipseBehavior.(local:RectangleToEllipseBehavior.Progress)"
-                                                Value="1" />
-                                        <Setter Target="AdjustToSquareBehavior.(local:AdjustToSquareBehavior.Progress)"
-                                                Value="1" />
-                                        <Setter Target="ContentPresenter.(UIElement.Opacity)"
-                                                Value="0" />
-                                        <Setter Target="FaultedElement.(UIElement.Opacity)"
-                                                Value="1" />
-                                        <Setter Target="Ellipse.(UIElement.Opacity)"
-                                                Value="1" />
-                                    </VisualState.Setters>
-                                </VisualState>
+                                <VisualState x:Name="Faulted" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid>
-                            <interactivity:Interaction.Behaviors>
-                                <local:AdjustToSquareBehavior x:Name="AdjustToSquareBehavior"
-                                                              ContentElement="{Binding ElementName=InnerGrid}"
-                                                              Progress="0" />
-                            </interactivity:Interaction.Behaviors>
-                            <Grid x:Name="InnerGrid">
-                                <Rectangle x:Name="Rectangle"
-                                           StrokeThickness="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=BorderThickness,Converter={StaticResource BorderToStrokeThicknessConverter}}"
-                                           Stroke="{TemplateBinding BorderBrush}"
-                                           Fill="{TemplateBinding Background}">
-                                    <interactivity:Interaction.Behaviors>
-                                        <local:RectangleToEllipseBehavior x:Name="RectangleToEllipseBehavior" />
-                                    </interactivity:Interaction.Behaviors>
-                                </Rectangle>
-                                <Ellipse x:Name="Ellipse"
-                                         Stroke="LightSeaGreen"
-                                         StrokeThickness="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=BorderThickness,Converter={StaticResource BorderToStrokeThicknessConverter}}"
-                                         Opacity="0"
-                                         RenderTransformOrigin="0.5,0.5">
-                                    <interactivity:Interaction.Behaviors>
-                                        <local:EllipseProgressBehavior Progress="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Progress}" />
-                                    </interactivity:Interaction.Behaviors>
-                                    <Ellipse.RenderTransform>
-                                        <RotateTransform Angle="-90" />
-                                    </Ellipse.RenderTransform>
-                                </Ellipse>
-                                <Grid x:Name="CompletedElement"
-                                      Opacity="0"
-                                      Margin="-2">
-                                    <control:DropShadowPanel OffsetX="0"
-                                                             OffsetY="0"
-                                                             BlurRadius="5"
-                                                             ShadowOpacity="0.3"
-                                                             VerticalContentAlignment="Stretch"
-                                                             HorizontalContentAlignment="Stretch">
-                                        <Ellipse x:Name="CompletedRectangle"
-                                                 Fill="LightSeaGreen" />
-                                    </control:DropShadowPanel>
-                                    <FontIcon Glyph="&#xE001;"
-                                              Foreground="White"
-                                              FontSize="{TemplateBinding FontSize}"
-                                              x:Name="CompletedIcon" />
-                                </Grid>
-                                <Grid x:Name="FaultedElement"
-                                      Opacity="0"
-                                      Margin="-2">
-                                    <control:DropShadowPanel OffsetX="0"
-                                                             OffsetY="0"
-                                                             BlurRadius="5"
-                                                             ShadowOpacity="0.3"
-                                                             VerticalContentAlignment="Stretch"
-                                                             HorizontalContentAlignment="Stretch">
-                                        <Ellipse Fill="MediumVioletRed" />
-                                    </control:DropShadowPanel>
-                                    <FontIcon Glyph="&#xE10A;"
-                                              Foreground="White"
-                                              FontSize="{TemplateBinding FontSize}"
-                                              x:Name="FaultedIcon" />
-                                </Grid>
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  Padding="{TemplateBinding Padding}"
+                            <ContentControl Template="{StaticResource CompletedTemplate}"
+                                            Opacity="0"
+                                            x:Name="CompletedElement">
+                                <animations:Implicit.HideAnimations>
+                                    <animations:TranslationAnimation SetInitialValueBeforeDelay="True"
+                                                                     From="0,0,0"
+                                                                     To="0,80,0"
+                                                                     Duration="0:0:0.6" />
+                                    <animations:OpacityAnimation SetInitialValueBeforeDelay="True"
+                                                                 From="1"
+                                                                 To="0"
+                                                                 Duration="0:0:0.6" />
+                                </animations:Implicit.HideAnimations>
+                                <animations:Implicit.ShowAnimations>
+                                    <animations:TranslationAnimation SetInitialValueBeforeDelay="True"
+                                                                     From="0,80,0"
+                                                                     To="0,0,0"
+                                                                     Duration="0:0:0.6" />
+                                    <animations:OpacityAnimation SetInitialValueBeforeDelay="True"
+                                                                 From="0"
+                                                                 To="1"
+                                                                 Duration="0:0:0.6" />
+                                </animations:Implicit.ShowAnimations>
+                            </ContentControl>
+                            <Border Margin="{TemplateBinding Padding}"
+                                    CornerRadius="100"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1"
+                                    Background="{TemplateBinding Background}"
+                                    x:Name="RootBorder">
+                                <ContentControl x:Name="ContentControl"
                                                   Content="{TemplateBinding Content}"
-                                                  ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  AutomationProperties.AccessibilityView="Raw" />
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  Foreground="{TemplateBinding Foreground}" />
+                            </Border>
+                            <control:RadialProgressBar x:Name="PressProgressBar"
+                                                       Foreground="{StaticResource PrimaryColor}"
+                                                       Value="{TemplateBinding Value}"
+                                                       Maximum="{TemplateBinding Maximum}"
+                                                       Minimum="{TemplateBinding Minimum}"
+                                                       Outline="Transparent"
+                                                       Background="Transparent" />
 
-                            </Grid>
                         </Grid>
                     </Grid>
                 </ControlTemplate>

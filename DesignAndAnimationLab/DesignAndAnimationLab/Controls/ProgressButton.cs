@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 
 namespace DesignAndAnimationLab
 {
@@ -20,6 +21,7 @@ namespace DesignAndAnimationLab
     [TemplateVisualState(Name = StatePointerOver, GroupName = GroupCommon)]
     [TemplateVisualState(Name = StatePressed, GroupName = GroupCommon)]
     [TemplateVisualState(Name = StateDisabled, GroupName = GroupCommon)]
+    [ContentProperty(Name = nameof(Content))]
     public partial class ProgressButton : RangeBase
     {
         private bool _isPointerCaptured;

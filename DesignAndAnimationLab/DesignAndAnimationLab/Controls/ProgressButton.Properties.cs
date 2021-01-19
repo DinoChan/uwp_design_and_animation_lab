@@ -10,6 +10,24 @@ namespace DesignAndAnimationLab
     public partial class ProgressButton
     {
 
+
+        /// <summary>
+        /// 获取或设置Content的值
+        /// </summary>
+        public object Content
+        {
+            get => (object)GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
+        }
+
+        /// <summary>
+        /// 标识 Content 依赖属性。
+        /// </summary>
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register(nameof(Content), typeof(object), typeof(ProgressButton), new PropertyMetadata(default(object)));
+
+      
+
         /// <summary>
         /// 获取或设置State的值
         /// </summary>  
