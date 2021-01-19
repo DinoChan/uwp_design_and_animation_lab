@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
+using System.Diagnostics;
 
 namespace DesignAndAnimationLab
 {
@@ -25,11 +26,38 @@ namespace DesignAndAnimationLab
     public partial class ProgressButton : RangeBase
     {
         private bool _isPointerCaptured;
+        GestureRecognizer gestureRecognizer = new GestureRecognizer();
 
         public ProgressButton()
         {
             DefaultStyleKey = typeof(ProgressButton);
+            gestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
             IsEnabledChanged += OnIsEnabledChanged;
+            this.Holding += ProgressButton_Holding;
+          
+            // 
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            gestureRecognizer.Tapped += GestureRecognizer_Tapped;
+            gestureRecognizer.Holding += GestureRecognizer_Holding;
+        }
+
+        private void GestureRecognizer_Tapped(GestureRecognizer sender, TappedEventArgs args)
+        {
+           
+        }
+
+        private void GestureRecognizer_Holding(GestureRecognizer sender, HoldingEventArgs args)
+        {
+            Debug.WriteLine("holding");
+        }
+
+        private void ProgressButton_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+           
         }
 
         protected override void OnApplyTemplate()
@@ -60,6 +88,13 @@ namespace DesignAndAnimationLab
             IsPressed = true;
             Focus(FocusState.Pointer);
             UpdateVisualStates();
+            var ps = e.GetIntermediatePoints(null);
+            if (ps != null && ps.Count > 0)
+            {
+                gestureRecognizer.ProcessDownEvent(ps[0]);
+                e.Handled = true;
+            }
+            Debug.WriteLine("OnPointerPressed");
         }
 
         protected override void OnPointerReleased(PointerRoutedEventArgs e)
@@ -77,11 +112,22 @@ namespace DesignAndAnimationLab
             ReleasePointerCapture(e.Pointer);
             _isPointerCaptured = false;
             UpdateVisualStates();
+
+            var ps = e.GetIntermediatePoints(null);
+            if (ps != null && ps.Count > 0)
+            {
+                gestureRecognizer.ProcessUpEvent(ps[0]);
+                e.Handled = true;
+                gestureRecognizer.CompleteGesture();
+            }
+            Debug.WriteLine("OnPointerReleased");
         }
 
         protected override void OnPointerMoved(PointerRoutedEventArgs e)
         {
             base.OnPointerMoved(e);
+            gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
+            e.Handled = true;
             if (_isPointerCaptured == false)
                 return;
 
@@ -153,5 +199,19 @@ namespace DesignAndAnimationLab
 
             UpdateVisualStates();
         }
+
+        protected override void OnHolding(HoldingRoutedEventArgs e)
+        {
+            base.OnHolding(e);
+            
+        }
+
+        protected override void OnTapped(TappedRoutedEventArgs e)
+        {
+            base.OnTapped(e);
+            Debug.WriteLine("Tapped");
+        }
+
+        
     }
 }

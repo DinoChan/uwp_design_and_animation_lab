@@ -26,8 +26,9 @@
                        FontSize="32" />
 
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <lab:ProgressButton Content="&#xE9F0;" Value="0.5"/>
-                <lab:ProgressButton Content="&#xEA45;" State="Completed"/>
+                <lab:ProgressButton Content="&#xE9F0;" Value="0.5" x:Name="LikeButton" Tapped="OnLikeButtonTapped"/>
+                <lab:ProgressButton Content="&#xEA45;"
+                                    State="Completed" />
                 <lab:ProgressButton Content="&#xE9E5;" />
             </StackPanel>
         </StackPanel>

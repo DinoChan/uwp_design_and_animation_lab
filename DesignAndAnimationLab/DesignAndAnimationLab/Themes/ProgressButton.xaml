@@ -3,13 +3,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-                    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations">
+                    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+                    xmlns:bubblebutton="using:DesignAndAnimationLab.Demos.BubbleButton">
 
 
     <SolidColorBrush x:Key="NormalTextColor"
                      Color="#2E2F33" />
     <SolidColorBrush x:Key="PrimaryColor"
-                     Color="#ED5B8C" />
+                     Color="#FFED5B8C" />
     <SolidColorBrush x:Key="LineColor"
                      Color="#E1E1E1" />
     <SolidColorBrush x:Key="TransparentBackground"
@@ -19,12 +20,11 @@
     <ControlTemplate x:Key="CompletedTemplate"
                      TargetType="ContentControl">
         <Grid x:Name="CompletedElement"
-              Opacity="1"
               Margin="-2">
             <control:DropShadowPanel OffsetX="0"
                                      OffsetY="0"
                                      BlurRadius="8"
-                                     Color="#ED5B8C"
+                                     Color="#FFED5B8C"
                                      VerticalContentAlignment="Stretch"
                                      HorizontalContentAlignment="Stretch">
                 <Ellipse x:Name="CompletedRectangle"
@@ -33,6 +33,7 @@
         </Grid>
     </ControlTemplate>
 
+  
     <Style TargetType="local:ProgressButton">
         <Setter Property="Background"
                 Value="{StaticResource TransparentBackground}" />
@@ -43,7 +44,7 @@
         <Setter Property="BorderThickness"
                 Value="{StaticResource LineColor}" />
         <Setter Property="FontSize"
-                Value="18" />
+                Value="20" />
         <Setter Property="Padding"
                 Value="1" />
         <Setter Property="HorizontalContentAlignment"
@@ -54,8 +55,6 @@
                 Value="{ThemeResource ContentControlThemeFontFamily}" />
         <Setter Property="FontWeight"
                 Value="Normal" />
-        <Setter Property="FontSize"
-                Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals"
                 Value="True" />
         <Setter Property="FocusVisualMargin"
@@ -73,45 +72,58 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver" />
-                                <VisualState x:Name="Pressed" />
-                                <VisualState x:Name="Disabled" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="ContentControl.Opacity"
+                                                Value="0.8" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="ContentControl.Opacity"
+                                                Value="0.6" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="RootGrid.Opacity"
+                                                Value="0.6" />
+                                    </VisualState.Setters>
+                                </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ProgressStates">
                                 <VisualState x:Name="Idle" />
                                 <VisualState x:Name="InProgress" />
                                 <VisualState x:Name="Completed">
                                     <VisualState.Setters>
-                                        <Setter Target="RootBorder.BorderBrush"
+                                        <Setter Target="RootBorder.BorderBrush" 
                                                 Value="Transparent" />
                                         <Setter Target="ContentControl.Foreground"
                                                 Value="White" />
-                                        <Setter Target="CompletedElement.Opacity"
-                                                Value="1" />
+                                        <Setter Target="CompletedElement.Visibility"
+                                                Value="Visible" />
+                                        <Setter Target="BubbleView.IsBubbing"
+                                                Value="True" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Faulted" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid>
+                            <bubblebutton:BubbleView x:Name="BubbleView"
+                                                     HorizontalAlignment="Stretch"
+                                                     VerticalAlignment="Stretch"
+                                                     Foreground="{StaticResource PrimaryColor}" />
                             <ContentControl Template="{StaticResource CompletedTemplate}"
-                                            Opacity="0"
+                                            Visibility="Collapsed"
                                             x:Name="CompletedElement">
                                 <animations:Implicit.HideAnimations>
-                                    <animations:TranslationAnimation SetInitialValueBeforeDelay="True"
-                                                                     From="0,0,0"
-                                                                     To="0,80,0"
-                                                                     Duration="0:0:0.6" />
                                     <animations:OpacityAnimation SetInitialValueBeforeDelay="True"
                                                                  From="1"
                                                                  To="0"
                                                                  Duration="0:0:0.6" />
                                 </animations:Implicit.HideAnimations>
                                 <animations:Implicit.ShowAnimations>
-                                    <animations:TranslationAnimation SetInitialValueBeforeDelay="True"
-                                                                     From="0,80,0"
-                                                                     To="0,0,0"
-                                                                     Duration="0:0:0.6" />
                                     <animations:OpacityAnimation SetInitialValueBeforeDelay="True"
                                                                  From="0"
                                                                  To="1"
@@ -125,10 +137,10 @@
                                     Background="{TemplateBinding Background}"
                                     x:Name="RootBorder">
                                 <ContentControl x:Name="ContentControl"
-                                                  Content="{TemplateBinding Content}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  Foreground="{TemplateBinding Foreground}" />
+                                                Content="{TemplateBinding Content}"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                Foreground="{TemplateBinding Foreground}" />
                             </Border>
                             <control:RadialProgressBar x:Name="PressProgressBar"
                                                        Foreground="{StaticResource PrimaryColor}"

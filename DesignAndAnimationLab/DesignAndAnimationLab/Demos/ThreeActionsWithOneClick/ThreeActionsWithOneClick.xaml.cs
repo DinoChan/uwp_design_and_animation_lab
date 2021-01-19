@@ -17,11 +17,19 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DesignAndAnimationLab.Demos
 {
-    public sealed partial class ThreeActionsWithOneClick 
+    public sealed partial class ThreeActionsWithOneClick
     {
         public ThreeActionsWithOneClick()
         {
             this.InitializeComponent();
+        }
+
+        private void OnLikeButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (LikeButton.State != ProgressState.Completed)
+                LikeButton.State = ProgressState.Completed;
+            else
+                LikeButton.State = ProgressState.Idle;
         }
     }
 }
