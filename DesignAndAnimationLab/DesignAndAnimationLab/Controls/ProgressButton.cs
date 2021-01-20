@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using System.Diagnostics;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace DesignAndAnimationLab
 {
@@ -26,39 +27,23 @@ namespace DesignAndAnimationLab
     public partial class ProgressButton : RangeBase
     {
         private bool _isPointerCaptured;
-        GestureRecognizer gestureRecognizer = new GestureRecognizer();
+        private GestureRecognizer _gestureRecognizer = new GestureRecognizer();
+       
+      
 
         public ProgressButton()
         {
             DefaultStyleKey = typeof(ProgressButton);
-            gestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
+            _gestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
+            _gestureRecognizer.Holding += OnGestureRecognizerHolding;
+            _gestureRecognizer.Tapped += OnGestureRecognizerTapped;
             IsEnabledChanged += OnIsEnabledChanged;
-            this.Holding += ProgressButton_Holding;
-          
-            // 
-            Loaded += OnLoaded;
+        
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            gestureRecognizer.Tapped += GestureRecognizer_Tapped;
-            gestureRecognizer.Holding += GestureRecognizer_Holding;
-        }
-
-        private void GestureRecognizer_Tapped(GestureRecognizer sender, TappedEventArgs args)
-        {
-           
-        }
-
-        private void GestureRecognizer_Holding(GestureRecognizer sender, HoldingEventArgs args)
-        {
-            Debug.WriteLine("holding");
-        }
-
-        private void ProgressButton_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-           
-        }
+        public event EventHandler StateChanged;
+        public event EventHandler<HoldingEventArgs> GestureRecognizerHolding;
+        public event EventHandler<TappedEventArgs> GestureRecognizerTapped;
 
         protected override void OnApplyTemplate()
         {
@@ -68,7 +53,14 @@ namespace DesignAndAnimationLab
 
         protected virtual void OnStateChanged(ProgressState oldValue, ProgressState newValue)
         {
+            StateChanged?.Invoke(this, EventArgs.Empty);
             UpdateVisualStates(true);
+        }
+
+        protected override void OnPointerCaptureLost(PointerRoutedEventArgs e)
+        {
+            base.OnPointerCaptureLost(e);
+            _isPointerCaptured = false;
         }
 
         protected override void OnPointerPressed(PointerRoutedEventArgs e)
@@ -88,13 +80,12 @@ namespace DesignAndAnimationLab
             IsPressed = true;
             Focus(FocusState.Pointer);
             UpdateVisualStates();
-            var ps = e.GetIntermediatePoints(null);
-            if (ps != null && ps.Count > 0)
+            var points = e.GetIntermediatePoints(null);
+            if (points != null && points.Count > 0)
             {
-                gestureRecognizer.ProcessDownEvent(ps[0]);
+                _gestureRecognizer.ProcessDownEvent(points[0]);
                 e.Handled = true;
             }
-            Debug.WriteLine("OnPointerPressed");
         }
 
         protected override void OnPointerReleased(PointerRoutedEventArgs e)
@@ -113,20 +104,19 @@ namespace DesignAndAnimationLab
             _isPointerCaptured = false;
             UpdateVisualStates();
 
-            var ps = e.GetIntermediatePoints(null);
-            if (ps != null && ps.Count > 0)
+            var points = e.GetIntermediatePoints(null);
+            if (points != null && points.Count > 0)
             {
-                gestureRecognizer.ProcessUpEvent(ps[0]);
+                _gestureRecognizer.ProcessUpEvent(points[0]);
                 e.Handled = true;
-                gestureRecognizer.CompleteGesture();
+                _gestureRecognizer.CompleteGesture();
             }
-            Debug.WriteLine("OnPointerReleased");
         }
 
         protected override void OnPointerMoved(PointerRoutedEventArgs e)
         {
             base.OnPointerMoved(e);
-            gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
+            _gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
             e.Handled = true;
             if (_isPointerCaptured == false)
                 return;
@@ -200,18 +190,16 @@ namespace DesignAndAnimationLab
             UpdateVisualStates();
         }
 
-        protected override void OnHolding(HoldingRoutedEventArgs e)
+
+        private void OnGestureRecognizerTapped(GestureRecognizer sender, TappedEventArgs args)
         {
-            base.OnHolding(e);
-            
+            GestureRecognizerTapped?.Invoke(this, args);
+           
         }
 
-        protected override void OnTapped(TappedRoutedEventArgs e)
+        private void OnGestureRecognizerHolding(GestureRecognizer sender, HoldingEventArgs args)
         {
-            base.OnTapped(e);
-            Debug.WriteLine("Tapped");
+            GestureRecognizerHolding?.Invoke(this, args);
         }
-
-        
     }
 }

@@ -12,7 +12,7 @@
 
     <Grid d:Background="White">
         <Grid.Resources>
-           
+
             <Style  TargetType="lab:ProgressButton">
                 <Setter Property="Margin"
                         Value="20" />
@@ -25,11 +25,22 @@
                        HorizontalAlignment="Center"
                        FontSize="32" />
 
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <lab:ProgressButton Content="&#xE9F0;" Value="0.5" x:Name="LikeButton" Tapped="OnLikeButtonTapped"/>
+            <StackPanel HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <lab:ProgressButton Content="&#xE9F0;"
+                                    x:Name="LikeButton"
+                                    GestureRecognizerTapped="OnGestureRecognizerTapped" 
+                                    GestureRecognizerHolding="OnGestureRecognizerHolding"/>
                 <lab:ProgressButton Content="&#xEA45;"
-                                    State="Completed" />
-                <lab:ProgressButton Content="&#xE9E5;" />
+                                    x:Name="CoinButton"
+                                    Value="{Binding ElementName=LikeButton,Path=Value}"
+                                    GestureRecognizerTapped="OnGestureRecognizerTapped"
+                                    GestureRecognizerHolding="OnGestureRecognizerHolding"/>
+                <lab:ProgressButton Content="&#xE9E5;"
+                                    x:Name="FavoriteButton"
+                                    Value="{Binding ElementName=LikeButton,Path=Value}"
+                                    GestureRecognizerTapped="OnGestureRecognizerTapped"
+                                    GestureRecognizerHolding="OnGestureRecognizerHolding"/>
             </StackPanel>
         </StackPanel>
     </Grid>
