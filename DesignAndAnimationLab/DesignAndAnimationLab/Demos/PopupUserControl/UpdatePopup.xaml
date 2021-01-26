@@ -90,7 +90,7 @@
             <Setter Property="CornerRadius" Value="20" />
             <Setter Property="FontFamily" Value="{ThemeResource Icon}" />
             <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="FontSize" Value="24" />
             <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
             <Setter Property="FocusVisualMargin" Value="-3" />
             <Setter Property="Template">
@@ -153,7 +153,7 @@
             </Setter>
         </Style>
         <Storyboard x:Name="PopupIn">
-            <DoubleAnimation Storyboard.TargetName="PopupContainer"
+            <!--<DoubleAnimation Storyboard.TargetName="PopupContainer"
                              Storyboard.TargetProperty="Opacity"
                              From="0"
                              To="1"
@@ -170,43 +170,43 @@
                 <DoubleAnimation.EasingFunction>
                     <PowerEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
+            </DoubleAnimation>-->
             <DoubleAnimation Storyboard.TargetName="PopupContainer"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             From="-20"
-                             To="0"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                             From="0.8"
+                             To="1"
                              Duration="00:00:00.5">
                 <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseOut" />
+                    <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="PopupContainer"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                             From="0.8"
+                             To="1"
+                             Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase Amplitude="0.5" EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
         <Storyboard x:Name="PopupOut">
             <DoubleAnimation Storyboard.TargetName="PopupContainer"
-                             Storyboard.TargetProperty="Opacity"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
                              From="1"
-                             To="0"
+                             To="0.0"
                              Duration="00:00:00.5">
                 <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="PopupBackground"
-                             Storyboard.TargetProperty="Opacity"
-                             From="1"
-                             To="0"
-                             Duration="00:00:00.5">
-                <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseOut" />
+                    <BackEase Amplitude="0.5" EasingMode="EaseIn" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
             <DoubleAnimation Storyboard.TargetName="PopupContainer"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             From="0"
-                             To="20"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                             From="1"
+                             To="0.0"
                              Duration="00:00:00.5">
                 <DoubleAnimation.EasingFunction>
-                    <PowerEase EasingMode="EaseOut" />
+                    <BackEase Amplitude="0.5" EasingMode="EaseIn" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
@@ -215,56 +215,33 @@
         <controls:DropShadowPanel x:Name="PopupContainer"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  BlurRadius="25"
-                                  OffsetY="6"
-                                  Opacity="0.01"
+                                  BlurRadius="64"
+                                  RenderTransformOrigin=".5,.5"
+                                  ShadowOpacity="0.7"
                                   Color="{ThemeResource ShadowColor}">
             <controls:DropShadowPanel.RenderTransform>
-                <TranslateTransform Y="-20" />
+                <!--<TranslateTransform Y="-20" />-->
+                <ScaleTransform ScaleX="0.8" ScaleY=".8" />
             </controls:DropShadowPanel.RenderTransform>
-            <Grid MaxWidth="400"
-                  MaxHeight="700"
-                  Padding="40,20,0,20"
+            <Grid Width="400"
+                  Height="200"
+                  Padding="20"
                   Background="{ThemeResource PageBackground}"
-                  CornerRadius="4">
+                  CornerRadius="0">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <controls:ImageEx x:Name="AppIcon"
-                                  Width="50"
-                                  Height="50"
-                                  Margin="0,0,40,0"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Top"
-                                  DecodePixelWidth="50"
-                                  Source="ms-appx:///Assets/bilibili logo.png" />
-                <StackPanel Grid.Row="1"
-                            Margin="0,20,40,0"
-                            Orientation="Horizontal">
-                    <TextBlock Foreground="{ThemeResource ImportantTextColor}" Text="升级说明" />
-                    <TextBlock x:Name="VersionBlock"
-                               Margin="10,0,0,0"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
-                </StackPanel>
-                <ScrollViewer Grid.Row="2"
-                              Margin="0,20,10,0"
-                              Padding="0,0,30,0"
-                              HorizontalAlignment="Center">
-                    <controls:MarkdownTextBlock x:Name="MarkdownBlock"
-                                                Grid.Row="1"
-                                                Foreground="{ThemeResource NormalTextColor}"
-                                                TextWrapping="Wrap" />
-                </ScrollViewer>
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="40"
+                           Foreground="Black"
+                           Text="UserControl" />
                 <Button Name="CloseButton"
-                        Grid.Row="3"
+                        Grid.Row="1"
                         Width="40"
                         Height="40"
-                        Margin="0,20,40,0"
                         HorizontalAlignment="Center"
                         Click="CloseButton_Click"
                         Content="&#xE92F;"

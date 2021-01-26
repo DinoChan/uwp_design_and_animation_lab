@@ -29,7 +29,6 @@ namespace DesignAndAnimationLab.Demos
         }
         public void ShowPopup()
         {
-            VersionBlock.Text = version;
             this.PopupShow();
             PopupIn.Begin();
         }
@@ -39,10 +38,7 @@ namespace DesignAndAnimationLab.Demos
             PopupOut.Completed -= PopupOut_Completed;
             PopupOut.Completed += PopupOut_Completed;
         }
-        public UpdatePopup(string content) : this()
-        {
-            MarkdownBlock.Text = content;
-        }
+       
 
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

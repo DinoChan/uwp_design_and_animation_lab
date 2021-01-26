@@ -29,7 +29,7 @@ namespace DesignAndAnimationLab.Demos
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var _updatePopup = new UpdatePopup("sdfsdffdsfds");
+            var _updatePopup = new UpdatePopup();
             _updatePopup.ShowPopup();
         }
     }
