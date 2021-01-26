@@ -146,27 +146,25 @@ namespace DesignAndAnimationLab
 
         private void UpdateVisualStates(bool useTransitions = true)
         {
-            string progressState;
             switch (State)
             {
                 case ProgressState.Idle:
-                    progressState = IdleStateName;
+                    VisualStateManager.GoToState(this, IdleStateName, useTransitions);
                     break;
                 case ProgressState.InProgress:
-                    progressState = InProgressStateName;
+                    VisualStateManager.GoToState(this, InProgressStateName, useTransitions);
                     break;
                 case ProgressState.Completed:
-                    progressState = CompletedStateName;
+                    VisualStateManager.GoToState(this, CompletedStateName, useTransitions);
                     break;
                 case ProgressState.Faulted:
-                    progressState = FaultedStateName;
+                    VisualStateManager.GoToState(this, FaultedStateName, useTransitions);
                     break;
                 default:
-                    progressState = IdleStateName;
+                    VisualStateManager.GoToState(this, IdleStateName, useTransitions);
                     break;
             }
 
-            VisualStateManager.GoToState(this, progressState, useTransitions);
 
             if (IsEnabled == false)
                 VisualStateManager.GoToState(this, StateDisabled, useTransitions);

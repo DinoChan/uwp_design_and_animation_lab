@@ -29,8 +29,8 @@
     <Style TargetType="local:ProgressButton">
         <Setter Property="Background" Value="{StaticResource TransparentBackground}" />
         <Setter Property="Foreground" Value="{StaticResource NormalTextColor}" />
-        <Setter Property="BorderBrush" Value="#FFCCCCCC" />
-        <Setter Property="BorderThickness" Value="{StaticResource LineColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource LineColor}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
