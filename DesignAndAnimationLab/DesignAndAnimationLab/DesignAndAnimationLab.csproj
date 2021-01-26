@@ -169,6 +169,14 @@
       <DependentUpon>LiquidFill.xaml</DependentUpon>
     </Compile>
     <Compile Include="Demos\LiquidFill\WaveCircle.cs" />
+    <Compile Include="Demos\PopupUserControl\AppPopupExtensions.cs" />
+    <Compile Include="Demos\PopupUserControl\IAppPopup.cs" />
+    <Compile Include="Demos\PopupUserControl\PopupUserControlDemo.xaml.cs">
+      <DependentUpon>PopupUserControlDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\PopupUserControl\UpdatePopup.xaml.cs">
+      <DependentUpon>UpdatePopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\ThreeActionsWithOneClick\ThreeActionsWithOneClick.xaml.cs">
       <DependentUpon>ThreeActionsWithOneClick.xaml</DependentUpon>
     </Compile>
@@ -278,6 +286,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Demos\LiquidFill\LiquidFill.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\PopupUserControl\PopupUserControlDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\PopupUserControl\UpdatePopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

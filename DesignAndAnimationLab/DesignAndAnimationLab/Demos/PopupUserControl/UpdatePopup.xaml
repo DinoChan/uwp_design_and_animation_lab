@@ -1,0 +1,276 @@
+﻿<UserControl x:Class="DesignAndAnimationLab.Demos.UpdatePopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:DesignAndAnimationLab.Demos"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <AcrylicBrush x:Key="SideBackground"
+                      BackgroundSource="HostBackdrop"
+                      FallbackColor="#f9fafe"
+                      TintColor="White"
+                      TintOpacity="0.8" />
+        <AcrylicBrush x:Key="PaneBackground"
+                      BackgroundSource="Backdrop"
+                      FallbackColor="#f9fafe"
+                      TintColor="White"
+                      TintOpacity="0.8" />
+        <AcrylicBrush x:Key="MaskAcrylicBackground"
+                      BackgroundSource="Backdrop"
+                      FallbackColor="#f9fafe"
+                      TintColor="White"
+                      TintOpacity="0.4" />
+        <SolidColorBrush x:Key="PopupBackground" Color="#f2f7fd" />
+        <SolidColorBrush x:Key="PageBackground" Color="#F1F6FA" />
+        <SolidColorBrush x:Key="PageOverBackground" Color="#DEE5EB" />
+        <SolidColorBrush x:Key="CardBackground" Color="White" />
+        <SolidColorBrush x:Key="CardBackgroundOver" Color="#DAE1E8" />
+        <SolidColorBrush x:Key="PointerOverMaskBackground"
+                         Opacity="0.2"
+                         Color="Gray" />
+        <SolidColorBrush x:Key="TransparentBackground"
+                         Opacity="0.01"
+                         Color="White" />
+
+        <SolidColorBrush x:Key="ImportantTextColor" Color="#000000" />
+        <SolidColorBrush x:Key="NormalTextColor" Color="#2E2F33" />
+        <SolidColorBrush x:Key="TipTextColor" Color="#999AA1" />
+        <SolidColorBrush x:Key="MaskTextColor" Color="#d3dbe8" />
+
+        <Color x:Key="ShadowColor">#AAAAAA</Color>
+
+        <SolidColorBrush x:Key="LineColor" Color="#E1E1E1" />
+        <SolidColorBrush x:Key="LineColorOver" Color="#D9D9D9" />
+
+        <SolidColorBrush x:Key="ProgressColor"
+                         Opacity="0.4"
+                         Color="#E1E1E1" />
+        <SolidColorBrush x:Key="ScreenMaskColor"
+                         Opacity="0.5"
+                         Color="White" />
+
+        <SolidColorBrush x:Key="PrimaryColorOpacity"
+                         Opacity="0.1"
+                         Color="#ED5B8C" />
+        <SolidColorBrush x:Key="PrimaryColor" Color="#ED5B8C" />
+        <SolidColorBrush x:Key="PrimaryColorOver" Color="#DB356D" />
+        <SolidColorBrush x:Key="SecondaryColorOpacity"
+                         Opacity="0.2"
+                         Color="#00A1D6" />
+        <SolidColorBrush x:Key="SecondaryColor" Color="#00A1D6" />
+        <SolidColorBrush x:Key="SecondaryColorOver" Color="#0E78CB" />
+        <SolidColorBrush x:Key="SuccessColorOpacity"
+                         Opacity="0.2"
+                         Color="#99B42D" />
+        <SolidColorBrush x:Key="SuccessColor" Color="#ADC744" />
+        <SolidColorBrush x:Key="SuccessColorOver" Color="#A1BD2F" />
+        <SolidColorBrush x:Key="ErrorColor" Color="#F63340" />
+        <SolidColorBrush x:Key="ErrorColorOpacity"
+                         Opacity="0.2"
+                         Color="#F63340" />
+        <SolidColorBrush x:Key="ErrorColorOver" Color="#E32528" />
+
+        <Style x:Key="PrimaryCircleButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource PrimaryColor}" />
+            <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="FontFamily" Value="{ThemeResource Icon}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+            <Setter Property="FocusVisualMargin" Value="-3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          AutomationProperties.AccessibilityView="Raw"
+                                          Background="{TemplateBinding Background}"
+                                          BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          CornerRadius="{TemplateBinding CornerRadius}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrimaryColorOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrimaryColorOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </ContentPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Storyboard x:Name="PopupIn">
+            <DoubleAnimation Storyboard.TargetName="PopupContainer"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0"
+                             To="1"
+                             Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="PopupBackground"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0"
+                             To="1"
+                             Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="PopupContainer"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="-20"
+                             To="0"
+                             Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="PopupOut">
+            <DoubleAnimation Storyboard.TargetName="PopupContainer"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1"
+                             To="0"
+                             Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="PopupBackground"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1"
+                             To="0"
+                             Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="PopupContainer"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="0"
+                             To="20"
+                             Duration="00:00:00.5">
+                <DoubleAnimation.EasingFunction>
+                    <PowerEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid x:Name="PopupBackground" Background="{ThemeResource ScreenMaskColor}">
+        <controls:DropShadowPanel x:Name="PopupContainer"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  BlurRadius="25"
+                                  OffsetY="6"
+                                  Opacity="0.01"
+                                  Color="{ThemeResource ShadowColor}">
+            <controls:DropShadowPanel.RenderTransform>
+                <TranslateTransform Y="-20" />
+            </controls:DropShadowPanel.RenderTransform>
+            <Grid MaxWidth="400"
+                  MaxHeight="700"
+                  Padding="40,20,0,20"
+                  Background="{ThemeResource PageBackground}"
+                  CornerRadius="4">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <controls:ImageEx x:Name="AppIcon"
+                                  Width="50"
+                                  Height="50"
+                                  Margin="0,0,40,0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Top"
+                                  DecodePixelWidth="50"
+                                  Source="ms-appx:///Assets/bilibili logo.png" />
+                <StackPanel Grid.Row="1"
+                            Margin="0,20,40,0"
+                            Orientation="Horizontal">
+                    <TextBlock Foreground="{ThemeResource ImportantTextColor}" Text="升级说明" />
+                    <TextBlock x:Name="VersionBlock"
+                               Margin="10,0,0,0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+                <ScrollViewer Grid.Row="2"
+                              Margin="0,20,10,0"
+                              Padding="0,0,30,0"
+                              HorizontalAlignment="Center">
+                    <controls:MarkdownTextBlock x:Name="MarkdownBlock"
+                                                Grid.Row="1"
+                                                Foreground="{ThemeResource NormalTextColor}"
+                                                TextWrapping="Wrap" />
+                </ScrollViewer>
+                <Button Name="CloseButton"
+                        Grid.Row="3"
+                        Width="40"
+                        Height="40"
+                        Margin="0,20,40,0"
+                        HorizontalAlignment="Center"
+                        Click="CloseButton_Click"
+                        Content="&#xE92F;"
+                        Style="{StaticResource PrimaryCircleButtonStyle}" />
+            </Grid>
+        </controls:DropShadowPanel>
+
+    </Grid>
+</UserControl>
