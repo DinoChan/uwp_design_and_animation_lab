@@ -6,6 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="Themes/BubbleButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="Icon">/Assets/Fonts/Richasy_BiliBili.ttf#Richasy_BiliBili</FontFamily>

@@ -65,6 +65,7 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Twitter Like Button", typeof(MattHenleysLikeButton)),
           new ExampleDefinition("Walking Cat", typeof(WalkingCat)),
           new ExampleDefinition("Transparent Cube", typeof(TransparentCube)),
+          new ExampleDefinition("Acrylic and Blur", typeof(AcrylicAndBlurDemo)),
 
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),

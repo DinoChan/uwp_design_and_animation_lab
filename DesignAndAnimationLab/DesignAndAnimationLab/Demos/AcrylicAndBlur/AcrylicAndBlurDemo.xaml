@@ -1,0 +1,94 @@
+﻿<Page x:Class="DesignAndAnimationLab.Demos.AcrylicAndBlurDemo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:brushes="using:Microsoft.Toolkit.Uwp.UI.Media"
+      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:effects="using:Microsoft.Toolkit.Uwp.UI.Media.Effects"
+      xmlns:local="using:DesignAndAnimationLab.Demos"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:media="using:Microsoft.UI.Xaml.Media"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      RequestedTheme="Light"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrush"
+                            BackgroundSource="HostBackdrop"
+                            FallbackColor="DarkSlateBlue"
+                            TintColor="#429ce3"
+                            TintOpacity="0.8" />
+
+        <brushes:AcrylicBrush x:Key="ToolkitAcrylicBrush"
+                              BackgroundSource="HostBackdrop"
+                              BlurAmount="12"
+                              FallbackColor="DarkSlateBlue"
+                              TextureUri="ms-appx:///Assets/BrushAssets/NoiseTexture.png"
+                              TintColor="#429ce3"
+                              TintOpacity="0.8" />
+
+        <local:HostBackdropBlurBrush x:Key="HostBackdropBlurBrush" />
+
+        <Style TargetType="ContentControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContentControl">
+                        <controls:DropShadowPanel Margin="36"
+                                                  VerticalAlignment="Top"
+                                                  HorizontalContentAlignment="Left"
+                                                  BlurRadius="7"
+                                                  Color="White">
+                            <TextBlock FontSize="36" Text="{TemplateBinding Content}" />
+                        </controls:DropShadowPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Slider">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Maximum" Value="1" />
+            <Setter Property="StepFrequency" Value="0.01" />
+        </Style>
+
+        <Style TargetType="controls:ColorPickerButton">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Width" Value="200" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource CustomAcrylicBackgroundBrush}">
+            <ContentControl Content="AcrylicBrush" />
+            <StackPanel Width="300" HorizontalAlignment="Right">
+                <Slider Header="TintOpacity" Value="{Binding TintOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                <Slider Header="TintLuminosityOpacity" Value="{Binding TintLuminosityOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                <controls:ColorPickerButton Content="TintColor" SelectedColor="{Binding TintColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                <controls:ColorPickerButton Content="FallbackColor" SelectedColor="{Binding FallbackColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Background="{StaticResource ToolkitAcrylicBrush}">
+            <ContentControl Content="ToolkitAcrylicBrush" />
+            <StackPanel Width="300" HorizontalAlignment="Right">
+                <Slider Header="TintOpacity" Value="{Binding TintOpacity, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
+                <Slider Header="BlurAmount"
+                        Maximum="32"
+                        Value="{Binding BlurAmount, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                <controls:ColorPickerButton Content="TintColor" SelectedColor="{Binding TintColor, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
+                <controls:ColorPickerButton Content="FallbackColor" SelectedColor="{Binding FallbackColor, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="{StaticResource HostBackdropBlurBrush}">
+            <ContentControl Content="HostBackdropBlurBrush" />
+            <StackPanel Width="300" HorizontalAlignment="Right">
+                <Slider Header="Amount"
+                        Maximum="32"
+                        Value="{Binding Amount, Source={StaticResource HostBackdropBlurBrush}, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
