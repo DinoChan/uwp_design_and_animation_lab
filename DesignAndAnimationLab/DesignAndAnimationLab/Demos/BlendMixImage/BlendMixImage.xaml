@@ -10,10 +10,10 @@
 
     <Grid Background="Black">
         <StackPanel HorizontalAlignment="Center">
-            <Rectangle x:Name="Background"
+            <Rectangle x:Name="BackgroundElement"
                        Width="800"
                        Height="384" />
-            <Rectangle x:Name="Background2"
+            <Rectangle x:Name="BackgroundElement2"
                        Width="800"
                        Height="384"
                        Margin="0,20,0,0" />

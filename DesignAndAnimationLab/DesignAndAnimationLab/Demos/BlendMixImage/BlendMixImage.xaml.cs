@@ -29,8 +29,8 @@ namespace DesignAndAnimationLab.Demos
             this.InitializeComponent();
 
 
-            ElementCompositionPreview.SetElementChildVisual(Background, CreateVisual("sea.jpg"));
-            ElementCompositionPreview.SetElementChildVisual(Background2, CreateVisual("sea2.jpg"));
+            ElementCompositionPreview.SetElementChildVisual(BackgroundElement, CreateVisual("sea.jpg"));
+            ElementCompositionPreview.SetElementChildVisual(BackgroundElement2, CreateVisual("sea2.jpg"));
         }
 
         private SpriteVisual CreateVisual(string imageName)
