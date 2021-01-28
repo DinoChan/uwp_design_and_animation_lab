@@ -28,6 +28,15 @@
 
         <local:HostBackdropBlurBrush x:Key="HostBackdropBlurBrush" />
 
+        <brushes:PipelineBrush x:Key="PipelineBrush" Source="{effects:BackdropSource BackgroundSource=HostBackdrop}">
+            <effects:LuminanceToAlphaEffect />
+            <effects:OpacityEffect x:Name="OpacityEffect" Value="0.4" />
+            <effects:BlendEffect Mode="Multiply" Source="{effects:BackdropSource BackgroundSource=HostBackdrop}" />
+            <effects:BlurEffect Amount="16" />
+            <effects:ShadeEffect Intensity="0.2" Color="#FF222222" />
+            <effects:BlendEffect Mode="Overlay" Source="{effects:TileSource Uri=ms-appx:///Assets/BrushAssets/NoiseTexture.png}" />
+        </brushes:PipelineBrush>
+
         <Style TargetType="ContentControl">
             <Setter Property="Template">
                 <Setter.Value>
@@ -51,7 +60,7 @@
 
         <Style TargetType="controls:ColorPickerButton">
             <Setter Property="Margin" Value="8" />
-            <Setter Property="Width" Value="200" />
+            <Setter Property="Width" Value="134" />
         </Style>
     </Page.Resources>
     <Grid>
@@ -59,35 +68,75 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Background="{StaticResource CustomAcrylicBackgroundBrush}">
+        <Grid Padding="8" Background="{StaticResource CustomAcrylicBackgroundBrush}">
             <ContentControl Content="AcrylicBrush" />
             <StackPanel Width="300" HorizontalAlignment="Right">
                 <Slider Header="TintOpacity" Value="{Binding TintOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
                 <Slider Header="TintLuminosityOpacity" Value="{Binding TintLuminosityOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
-                <controls:ColorPickerButton Content="TintColor" SelectedColor="{Binding TintColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
-                <controls:ColorPickerButton Content="FallbackColor" SelectedColor="{Binding FallbackColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                <controls:WrapPanel>
+                    <controls:ColorPickerButton Content="TintColor" SelectedColor="{Binding TintColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                    <controls:ColorPickerButton Content="FallbackColor" SelectedColor="{Binding FallbackColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                </controls:WrapPanel>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1" Background="{StaticResource ToolkitAcrylicBrush}">
+        <Grid Grid.Row="1"
+              Padding="8"
+              Background="{StaticResource ToolkitAcrylicBrush}">
             <ContentControl Content="ToolkitAcrylicBrush" />
             <StackPanel Width="300" HorizontalAlignment="Right">
                 <Slider Header="TintOpacity" Value="{Binding TintOpacity, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
                 <Slider Header="BlurAmount"
                         Maximum="32"
-                        Value="{Binding BlurAmount, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                        Value="{Binding BlurAmount, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
                 <controls:ColorPickerButton Content="TintColor" SelectedColor="{Binding TintColor, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
-                <controls:ColorPickerButton Content="FallbackColor" SelectedColor="{Binding FallbackColor, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="2" Background="{StaticResource HostBackdropBlurBrush}">
+        <Grid Grid.Row="2"
+              Padding="8"
+              Background="{StaticResource HostBackdropBlurBrush}">
             <ContentControl Content="HostBackdropBlurBrush" />
             <StackPanel Width="300" HorizontalAlignment="Right">
                 <Slider Header="Amount"
                         Maximum="32"
                         Value="{Binding Amount, Source={StaticResource HostBackdropBlurBrush}, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+
+
+        <Grid Grid.Row="3" Background="{StaticResource PipelineBrush}">
+            <ContentControl Content="PipelineBrush" />
+            <StackPanel Width="300" HorizontalAlignment="Right">
+                <Slider Header="Amount" Value="{x:Bind OpacityEffect.Value, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="4"
+              Padding="8"
+              Background="{x:Bind CustomPipelineBrush, Mode=OneWay}">
+            <ContentControl Content="CustomPipelineBrush" />
+            <StackPanel Width="300" HorizontalAlignment="Right">
+                <CheckBox Content="LuminanceToAlpha" IsChecked="{x:Bind HasLuminanceToAlpha, Mode=TwoWay}" />
+                <CheckBox Content="Opacity" IsChecked="{x:Bind HasOpacity, Mode=TwoWay}" />
+                <Slider Margin="30,0,0,0" Value="{x:Bind EffectOpacity, Mode=TwoWay}" />
+                <CheckBox Content="Blur" IsChecked="{x:Bind HasBlur, Mode=TwoWay}" />
+                <Slider Margin="30,0,0,0"
+                        Maximum="32"
+                        Value="{x:Bind BlurAmount, Mode=TwoWay}" />
+                <CheckBox Content="Shade" IsChecked="{x:Bind HasShade, Mode=TwoWay}" />
+                <controls:ColorPickerButton Margin="30,0,0,0"
+                                            Content="Color"
+                                            SelectedColor="{x:Bind ShadeColor, Mode=TwoWay}" />
+                <Slider Margin="30,0,0,0" Value="{x:Bind ShadeIntensity, Mode=TwoWay}" />
+
+                <Button HorizontalAlignment="Stretch"
+                        Click="OnAcceptCustomBrush"
+                        Content="Accept"
+                        Style="{StaticResource ButtonRevealStyle}" />
             </StackPanel>
         </Grid>
     </Grid>
