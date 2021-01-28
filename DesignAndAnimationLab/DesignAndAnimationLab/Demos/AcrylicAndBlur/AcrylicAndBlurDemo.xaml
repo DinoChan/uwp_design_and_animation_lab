@@ -118,7 +118,7 @@
         <Grid Grid.Row="4"
               Padding="8"
               Background="{x:Bind CustomPipelineBrush}">
-            <ContentControl Content="CustomPipelineBrush" />
+            <ContentControl Content="{x:Bind CustomPipelineBrushDark, Mode=OneWay}" />
             <StackPanel Width="300"
                         HorizontalAlignment="Right"
                         BorderBrush="Black"

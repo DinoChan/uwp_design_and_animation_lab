@@ -19,7 +19,7 @@ namespace DesignAndAnimationLab.Demos
     public sealed partial class AcrylicAndBlurDemo : Page, INotifyPropertyChanged
     {
         private Brush _customPipelineBrush;
-
+        private Brush _customPipelineBrushDark;
         public AcrylicAndBlurDemo()
         {
             this.InitializeComponent();
@@ -45,7 +45,7 @@ namespace DesignAndAnimationLab.Demos
             BlurAmount = 16;
             ShadeColor = "#FF222222".ToColor();
             ShadeIntensity = 0.4;
-
+            UpdateCustomPipelineBrushDark();
         }
 
         public bool HasLuminanceToAlpha { get; set; }
@@ -75,6 +75,18 @@ namespace DesignAndAnimationLab.Demos
             }
         }
 
+        public Brush CustomPipelineBrushDark
+        {
+            get => _customPipelineBrushDark;
+            set
+            {
+                _customPipelineBrushDark = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CustomPipelineBrushDark)));
+            }
+        }
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnAcceptCustomBrush(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -98,6 +110,11 @@ namespace DesignAndAnimationLab.Demos
                       Placement.Background);
 
             CustomPipelineBrush = builder.AsBrush();
+            UpdateCustomPipelineBrushDark();
+        }
+
+        private void UpdateCustomPipelineBrushDark()
+        {
         }
     }
 }
