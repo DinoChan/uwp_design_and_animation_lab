@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.UI.Xaml.Navigation;
+using System;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -115,6 +116,27 @@ namespace DesignAndAnimationLab.Demos
 
         private void UpdateCustomPipelineBrushDark()
         {
+            var builder = PipelineBuilder.FromHostBackdrop();
+            if (HasLuminanceToAlpha)
+                builder = builder.LuminanceToAlpha();
+
+            var opacity = Math.Min(1, EffectOpacity+0.3);
+            if (HasOpacity)
+                builder = builder.Opacity((float)opacity);
+
+            builder = builder.Blend(PipelineBuilder.FromHostBackdrop(), BlendEffectMode.Multiply);
+
+            if (HasBlur)
+                builder = builder.Blur((float)BlurAmount);
+
+            if (HasShade)
+                builder = builder.Shade(ShadeColor, (float)ShadeIntensity);
+
+            builder = builder.Blend(PipelineBuilder.FromTiles("/Assets/BrushAssets/NoiseTexture.png"),
+                      BlendEffectMode.Overlay,
+                      Placement.Background);
+
+            CustomPipelineBrushDark = builder.AsBrush();
         }
     }
 }
