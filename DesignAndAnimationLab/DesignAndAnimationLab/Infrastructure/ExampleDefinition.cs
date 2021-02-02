@@ -66,7 +66,7 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Walking Cat", typeof(WalkingCat)),
           new ExampleDefinition("Transparent Cube", typeof(TransparentCube)),
           new ExampleDefinition("Acrylic and Blur", typeof(AcrylicAndBlurDemo)),
-
+            new ExampleDefinition("Setting Panel", typeof(SettingPanelDemo)),
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),
             //new ExampleDefinition("Mandelbrot", typeof(Mandelbrot)),

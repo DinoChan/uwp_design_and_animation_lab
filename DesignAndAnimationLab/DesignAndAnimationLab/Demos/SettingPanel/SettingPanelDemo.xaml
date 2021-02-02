@@ -1,0 +1,298 @@
+﻿<Page x:Class="DesignAndAnimationLab.Demos.SettingPanelDemo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:brushes="using:Microsoft.Toolkit.Uwp.UI.Media"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:DesignAndAnimationLab.Demos"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <RevealBorderBrush x:Key="RevealBorderBrush"
+                                       FallbackColor="Red"
+                                       TargetTheme="Dark"
+                                       Color="Transparent" />
+                    <brushes:AcrylicBrush x:Key="LightBackgroundBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="Black"
+                                          TintOpacity="0.3" />
+
+                    <brushes:AcrylicBrush x:Key="DarkBackgroundBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="Black"
+                                          TintOpacity="0.3" />
+
+
+                    <brushes:AcrylicBrush x:Key="DarkBorderBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="Black"
+                                          TintOpacity="0.5" />
+
+                    <brushes:AcrylicBrush x:Key="LightBorderBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="White"
+                                          TintOpacity="0.1" />
+                </ResourceDictionary>
+
+
+                <ResourceDictionary x:Key="Light">
+                    <RevealBorderBrush x:Key="RevealBorderBrush"
+                                       FallbackColor="Red"
+                                       TargetTheme="Light"
+                                       Color="Transparent" />
+                    <brushes:AcrylicBrush x:Key="LightBackgroundBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="White"
+                                          TintOpacity="0.3" />
+
+                    <brushes:AcrylicBrush x:Key="DarkBackgroundBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="White"
+                                          TintOpacity="0.3" />
+
+
+                    <brushes:AcrylicBrush x:Key="DarkBorderBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="Black"
+                                          TintOpacity="0.5" />
+
+                    <brushes:AcrylicBrush x:Key="LightBorderBrush"
+                                          BackgroundSource="Backdrop"
+                                          BlurAmount="16"
+                                          TintColor="White"
+                                          TintOpacity="0.1" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <Style x:Key="OutterPanel" TargetType="ContentControl">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                <Setter Property="Padding" Value="18" />
+                <Setter Property="CornerRadius" Value="18" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ContentControl">
+                            <Grid Background="{ThemeResource LightBackgroundBrush}"
+                                  BorderBrush="{ThemeResource DarkBorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid HorizontalAlignment="Stretch"
+                                      BorderBrush="{ThemeResource LightBorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      CornerRadius="{TemplateBinding CornerRadius}">
+                                    <ContentPresenter Margin="{TemplateBinding Padding}" />
+                                </Grid>
+                                <Grid HorizontalAlignment="Stretch"
+                                      BorderBrush="{ThemeResource RevealBorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      CornerRadius="{TemplateBinding CornerRadius}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+            <Style x:Key="InnerPanel"
+                   BasedOn="{StaticResource OutterPanel}"
+                   TargetType="ContentControl">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ContentControl">
+                            <Grid Background="{ThemeResource DarkBackgroundBrush}"
+                                  BorderBrush="{ThemeResource DarkBorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid HorizontalAlignment="Stretch"
+                                      BorderBrush="{ThemeResource LightBorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      CornerRadius="{TemplateBinding CornerRadius}">
+                                    <ContentPresenter Margin="{TemplateBinding Padding}" />
+                                </Grid>
+                                <Grid HorizontalAlignment="Stretch"
+                                      BorderBrush="{ThemeResource RevealBorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      CornerRadius="{TemplateBinding CornerRadius}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style TargetType="FontIcon">
+                <Setter Property="FontSize" Value="36" />
+                <Setter Property="Margin" Value="8" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Image Grid.ColumnSpan="2"
+               Source="/Assets/Images/macOS-Catalina-Dark-Mode.jpg"
+               Stretch="UniformToFill" />
+        <Grid RequestedTheme="Dark">
+            <ContentControl HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource OutterPanel}">
+                <Grid ColumnSpacing="18" RowSpacing="18">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ContentControl Grid.RowSpan="2"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE70c;" />
+                                <TextBlock Text="RememberedDevice" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE720;" />
+                                <TextBlock Text="Microphone" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE728;" />
+                                <TextBlock Text="FavoriteList" />
+                            </StackPanel>
+                        </StackPanel>
+
+
+                    </ContentControl>
+
+                    <ContentControl Grid.Column="2"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE736;" />
+                                <TextBlock Text="ReadingMode" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ContentControl>
+
+                    <ContentControl Grid.Row="1"
+                                    Grid.Column="2"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel>
+                                <FontIcon Glyph="&#xE73f;" />
+                                <TextBlock Text="BackToWindow" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ContentControl>
+
+                    <ContentControl Grid.Row="1"
+                                    Grid.Column="3"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel>
+                                <FontIcon Glyph="&#xE749;" />
+                                <TextBlock Text="Print" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ContentControl>
+                </Grid>
+            </ContentControl>
+        </Grid>
+        <Grid Grid.Column="1" RequestedTheme="Light">
+            <ContentControl HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource OutterPanel}">
+                <Grid ColumnSpacing="18" RowSpacing="18">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ContentControl Grid.RowSpan="2"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE70c;" />
+                                <TextBlock Text="RememberedDevice" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE720;" />
+                                <TextBlock Text="Microphone" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE728;" />
+                                <TextBlock Text="FavoriteList" />
+                            </StackPanel>
+                        </StackPanel>
+
+
+                    </ContentControl>
+
+                    <ContentControl Grid.Column="2"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE736;" />
+                                <TextBlock Text="ReadingMode" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ContentControl>
+
+                    <ContentControl Grid.Row="1"
+                                    Grid.Column="2"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel>
+                                <FontIcon Glyph="&#xE73f;" />
+                                <TextBlock Text="BackToWindow" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ContentControl>
+
+                    <ContentControl Grid.Row="1"
+                                    Grid.Column="3"
+                                    Style="{StaticResource InnerPanel}">
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel>
+                                <FontIcon Glyph="&#xE749;" />
+                                <TextBlock Text="Print" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ContentControl>
+                </Grid>
+            </ContentControl>
+        </Grid>
+    </Grid>
+</Page>
