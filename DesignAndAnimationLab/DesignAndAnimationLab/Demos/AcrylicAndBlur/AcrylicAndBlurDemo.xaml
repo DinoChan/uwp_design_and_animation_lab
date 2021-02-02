@@ -26,9 +26,9 @@
 
         <brushes:AcrylicBrush x:Key="LightBorderBrush"
                               BackgroundSource="HostBackdrop"
-                              FallbackColor="Gray"
+                              FallbackColor="White"
                               TintColor="White"
-                              TintOpacity="0.1" />
+                              TintOpacity="0.3" />
 
         <brushes:AcrylicBrush x:Key="ToolkitAcrylicBrush"
                               BackgroundSource="HostBackdrop"
@@ -75,14 +75,13 @@
             <Setter Property="Width" Value="134" />
         </Style>
     </Page.Resources>
-    <StackPanel>
-        <!--<Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>-->
+        </Grid.RowDefinitions>
         <Grid Padding="8" Background="{StaticResource CustomAcrylicBackgroundBrush}">
             <ContentControl Content="AcrylicBrush" />
             <StackPanel Width="300" HorizontalAlignment="Right">
@@ -120,10 +119,12 @@
         </Grid>
 
 
-        <Grid Grid.Row="3" Background="{StaticResource PipelineBrush}">
+        <!--<Grid Grid.Row="3" Background="{StaticResource PipelineBrush}">
             <ContentControl Content="PipelineBrush" />
-
-        </Grid>
+            <StackPanel Width="300" HorizontalAlignment="Right">
+                <Slider Header="Amount" Value="{x:Bind OpacityEffect.Value, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>-->
 
         <Grid Grid.Row="4"
               Padding="8"
@@ -133,7 +134,8 @@
                         HorizontalAlignment="Right"
                         BorderBrush="{StaticResource DarkBorderBrush}"
                         BorderThickness="1"
-                        CornerRadius="8">
+                        CornerRadius="8"
+                        RequestedTheme="Dark">
                 <StackPanel Background="{x:Bind CustomPipelineBrushDark, Mode=OneWay}"
                             BorderBrush="{StaticResource LightBorderBrush}"
                             BorderThickness="1"
@@ -166,5 +168,5 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-    </StackPanel>
+    </Grid>
 </Page>
