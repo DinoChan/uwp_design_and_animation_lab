@@ -1,4 +1,4 @@
-﻿<Page x:Class="DesignAndAnimationLab.Demos.SettingPanelDemo"
+﻿<Page x:Class="DesignAndAnimationLab.Demos.ControlCenterDemo"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:brushes="using:Microsoft.Toolkit.Uwp.UI.Media"
@@ -250,7 +250,7 @@
                         <StackPanel VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE70c;" />
-                                <TextBlock Text="RememberedDevice" />
+                                <TextBlock Text="Remembered" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE720;" />

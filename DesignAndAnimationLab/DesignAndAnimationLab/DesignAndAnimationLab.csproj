@@ -181,8 +181,8 @@
     <Compile Include="Demos\PopupUserControl\UpdatePopup.xaml.cs">
       <DependentUpon>UpdatePopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Demos\SettingPanel\SettingPanelDemo.xaml.cs">
-      <DependentUpon>SettingPanelDemo.xaml</DependentUpon>
+    <Compile Include="Demos\ControlCenter\ControlCenterDemo.xaml.cs">
+      <DependentUpon>ControlCenterDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Demos\ThreeActionsWithOneClick\ThreeActionsWithOneClick.xaml.cs">
       <DependentUpon>ThreeActionsWithOneClick.xaml</DependentUpon>
@@ -311,7 +311,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Demos\SettingPanel\SettingPanelDemo.xaml">
+    <Page Include="Demos\ControlCenter\ControlCenterDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
