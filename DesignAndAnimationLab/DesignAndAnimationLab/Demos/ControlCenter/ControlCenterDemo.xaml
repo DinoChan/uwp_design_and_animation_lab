@@ -83,18 +83,15 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ContentControl">
-                            <Grid>
-                                <Grid Background="{ThemeResource LightBackgroundBrush}"
-                                      BorderBrush="{ThemeResource DarkBorderBrush}"
+                            <Grid Background="{ThemeResource LightBackgroundBrush}"
+                                  BorderBrush="{ThemeResource DarkBorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid HorizontalAlignment="Stretch"
+                                      BorderBrush="{ThemeResource LightBorderBrush}"
                                       BorderThickness="{TemplateBinding BorderThickness}"
                                       CornerRadius="{TemplateBinding CornerRadius}">
-                                    <Grid HorizontalAlignment="Stretch"
-                                          BorderBrush="{ThemeResource LightBorderBrush}"
-                                          BorderThickness="{TemplateBinding BorderThickness}"
-                                          CornerRadius="{TemplateBinding CornerRadius}">
-                                        <ContentPresenter Margin="{TemplateBinding Padding}" />
-                                    </Grid>
-
+                                    <ContentPresenter Margin="{TemplateBinding Padding}" />
                                 </Grid>
                                 <Grid HorizontalAlignment="Stretch"
                                       BorderBrush="{ThemeResource RevealBorderBrush}"
@@ -113,18 +110,15 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ContentControl">
-                            <Grid>
-                                <Grid Background="{ThemeResource DarkBackgroundBrush}"
-                                      BorderBrush="{ThemeResource DarkBorderBrush}"
+                            <Grid Background="{ThemeResource DarkBackgroundBrush}"
+                                  BorderBrush="{ThemeResource DarkBorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid HorizontalAlignment="Stretch"
+                                      BorderBrush="{ThemeResource LightBorderBrush}"
                                       BorderThickness="{TemplateBinding BorderThickness}"
                                       CornerRadius="{TemplateBinding CornerRadius}">
-                                    <Grid HorizontalAlignment="Stretch"
-                                          BorderBrush="{ThemeResource LightBorderBrush}"
-                                          BorderThickness="{TemplateBinding BorderThickness}"
-                                          CornerRadius="{TemplateBinding CornerRadius}">
-                                        <ContentPresenter Margin="{TemplateBinding Padding}" />
-                                    </Grid>
-
+                                    <ContentPresenter Margin="{TemplateBinding Padding}" />
                                 </Grid>
                                 <Grid HorizontalAlignment="Stretch"
                                       BorderBrush="{ThemeResource RevealBorderBrush}"
@@ -143,11 +137,11 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="FontWeight" Value="Bold" />
-                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
 
             <Style TargetType="FontIcon">
-                <Setter Property="FontSize" Value="36" />
+                <Setter Property="FontSize" Value="24" />
                 <Setter Property="Margin" Value="8" />
             </Style>
         </Grid.Resources>

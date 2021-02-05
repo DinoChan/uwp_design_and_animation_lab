@@ -230,9 +230,11 @@
     <Content Include="Thumbnails\BlendMixImage.png" />
     <Content Include="Thumbnails\BlendMixText.png" />
     <Content Include="Thumbnails\BubbleButton.png" />
+    <Content Include="Thumbnails\ControlCenter.png" />
     <Content Include="Thumbnails\GlitchArt.png" />
     <Content Include="Thumbnails\GlitchArtManyWords.png" />
     <Content Include="Thumbnails\GooeyButton.png" />
+    <Content Include="Thumbnails\PopupUserControl.png" />
     <Content Include="Thumbnails\ThreeActionsWithOneClick.png" />
     <Content Include="Thumbnails\TwitterLikeButton.png" />
     <Content Include="Thumbnails\TransparentCube.png" />
