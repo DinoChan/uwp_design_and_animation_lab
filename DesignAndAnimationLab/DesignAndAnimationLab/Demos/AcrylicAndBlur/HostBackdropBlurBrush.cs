@@ -46,7 +46,7 @@ namespace DesignAndAnimationLab.Demos
         }
 
         /// <inheritdoc/>
-        protected override PipelineBuilder OnBrushRequested()
+        protected override PipelineBuilder OnPipelineRequested()
         {
             return PipelineBuilder.FromHostBackdrop().Blur((float)Amount, out this.amountSetter);
         }
