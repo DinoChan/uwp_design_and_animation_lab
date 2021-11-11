@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DesignAndAnimationLab.Demos.BubbleButton;
 using DesignAndAnimationLab.Demos.LikeButtons;
+using DesignAndAnimationLab.Demos.GalaxyShuttles;
 
 namespace DesignAndAnimationLab
 {
@@ -67,6 +68,7 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Transparent Cube", typeof(TransparentCube)),
           new ExampleDefinition("Acrylic and Blur", typeof(AcrylicAndBlurDemo)),
             new ExampleDefinition("Control Center", typeof(ControlCenterDemo)),
+               new ExampleDefinition("Galaxy Shuttle", typeof(GalaxyShuttleDemo)),
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),
             //new ExampleDefinition("Mandelbrot", typeof(Mandelbrot)),

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+﻿<?xml version="1.0" ?>
 <!--
     Copyright (c) Microsoft Corporation. All rights reserved.
     
@@ -20,7 +20,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
+        
+        <Grid x:Name="exampleContent" Grid.Row="1" />
+        
         <StackPanel Grid.Row="0"
                     Margin="10"
                     Orientation="Horizontal">
@@ -38,6 +40,6 @@
                        Text="{Binding Name}" />
         </StackPanel>
 
-        <Grid x:Name="exampleContent" Grid.Row="1" />
+     
     </Grid>
 </Page>

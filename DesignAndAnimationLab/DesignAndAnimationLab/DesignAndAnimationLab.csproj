@@ -141,6 +141,12 @@
     </Compile>
     <Compile Include="Demos\BubbleButton\BubbleView.cs" />
     <Compile Include="Demos\BubbleButton\SimpleShadowPanel.cs" />
+    <Compile Include="Demos\GalaxyShuttles\GalaxyShuttleControl.xaml.cs">
+      <DependentUpon>GalaxyShuttleControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\GalaxyShuttles\GalaxyShuttleDemo.xaml.cs">
+      <DependentUpon>GalaxyShuttleDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\GlitchArtDemo\GlitchArtWithManyWordsDemoPage.xaml.cs">
       <DependentUpon>GlitchArtWithManyWordsDemoPage.xaml</DependentUpon>
     </Compile>
@@ -219,6 +225,7 @@
     <Content Include="Assets\Images\sea2.jpg" />
     <Content Include="Assets\Images\tuna_sprite.png" />
     <Content Include="Assets\Images\wallpaper.jpg" />
+    <Content Include="Demos\GalaxyShuttles\Galaxy.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -232,6 +239,7 @@
     <Content Include="Thumbnails\BlendMixText.png" />
     <Content Include="Thumbnails\BubbleButton.png" />
     <Content Include="Thumbnails\ControlCenter.png" />
+    <Content Include="Thumbnails\GalaxyShuttle.png" />
     <Content Include="Thumbnails\GlitchArt.png" />
     <Content Include="Thumbnails\GlitchArtManyWords.png" />
     <Content Include="Thumbnails\GooeyButton.png" />
@@ -263,6 +271,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Demos\BubbleButton\BubbleButtonDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\GalaxyShuttles\GalaxyShuttleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\GalaxyShuttles\GalaxyShuttleDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
