@@ -1,7 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Media;
-using Microsoft.Toolkit.Uwp.UI.Media.Effects;
+
 using Microsoft.Toolkit.Uwp.UI.Media.Pipelines;
 using System.ComponentModel;
 using Windows.UI.Xaml.Controls;

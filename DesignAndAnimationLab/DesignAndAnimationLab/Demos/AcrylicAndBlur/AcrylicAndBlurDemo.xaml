@@ -4,7 +4,7 @@
       xmlns:brushes="using:Microsoft.Toolkit.Uwp.UI.Media"
       xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:effects="using:Microsoft.Toolkit.Uwp.UI.Media.Effects"
+      xmlns:effects="using:Microsoft.Toolkit.Uwp.UI.Media"
       xmlns:local="using:DesignAndAnimationLab.Demos"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:media="using:Microsoft.UI.Xaml.Media"
@@ -16,7 +16,7 @@
                             BackgroundSource="HostBackdrop"
                             FallbackColor="DarkSlateBlue"
                             TintColor="#429ce3"
-                            TintOpacity="0.8" />
+                            TintOpacity="0" />
 
         <brushes:AcrylicBrush x:Key="DarkBorderBrush"
                               BackgroundSource="HostBackdrop"
@@ -36,7 +36,7 @@
                               FallbackColor="DarkSlateBlue"
                               TextureUri="ms-appx:///Assets/BrushAssets/NoiseTexture.png"
                               TintColor="#429ce3"
-                              TintOpacity="0.8" />
+                              TintOpacity="0" />
 
         <local:HostBackdropBlurBrush x:Key="HostBackdropBlurBrush" />
 
