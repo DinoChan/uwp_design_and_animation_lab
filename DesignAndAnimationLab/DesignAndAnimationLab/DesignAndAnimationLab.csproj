@@ -169,6 +169,9 @@
     <Compile Include="Demos\GooeyButtonDemo\GooeyButtonDemoPage.xaml.cs">
       <DependentUpon>GooeyButtonDemoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\Gooey\GooeyEllipseDemoPage.xaml.cs">
+      <DependentUpon>GooeyEllipseDemoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\LikeButtons\LikeButtonsDemo.xaml.cs">
       <DependentUpon>LikeButtonsDemo.xaml</DependentUpon>
     </Compile>
@@ -310,6 +313,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Demos\Gooey\GooeyEllipseDemoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Demos\LikeButtons\LikeButtonsDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -403,6 +410,7 @@
   <ItemGroup>
     <Content Include="Assets\Fonts\Richasy_BiliBili.ttf" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
