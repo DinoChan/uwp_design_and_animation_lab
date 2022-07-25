@@ -169,6 +169,7 @@
     <Compile Include="Demos\GooeyButtonDemo\GooeyButtonDemoPage.xaml.cs">
       <DependentUpon>GooeyButtonDemoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\Gooey\ColorMatrixPipelineEffect.cs" />
     <Compile Include="Demos\Gooey\GooeyEllipseDemoPage.xaml.cs">
       <DependentUpon>GooeyEllipseDemoPage.xaml</DependentUpon>
     </Compile>
