@@ -21,7 +21,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
-        <Grid x:Name="exampleContent" Grid.Row="1" />
+        <Grid x:Name="exampleContent" Grid.RowSpan="2" />
         
         <StackPanel Grid.Row="0"
                     Margin="10"

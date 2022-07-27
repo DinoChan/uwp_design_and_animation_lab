@@ -32,10 +32,10 @@
         </Storyboard>
     </UserControl.Resources>
     <Grid x:Name="Root">
-
+       
         <Grid Height="300" Width="300">
             <Grid.Transform3D>
-                <media3D:PerspectiveTransform3D Depth="4" />
+                <media3D:PerspectiveTransform3D Depth="2" />
             </Grid.Transform3D>
             <Grid Background="{StaticResource ImageBackground}" Transform3D="{StaticResource TransformLeft}" />
             <Grid Background="{StaticResource ImageBackground}" Transform3D="{StaticResource TransformUp}" />

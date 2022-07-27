@@ -15,7 +15,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <StackPanel Width="128" Margin="16">
+        <StackPanel Width="128" Margin="16,100">
             <Slider x:Name="RotationXElement"
                     Margin="8"
                     Header="RotationX"
@@ -32,6 +32,30 @@
                     Header="RotationZ"
                     Maximum="360"
                     Minimum="-360" />
+            <Slider x:Name="CenterXElement"
+                    Margin="8"
+                    Header="Center"
+                    Maximum="300"
+                    Minimum="-300"
+                    Value="150"/>
+            <Slider x:Name="CenterYElement"
+                    Margin="8"
+                    Header="CenterY"
+                    Maximum="300"
+                    Minimum="-300"
+                    Value="150" />
+            <Slider x:Name="CenterZElement"
+                    Margin="8"
+                    Header="CenterZ"
+                    Maximum="300"
+                    Minimum="-300" 
+                    Value="150"/>
+            <Slider x:Name="DepthElement"
+                    Margin="8"
+                    Header="Depth"
+                    Maximum="4000"
+                    Minimum="0"
+                    Value="1000" />
         </StackPanel>
         <Grid Grid.Column="1">
             <Grid.Resources>
@@ -45,7 +69,7 @@
                 </Style>
             </Grid.Resources>
             <Grid.Transform3D>
-                <media3D:PerspectiveTransform3D />
+                <media3D:PerspectiveTransform3D x:Name="Transform3D" Depth="{Binding ElementName=DepthElement, Path=Value}" />
             </Grid.Transform3D>
             <Grid>
                 <!--<Grid.Transform3D>
@@ -56,9 +80,9 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
                     <Grid.Transform3D>
-                        <media3D:CompositeTransform3D CenterX="150"
-                                                      CenterY="150"
-                                                      CenterZ="150"
+                        <media3D:CompositeTransform3D CenterX="{Binding ElementName=CenterXElement, Path=Value}"
+                                                      CenterY="{Binding ElementName=CenterYElement, Path=Value}"
+                                                      CenterZ="{Binding ElementName=CenterZElement, Path=Value}"
                                                       RotationX="{Binding ElementName=RotationXElement, Path=Value}"
                                                       RotationY="{Binding ElementName=RotationYElement, Path=Value}"
                                                       RotationZ="{Binding ElementName=RotationZElement, Path=Value}" />
