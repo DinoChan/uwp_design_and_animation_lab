@@ -23,7 +23,7 @@
                                           TintOpacity="0.3" />
 
                     <brushes:AcrylicBrush x:Key="DarkBackgroundBrush"
-                                          BackgroundSource="Backdrop"
+                                          BackgroundSource="Backdrop" 
                                           BlurAmount="16"
                                           TintColor="Black"
                                           TintOpacity="0.3" />
