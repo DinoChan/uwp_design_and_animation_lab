@@ -20,7 +20,6 @@
                 <local:GlitchText3 Width="720" Height="200" />
                 <local:GlitchText3 Width="720" Height="200" />
                 <local:GlitchText3 Width="720" Height="200" />
-
             </controls:WrapPanel>
         </ScrollViewer>
     </Grid>

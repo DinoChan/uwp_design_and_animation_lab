@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Windows.Foundation;
+using Microsoft.Graphics.Canvas.Geometry;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Media;
-using Microsoft.Graphics.Canvas.Geometry;
-using System.Drawing;
-using Windows.UI.Xaml.Shapes;
 
 namespace DesignAndAnimationLab.Demos
 {
@@ -20,8 +15,6 @@ namespace DesignAndAnimationLab.Demos
         {
             SizeChanged += OnSizeChanged;
         }
-
-
 
         private void OnSizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
@@ -50,8 +43,6 @@ namespace DesignAndAnimationLab.Demos
 
             points.Add(points[0]);
 
-
-
             CanvasGeometry result;
             using (var builder = new CanvasPathBuilder(null))
             {
@@ -77,11 +68,9 @@ namespace DesignAndAnimationLab.Demos
             visual.Shapes.Add(shape3);
             visual.Size = e.NewSize.ToVector2();
             ElementCompositionPreview.SetElementChildVisual(this, visual);
-          
         }
 
-
-        CompositionPath GetLine(Vector2 pt1, Vector2 pt2)
+        private CompositionPath GetLine(Vector2 pt1, Vector2 pt2)
         {
             CanvasGeometry result;
             using (var builder = new CanvasPathBuilder(null))

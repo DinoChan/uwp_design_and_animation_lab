@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 
 namespace DesignAndAnimationLab
 {
     public partial class ProgressButton
     {
-
-
         /// <summary>
         /// 获取或设置Content的值
         /// </summary>
@@ -26,11 +19,9 @@ namespace DesignAndAnimationLab
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register(nameof(Content), typeof(object), typeof(ProgressButton), new PropertyMetadata(default(object)));
 
-      
-
         /// <summary>
         /// 获取或设置State的值
-        /// </summary>  
+        /// </summary>
         public ProgressState State
         {
             get { return (ProgressState)GetValue(StateProperty); }

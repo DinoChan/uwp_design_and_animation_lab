@@ -15,7 +15,7 @@ namespace DesignAndAnimationLab
 
         public ExamplePage()
         {
-            this.InitializeComponent();         
+            this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
 
@@ -36,7 +36,7 @@ namespace DesignAndAnimationLab
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {            
+        {
             this.navigationHelper.OnNavigatedTo(e);
 
             var example = e.Parameter as ExampleDefinition;
@@ -48,7 +48,7 @@ namespace DesignAndAnimationLab
                     var control = Activator.CreateInstance(example.Control) as FrameworkElement;
                     this.RequestedTheme = control.RequestedTheme;
                     this.exampleContent.Children.Add(control);
-                }                
+                }
             }
         }
 

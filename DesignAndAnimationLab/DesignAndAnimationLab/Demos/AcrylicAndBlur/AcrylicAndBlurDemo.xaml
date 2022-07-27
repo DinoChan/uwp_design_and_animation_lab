@@ -118,7 +118,6 @@
             </StackPanel>
         </Grid>
 
-
         <!--<Grid Grid.Row="3" Background="{StaticResource PipelineBrush}">
             <ContentControl Content="PipelineBrush" />
             <StackPanel Width="300" HorizontalAlignment="Right">

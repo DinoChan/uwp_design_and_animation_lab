@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesignAndAnimationLab
+﻿namespace DesignAndAnimationLab
 {
     public partial class ProgressButton
     {
@@ -19,6 +13,5 @@ namespace DesignAndAnimationLab
         private const string StatePressed = "Pressed";
         private const string StateDisabled = "Disabled";
         private const string GroupCommon = "CommonStates";
-    
     }
 }

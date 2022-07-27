@@ -67,7 +67,6 @@
                                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                                               ContentTransitions="{TemplateBinding ContentTransitions}"
                                                               CornerRadius="{TemplateBinding CornerRadius}" />
-
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -96,7 +95,6 @@
                                     <ContentPresenter.RenderTransform>
                                         <TranslateTransform x:Name="BackgroundShapeTranslate" />
                                     </ContentPresenter.RenderTransform>
-
                                 </ContentPresenter>
                             </Grid>
                         </Button>

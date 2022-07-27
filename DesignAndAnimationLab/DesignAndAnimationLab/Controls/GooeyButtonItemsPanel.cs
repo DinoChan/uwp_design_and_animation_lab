@@ -1,9 +1,5 @@
-﻿using Microsoft.Graphics.Canvas.UI.Xaml;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,7 +15,6 @@ namespace DesignAndAnimationLab
 
         private List<Storyboard> openStoryboards = new List<Storyboard>();
         private List<Storyboard> closeStoryboards = new List<Storyboard>();
-
 
         #region Override Methods
 
@@ -175,7 +170,6 @@ namespace DesignAndAnimationLab
                     sb2.Completed += OnStoryboardCompleted;
                 }
 
-
                 openStoryboards.Add(sb1);
                 closeStoryboards.Add(sb2);
             }
@@ -192,7 +186,6 @@ namespace DesignAndAnimationLab
             dax.Duration = TimeSpan.FromSeconds(duration);
             dax.EasingFunction = easing;
             sb.Children.Add(dax);
-
 
             var day = new DoubleAnimation();
             Storyboard.SetTarget(day, translate);
@@ -211,7 +204,6 @@ namespace DesignAndAnimationLab
             wdax.EnableDependentAnimation = true;
             sb.Children.Add(wdax);
 
-
             var wday = new DoubleAnimation();
             Storyboard.SetTarget(wday, element);
             Storyboard.SetTargetProperty(wday, "Win2DTranslateY");
@@ -229,6 +221,7 @@ namespace DesignAndAnimationLab
         #region Events
 
         public event EventHandler ItemsAnimationStarted;
+
         public event EventHandler ItemsAnimationCompleted;
 
         #endregion Events
@@ -263,6 +256,7 @@ namespace DesignAndAnimationLab
         // Using a DependencyProperty as the backing store for Expanded.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ExpandedProperty =
             DependencyProperty.Register("Expanded", typeof(bool), typeof(GooeyButtonItemsPanel), new PropertyMetadata(false, OnExpandedChanged));
+
         public double Distance
         {
             get { return (double)GetValue(DistanceProperty); }
@@ -273,7 +267,6 @@ namespace DesignAndAnimationLab
         public static readonly DependencyProperty DistanceProperty =
             DependencyProperty.Register("Distance", typeof(double), typeof(GooeyButtonItemsPanel), new PropertyMetadata(0d, OnDistanceChanged));
 
-
         public GooeyButtonItemsPosition ItemsPosition
         {
             get { return (GooeyButtonItemsPosition)GetValue(ItemsPositionProperty); }
@@ -283,7 +276,6 @@ namespace DesignAndAnimationLab
         // Using a DependencyProperty as the backing store for ItemsPosition.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ItemsPositionProperty =
             DependencyProperty.Register("ItemsPosition", typeof(GooeyButtonItemsPosition), typeof(GooeyButton), new PropertyMetadata(GooeyButtonItemsPosition.LeftTop, OnItemsPositionChanged));
-
 
         private static void OnDistanceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -307,11 +299,9 @@ namespace DesignAndAnimationLab
                 if (e.NewValue != e.OldValue)
                 {
                     sender.StartAnimation();
-
                 }
             }
         }
-
 
         private static void OnItemsPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -329,6 +319,5 @@ namespace DesignAndAnimationLab
         }
 
         #endregion Dependency Properties
-
     }
 }

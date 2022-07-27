@@ -3,9 +3,7 @@
                     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
                     xmlns:bubblebutton="using:DesignAndAnimationLab.Demos.BubbleButton"
                     xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
-                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                     xmlns:local="using:DesignAndAnimationLab">
-
 
     <SolidColorBrush x:Key="NormalTextColor" Color="#2E2F33" />
     <SolidColorBrush x:Key="PrimaryColor" Color="#FFED5B8C" />
@@ -24,7 +22,6 @@
             </control:DropShadowPanel>
         </Grid>
     </ControlTemplate>
-
 
     <Style TargetType="local:ProgressButton">
         <Setter Property="Background" Value="{StaticResource TransparentBackground}" />
@@ -118,7 +115,6 @@
                                                    Minimum="{TemplateBinding Minimum}"
                                                    Outline="Transparent"
                                                    Value="{TemplateBinding Value}" />
-
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

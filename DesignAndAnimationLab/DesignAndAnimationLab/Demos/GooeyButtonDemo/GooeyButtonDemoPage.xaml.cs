@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -34,8 +22,8 @@ namespace DesignAndAnimationLab.Demos.GooeyButtonDemo
             };
         }
 
-        ObservableCollection<Symbol> strings { get; set; }
-        Random rnd = new Random();
+        private ObservableCollection<Symbol> strings { get; set; }
+        private Random rnd = new Random();
 
         private void gooeyButton_Invoked(object sender, GooeyButton.GooeyButtonInvokedEventArgs args)
         {

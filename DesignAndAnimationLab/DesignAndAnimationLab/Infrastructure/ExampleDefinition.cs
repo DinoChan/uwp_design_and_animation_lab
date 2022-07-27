@@ -1,15 +1,11 @@
-﻿using DesignAndAnimationLab.Demos.GlitchArtDemo;
+﻿using System;
 using DesignAndAnimationLab.Demos;
-using DesignAndAnimationLab.Demos.GooeyButtonDemo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DesignAndAnimationLab.Demos.BubbleButton;
-using DesignAndAnimationLab.Demos.LikeButtons;
 using DesignAndAnimationLab.Demos.GalaxyShuttles;
+using DesignAndAnimationLab.Demos.GlitchArtDemo;
 using DesignAndAnimationLab.Demos.Gooey;
+using DesignAndAnimationLab.Demos.GooeyButtonDemo;
+using DesignAndAnimationLab.Demos.LikeButtons;
 
 namespace DesignAndAnimationLab
 {
@@ -52,10 +48,10 @@ namespace DesignAndAnimationLab
         }
     }
 
-
     public class ExampleDefinitions
     {
         public static ExampleDefinition[] Definitions { get; } = {
+             new ExampleDefinition("Gooey Ellipse", typeof(GooeyEllipseDemoPage)),
           new ExampleDefinition("Three Actions With One Click", typeof(ThreeActionsWithOneClick)),
           new ExampleDefinition("Popup UserControl", typeof(PopupUserControlDemo)),
           new ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
@@ -70,7 +66,7 @@ namespace DesignAndAnimationLab
           new ExampleDefinition("Acrylic and Blur", typeof(AcrylicAndBlurDemo)),
             new ExampleDefinition("Control Center", typeof(ControlCenterDemo)),
                new ExampleDefinition("Galaxy Shuttle", typeof(GalaxyShuttleDemo)),
-                 new ExampleDefinition("Gooey Ellipse", typeof(GooeyEllipseDemoPage)),
+
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),
             //new ExampleDefinition("Mandelbrot", typeof(Mandelbrot)),

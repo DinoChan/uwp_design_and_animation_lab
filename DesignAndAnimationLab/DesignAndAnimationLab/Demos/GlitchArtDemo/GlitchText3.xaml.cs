@@ -1,27 +1,16 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Toolkit.Uwp.UI.Animations;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
@@ -31,6 +20,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
     {
         private Compositor Compositor => Window.Current.Compositor;
         public string Text { get; }
+
         public GlitchText3()
         {
             this.InitializeComponent();
@@ -47,7 +37,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             var containerVisual = Compositor.CreateContainerVisual();
             var foregroundVisual = Compositor.CreateSpriteVisual();
 
-            foregroundVisual.Brush =  CreateBrush(blueBrush, redBrush, BlendEffectMode.Multiply);
+            foregroundVisual.Brush = CreateBrush(blueBrush, redBrush, BlendEffectMode.Multiply);
             foregroundVisual.Size = new Vector2(800, 110);
             containerVisual.Children.InsertAtBottom(foregroundVisual);
 
@@ -84,8 +74,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             };
         }
 
-
-
         public TextToBrushWrapper CreateTextToBrushWrapper(double shadowOffsetX, Color shadowColor)
         {
             var result = new TextToBrushWrapper
@@ -105,8 +93,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             result.Brush.VerticalAlignmentRatio = 0;
             return result;
         }
-
-
 
         private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
         {

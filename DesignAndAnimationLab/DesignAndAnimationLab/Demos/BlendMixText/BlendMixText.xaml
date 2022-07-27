@@ -11,6 +11,5 @@
 
     <Grid Background="Black">
         <controls:WrapPanel x:Name="Root" />
-
     </Grid>
 </UserControl>

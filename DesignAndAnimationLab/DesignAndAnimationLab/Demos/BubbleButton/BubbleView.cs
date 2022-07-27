@@ -1,11 +1,8 @@
-﻿using DesignAndAnimationLab.Common;
+﻿using System;
+using System.Collections.Generic;
+using DesignAndAnimationLab.Common;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Composition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -28,19 +25,19 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             this.Unloaded += BubbleView_Unloaded;
         }
 
-        Rectangle BubbleHost;
-        Color ForegroundColor;
+        private Rectangle BubbleHost;
+        private Color ForegroundColor;
 
-        Compositor _Compositor;
-        Visual _HostVisual;
-        ContainerVisual _BubblesVisual;
+        private Compositor _Compositor;
+        private Visual _HostVisual;
+        private ContainerVisual _BubblesVisual;
 
-        CanvasDevice _canvasDevice;
-        CompositionGraphicsDevice _graphicsDevice;
+        private CanvasDevice _canvasDevice;
+        private CompositionGraphicsDevice _graphicsDevice;
 
-        List<Bubble> Bubbles;
+        private List<Bubble> Bubbles;
 
-        long ForegroundPropertyChangedToken;
+        private long ForegroundPropertyChangedToken;
 
         protected override void OnApplyTemplate()
         {
@@ -219,6 +216,5 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
                     }
                 }
             }));
-
     }
 }

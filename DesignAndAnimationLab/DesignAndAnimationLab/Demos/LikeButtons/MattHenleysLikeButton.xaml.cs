@@ -26,7 +26,6 @@ namespace DesignAndAnimationLab.Demos.LikeButtons
             _heartTransform = (sender as Image).RenderTransform as CompositeTransform;
             _checkStoryboard = new Storyboard();
 
-
             var keyFrames = new DoubleAnimationUsingKeyFrames();
             Storyboard.SetTarget(keyFrames, _heartTransform);
             Storyboard.SetTargetProperty(keyFrames, nameof(CompositeTransform.TranslateX));

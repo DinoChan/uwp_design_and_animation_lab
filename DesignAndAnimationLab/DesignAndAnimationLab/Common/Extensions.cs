@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Composition;
 
 namespace DesignAndAnimationLab.Common
@@ -33,15 +29,18 @@ namespace DesignAndAnimationLab.Common
                 case "rotationAxis":
                     animation = source.Compositor.CreateVector3KeyFrameAnimation();
                     break;
+
                 case "size":
                     animation = source.Compositor.CreateVector2KeyFrameAnimation();
                     break;
+
                 case "opacity":
                 case "blueRadius":
                 case "rotationAngle":
                 case "rotationAngleInDegrees":
                     animation = source.Compositor.CreateScalarKeyFrameAnimation();
                     break;
+
                 case "color":
                     animation = source.Compositor.CreateColorKeyFrameAnimation();
                     break;

@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Input;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
-using System.Diagnostics;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace DesignAndAnimationLab
 {
@@ -18,7 +11,6 @@ namespace DesignAndAnimationLab
     [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = InProgressStateName)]
     [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = CompletedStateName)]
     [TemplateVisualState(GroupName = ProgressStatesGroupName, Name = FaultedStateName)]
-
     [TemplateVisualState(Name = StateNormal, GroupName = GroupCommon)]
     [TemplateVisualState(Name = StatePointerOver, GroupName = GroupCommon)]
     [TemplateVisualState(Name = StatePressed, GroupName = GroupCommon)]
@@ -28,8 +20,6 @@ namespace DesignAndAnimationLab
     {
         private bool _isPointerCaptured;
         private GestureRecognizer _gestureRecognizer = new GestureRecognizer();
-       
-      
 
         public ProgressButton()
         {
@@ -38,11 +28,12 @@ namespace DesignAndAnimationLab
             _gestureRecognizer.Holding += OnGestureRecognizerHolding;
             _gestureRecognizer.Tapped += OnGestureRecognizerTapped;
             IsEnabledChanged += OnIsEnabledChanged;
-        
         }
 
         public event EventHandler StateChanged;
+
         public event EventHandler<HoldingEventArgs> GestureRecognizerHolding;
+
         public event EventHandler<TappedEventArgs> GestureRecognizerTapped;
 
         protected override void OnApplyTemplate()
@@ -151,20 +142,23 @@ namespace DesignAndAnimationLab
                 case ProgressState.Idle:
                     VisualStateManager.GoToState(this, IdleStateName, useTransitions);
                     break;
+
                 case ProgressState.InProgress:
                     VisualStateManager.GoToState(this, InProgressStateName, useTransitions);
                     break;
+
                 case ProgressState.Completed:
                     VisualStateManager.GoToState(this, CompletedStateName, useTransitions);
                     break;
+
                 case ProgressState.Faulted:
                     VisualStateManager.GoToState(this, FaultedStateName, useTransitions);
                     break;
+
                 default:
                     VisualStateManager.GoToState(this, IdleStateName, useTransitions);
                     break;
             }
-
 
             if (IsEnabled == false)
                 VisualStateManager.GoToState(this, StateDisabled, useTransitions);
@@ -188,11 +182,9 @@ namespace DesignAndAnimationLab
             UpdateVisualStates();
         }
 
-
         private void OnGestureRecognizerTapped(GestureRecognizer sender, TappedEventArgs args)
         {
             GestureRecognizerTapped?.Invoke(this, args);
-           
         }
 
         private void OnGestureRecognizerHolding(GestureRecognizer sender, HoldingEventArgs args)

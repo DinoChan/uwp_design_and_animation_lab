@@ -248,6 +248,5 @@
                         Style="{StaticResource PrimaryCircleButtonStyle}" />
             </Grid>
         </controls:DropShadowPanel>
-
     </Grid>
 </UserControl>

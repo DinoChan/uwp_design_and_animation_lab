@@ -1,12 +1,8 @@
-﻿using DesignAndAnimationLab.Common;
+﻿using System;
+using System.Numerics;
+using DesignAndAnimationLab.Common;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Composition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Composition;
@@ -62,7 +58,7 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             Dispose(false);
         }
 
-        private readonly static Random rnd = new Random();
+        private static readonly Random rnd = new Random();
 
         private static CompositionEasingFunction easing;
 
@@ -75,7 +71,6 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
         private Vector3 Offset;
         private CompositionDrawingSurface _surface;
         private CompositionSurfaceBrush _brush;
-
 
         private void Draw(bool IsFill, Color color)
         {

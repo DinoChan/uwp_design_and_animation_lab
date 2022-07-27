@@ -1,14 +1,12 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
+﻿using System;
+using System.ComponentModel;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Media;
-
 using Microsoft.Toolkit.Uwp.UI.Media.Pipelines;
-using System.ComponentModel;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI;
-using Windows.UI.Xaml.Navigation;
-using System;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -21,6 +19,7 @@ namespace DesignAndAnimationLab.Demos
     {
         private Brush _customPipelineBrush;
         private Brush _customPipelineBrushDark;
+
         public AcrylicAndBlurDemo()
         {
             this.InitializeComponent();
@@ -59,7 +58,6 @@ namespace DesignAndAnimationLab.Demos
 
         public double BlurAmount { get; set; }
 
-
         public Color ShadeColor { get; set; }
 
         public double ShadeIntensity { get; set; }
@@ -85,8 +83,6 @@ namespace DesignAndAnimationLab.Demos
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CustomPipelineBrushDark)));
             }
         }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -120,7 +116,7 @@ namespace DesignAndAnimationLab.Demos
             if (HasLuminanceToAlpha)
                 builder = builder.LuminanceToAlpha();
 
-            var opacity = Math.Min(1, EffectOpacity+0.3);
+            var opacity = Math.Min(1, EffectOpacity + 0.3);
             if (HasOpacity)
                 builder = builder.Opacity((float)opacity);
 

@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -88,7 +80,6 @@ namespace DesignAndAnimationLab
             OnGooeyButtonItemPropertyChanged();
         }
 
-
         private void OnBrushColorChanged(DependencyObject sender, DependencyProperty dp)
         {
             OnGooeyButtonItemPropertyChanged();
@@ -101,7 +92,6 @@ namespace DesignAndAnimationLab
 
         #endregion Update Property
 
-
         #endregion Event Methods
 
         #region Event
@@ -113,7 +103,6 @@ namespace DesignAndAnimationLab
             UpdateItemPropertyCore();
             GooeyButtonItemPropertyChanged?.Invoke(this, new GooeyButtonItemPropertyChangedEventArgs(ItemProperty));
         }
-
 
         #endregion Event
 
@@ -203,6 +192,5 @@ namespace DesignAndAnimationLab
         }
 
         #endregion Nested Class
-
     }
 }

@@ -1,25 +1,19 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Shapes;
-
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -36,34 +30,34 @@ namespace DesignAndAnimationLab
             this.SizeChanged += OnSizeChanged;
             RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundChanged);
             RegisterPropertyChangedCallback(OpacityProperty, OnOpacityChanged);
-
         }
 
-        Grid LayoutRoot;
-        Button InnerButton;
-        Canvas Win2DHost;
-        Shape BackgroundShape;
-        TranslateTransform BackgroundShapeTranslate;
-        GooeyButtonItemsPanel panel;
-        CanvasAnimatedControl Win2DCanvas;
-        bool unloaded = false;
-        bool isAnimating = false;
-        long brushColorToken = -1;
-        long brushOpacityToken = -1;
-        IReadOnlyList<GooeyButtonItem.GooeyButtonItemProperty> gooeyButtonItemsProperty;
-        GooeyButtonProperty property = new GooeyButtonProperty();
+        private Grid LayoutRoot;
+        private Button InnerButton;
+        private Canvas Win2DHost;
+        private Shape BackgroundShape;
+        private TranslateTransform BackgroundShapeTranslate;
+        private GooeyButtonItemsPanel panel;
+        private CanvasAnimatedControl Win2DCanvas;
+        private bool unloaded = false;
+        private bool isAnimating = false;
+        private long brushColorToken = -1;
+        private long brushOpacityToken = -1;
+        private IReadOnlyList<GooeyButtonItem.GooeyButtonItemProperty> gooeyButtonItemsProperty;
+        private GooeyButtonProperty property = new GooeyButtonProperty();
         private Brush background;
         private double mainButtonAnimationDuration = 0.6d;
 
-        GaussianBlurEffect effect;
-        ICanvasImage image;
+        private GaussianBlurEffect effect;
+        private ICanvasImage image;
 
-        Storyboard mainButtonOpenStoryboard;
-        Storyboard mainButtonCloseStoryboard;
+        private Storyboard mainButtonOpenStoryboard;
+        private Storyboard mainButtonCloseStoryboard;
 
         #region Create Or Update Resources
 
         #region Storyboards
+
         private void UpdateStoryboards()
         {
             UpdateOpenStoryboard();
@@ -354,9 +348,7 @@ namespace DesignAndAnimationLab
                     M54 = -7,
                 },
                 Source = effect1
-
             };
-
 
             image = effect2;
         }
@@ -395,11 +387,9 @@ namespace DesignAndAnimationLab
                 else
                 {
                     args.DrawingSession.DrawImage(source);
-
                 }
             }
         }
-
 
         #endregion Win2D
 
@@ -475,7 +465,6 @@ namespace DesignAndAnimationLab
             }
         }
 
-
         #region Update Property
 
         private void OnOpacityChanged(DependencyObject sender, DependencyProperty dp)
@@ -528,6 +517,7 @@ namespace DesignAndAnimationLab
         #region Events
 
         public event GooeyButtonInvokedEventHandler Invoked;
+
         public event GooeyButtonItemInvokedEventHandler ItemInvoked;
 
         private bool OnInvoked()
@@ -625,7 +615,6 @@ namespace DesignAndAnimationLab
                 }
             }));
 
-
         public double Distance
         {
             get { return (double)GetValue(DistanceProperty); }
@@ -691,7 +680,6 @@ namespace DesignAndAnimationLab
                 }
             }));
 
-
         #endregion Dependency Properties
 
         #region Nested Class
@@ -710,6 +698,7 @@ namespace DesignAndAnimationLab
         }
 
         public delegate void GooeyButtonInvokedEventHandler(object sender, GooeyButtonInvokedEventArgs args);
+
         public delegate void GooeyButtonItemInvokedEventHandler(object sender, GooeyButtonItemInvokedEventArgs args);
 
         public class GooeyButtonInvokedEventArgs : EventArgs
@@ -728,7 +717,6 @@ namespace DesignAndAnimationLab
         }
 
         #endregion Nested Class
-
     }
 
     public enum GooeyButtonItemsPosition

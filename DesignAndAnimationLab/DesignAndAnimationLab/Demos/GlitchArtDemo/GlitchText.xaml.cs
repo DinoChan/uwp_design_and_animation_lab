@@ -1,23 +1,11 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
@@ -35,8 +23,8 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             {
                 Text = "TextAnimation",
                 FontSize = 90,
-                Width=800,
-                Height=110,
+                Width = 800,
+                Height = 110,
                 FontColor = Colors.Red
             };
 
@@ -56,7 +44,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             var containerVisual = Compositor.CreateContainerVisual();
             containerVisual.Children.InsertAtBottom(imageVisual);
 
-
             var lineVisual = Compositor.CreateSpriteVisual();
             lineVisual.Brush = Compositor.CreateColorBrush(Colors.Black);
             lineVisual.Size = new Vector2(800, 2);
@@ -71,7 +58,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
               };
         }
 
-      
         private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
         {
             var compositor = Window.Current.Compositor;

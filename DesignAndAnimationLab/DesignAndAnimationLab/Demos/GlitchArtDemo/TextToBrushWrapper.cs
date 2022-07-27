@@ -1,14 +1,9 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using System.Numerics;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Composition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Graphics.DirectX;
 using Windows.UI;
 using Windows.UI.Composition;
@@ -61,7 +56,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             }));
         }
 
-
         /// <summary>
         /// 获取或设置OutlineColor的值
         /// </summary>
@@ -97,8 +91,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
         {
             DrawSurface();
         }
-
-
 
         /// <summary>
         /// 获取或设置FontColor的值
@@ -136,7 +128,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             DrawSurface();
         }
 
-
         /// <summary>
         /// 获取或设置Text的值
         /// </summary>
@@ -172,8 +163,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
         {
             DrawSurface();
         }
-
-
 
         /// <summary>
         /// 获取或设置StrokeStyle的值
@@ -211,8 +200,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             DrawSurface();
         }
 
-
-
         /// <summary>
         /// 获取或设置ShowNonOutlineText的值
         /// </summary>
@@ -248,7 +235,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
         {
             DrawSurface();
         }
-
 
         /// <summary>
         /// 获取或设置StrokeWidth的值
@@ -305,7 +291,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
                 if (Background is SolidColorBrush solidColorBrush)
                     session.FillRectangle(new Windows.Foundation.Rect(0, 0, width, height), solidColorBrush.Color);
 
-
                 using (var textFormat = new CanvasTextFormat()
                 {
                     FontSize = (float)FontSize,
@@ -345,7 +330,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
                 }
             }
         }
-
 
         protected void DrawText(CanvasDrawingSession session, CanvasTextLayout textLayout, Color color)
         {
@@ -398,7 +382,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             DrawSurface();
         }
 
-
         /// <summary>
         /// 获取或设置ShadowOffsetX的值
         /// </summary>
@@ -435,7 +418,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             DrawSurface();
         }
 
-
         /// <summary>
         /// 获取或设置ShadowOffsetY的值
         /// </summary>
@@ -471,7 +453,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
         {
             DrawSurface();
         }
-
 
         /// <summary>
         /// 获取或设置ShadowColor的值

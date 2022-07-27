@@ -1,10 +1,5 @@
-﻿using DesignAndAnimationLab.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
+using DesignAndAnimationLab.Common;
 using Windows.ApplicationModel;
 using Windows.UI;
 using Windows.UI.Composition;
@@ -26,12 +21,11 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             this.SizeChanged += SimpleShadowPanel_SizeChanged;
         }
 
-        Rectangle ShadowHost;
-        Visual HostVisual;
-        Compositor _Compositor;
-        SpriteVisual _ShadowVisual;
-        DropShadow _Shadow;
-
+        private Rectangle ShadowHost;
+        private Visual HostVisual;
+        private Compositor _Compositor;
+        private SpriteVisual _ShadowVisual;
+        private DropShadow _Shadow;
 
         protected override void OnApplyTemplate()
         {
@@ -82,7 +76,6 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             }
         }
 
-
         private void SimpleShadowPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateShadow();
@@ -97,6 +90,5 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
         {
             UpdateShadow();
         }
-
     }
 }

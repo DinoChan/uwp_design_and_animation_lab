@@ -34,7 +34,6 @@
                            Text="{Binding Name}" />
             </StackPanel>
         </DataTemplate>
-
     </Page.Resources>
 
     <ScrollViewer x:Name="scrollViewer"
