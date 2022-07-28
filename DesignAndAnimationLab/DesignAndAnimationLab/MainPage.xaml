@@ -71,10 +71,12 @@
                 </GridView.DataContext>
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" />
+                        <ItemsWrapGrid Orientation="Horizontal" ItemHeight="250"/>
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>
+
+           
         </Grid>
     </ScrollViewer>
 </Page>

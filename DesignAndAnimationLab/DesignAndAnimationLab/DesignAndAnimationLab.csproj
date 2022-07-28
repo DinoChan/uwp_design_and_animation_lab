@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\DoubleProgresser.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\VisualExtensions.cs" />
     <Compile Include="Controls\GooeyButton.cs" />
