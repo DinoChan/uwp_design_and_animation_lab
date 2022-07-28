@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace DesignAndAnimationLab.Common
+namespace DesignAndAnimationLab.AnimationTimelines
 {
-    public class DoubleProgresser
+    public class TimelineProgresser
     {
-        public DoubleProgresser(double seconds, bool autoReverse)
+        public TimelineProgresser(double seconds, bool autoReverse)
         {
             Duration = new Duration(TimeSpan.FromSeconds(seconds));
             AutoReverse = autoReverse;

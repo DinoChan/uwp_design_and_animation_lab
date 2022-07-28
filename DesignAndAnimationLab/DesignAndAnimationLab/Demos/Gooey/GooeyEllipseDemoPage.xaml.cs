@@ -1,51 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using DesignAndAnimationLab.Common;
+﻿using System.Numerics;
+using DesignAndAnimationLab.AnimationTimelines;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
 namespace DesignAndAnimationLab.Demos.Gooey
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    /// https://codepen.io/Chokcoco/pen/QqWBqV
     /// </summary>
     public sealed partial class GooeyEllipseDemoPage : Page
     {
         private GaussianBlurEffect _effect;
         private ICanvasImage _image;
-        private Vector2 _canvasActualSize;
-        private DoubleProgresser _leftProgresser;
-        private DoubleProgresser _rightProgresser;
+        private Vector2 _centerPoint;
+
+        private Vector2Timeline _leftTimeline;
+        private Vector2Timeline _rightTimeline;
+
+        private ICanvasBrush _leftBrush;
+        private ICanvasBrush _rightBrush;
 
         public GooeyEllipseDemoPage()
         {
-            this.InitializeComponent();
-
-            _leftProgresser = new DoubleProgresser(2, true);
-            _rightProgresser = new DoubleProgresser(2, true);
+            InitializeComponent();
+            var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
+            _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2, true, easingFunction);
+            _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2, true, easingFunction);
         }
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-
+            _leftBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black); // new CanvasSolidColorBrush(sender, Windows.UI.Colors.IndianRed);
+            _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue); // new CanvasSolidColorBrush(sender, Windows.UI.Colors.PaleVioletRed);
             var effect1 = new GaussianBlurEffect()
             {
                 BlurAmount = 20f,
@@ -87,12 +78,11 @@ namespace DesignAndAnimationLab.Demos.Gooey
         private void OnDraw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
         {
             var source = new CanvasCommandList(sender);
+            var totalTime = args.Timing.TotalTime;
             using (var ds = source.CreateDrawingSession())
             {
-                ds.FillCircle(_canvasActualSize / 2 + new Vector2(System.Convert.ToSingle(-200 * _leftProgresser.GetCurrentProgress(args.Timing.TotalTime)), 0), 100, new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black));
-                ds.FillCircle(_canvasActualSize / 2 + new Vector2(System.Convert.ToSingle(200 * _rightProgresser.GetCurrentProgress(args.Timing.TotalTime)), 0), 60, new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue));
-
-
+                ds.FillCircle(_centerPoint + _leftTimeline.GetCurrentValue(totalTime), 100, _leftBrush);
+                ds.FillCircle(_centerPoint + _rightTimeline.GetCurrentValue(totalTime), 60, _rightBrush);
             }
 
             _effect.Source = source;
@@ -101,7 +91,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
 
         private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            _canvasActualSize = Canvas.ActualSize;
+            _centerPoint = Canvas.ActualSize / 2;
         }
     }
 }

@@ -116,10 +116,26 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimationTimelines\BackEase.cs" />
+    <Compile Include="AnimationTimelines\BounceEase.cs" />
+    <Compile Include="AnimationTimelines\CircleEase.cs" />
+    <Compile Include="AnimationTimelines\CubicEase.cs" />
+    <Compile Include="AnimationTimelines\DoubleTimeline.cs" />
+    <Compile Include="AnimationTimelines\EasingFunctionBase.cs" />
+    <Compile Include="AnimationTimelines\EasingMode.cs" />
+    <Compile Include="AnimationTimelines\ElasticEase.cs" />
+    <Compile Include="AnimationTimelines\ExponentialEase.cs" />
+    <Compile Include="AnimationTimelines\PowerEase.cs" />
+    <Compile Include="AnimationTimelines\QuadraticEase.cs" />
+    <Compile Include="AnimationTimelines\QuarticEase.cs" />
+    <Compile Include="AnimationTimelines\QuinticEase.cs" />
+    <Compile Include="AnimationTimelines\SineEase.cs" />
+    <Compile Include="AnimationTimelines\Vector2Timeline.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\DoubleProgresser.cs" />
+    <Compile Include="AnimationTimelines\TimelineProgresser.cs" />
+    <Compile Include="Common\DoubleUtil.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\VisualExtensions.cs" />
     <Compile Include="Controls\GooeyButton.cs" />
