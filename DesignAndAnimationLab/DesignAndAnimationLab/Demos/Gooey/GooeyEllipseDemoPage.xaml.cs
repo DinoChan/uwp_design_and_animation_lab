@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
+
 using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -39,19 +39,13 @@ namespace DesignAndAnimationLab.Demos.Gooey
         {
             this.InitializeComponent();
 
-            var visual = ElementCompositionPreview.GetElementVisual(this);
-            var compositor = visual.Compositor;
-            var containerVisual = compositor.CreateContainerVisual();
-
-            ElementCompositionPreview.SetElementChildVisual(Root, containerVisual);
-
-            _leftProgresser = new DoubleProgresser(4, true) { EasingFunction = new CircleEase { EasingMode = EasingMode.EaseOut } };
-            _rightProgresser = new DoubleProgresser(4, true) { EasingFunction = new CircleEase { EasingMode = EasingMode.EaseOut } };
-
+            _leftProgresser = new DoubleProgresser(2, true);
+            _rightProgresser = new DoubleProgresser(2, true);
         }
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
+
             var effect1 = new GaussianBlurEffect()
             {
                 BlurAmount = 20f,
@@ -92,14 +86,13 @@ namespace DesignAndAnimationLab.Demos.Gooey
 
         private void OnDraw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
         {
-            Windows.UI.Xaml.Media.Animation.clo
             var source = new CanvasCommandList(sender);
             using (var ds = source.CreateDrawingSession())
             {
-                ds.FillCircle(_canvasActualSize / 2, 100, new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black));
-                ds.FillCircle(_canvasActualSize / 2 + new Vector2(100, 0), 60, new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue));
-              
-              
+                ds.FillCircle(_canvasActualSize / 2 + new Vector2(System.Convert.ToSingle(-200 * _leftProgresser.GetCurrentProgress(args.Timing.TotalTime)), 0), 100, new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black));
+                ds.FillCircle(_canvasActualSize / 2 + new Vector2(System.Convert.ToSingle(200 * _rightProgresser.GetCurrentProgress(args.Timing.TotalTime)), 0), 60, new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue));
+
+
             }
 
             _effect.Source = source;

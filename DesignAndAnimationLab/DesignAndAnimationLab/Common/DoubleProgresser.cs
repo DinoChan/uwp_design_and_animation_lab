@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +25,14 @@ namespace DesignAndAnimationLab.Common
 
         public double GetCurrentProgress(TimeSpan timeSpan)
         {
+            var durationTicks = Duration.TimeSpan.Ticks;
             var scalingFactor = AutoReverse ? 2d : 1d;
-            var offsetFromBegin = timeSpan.Ticks % (Duration.TimeSpan.Ticks * scalingFactor) % Duration.TimeSpan.Ticks;
-            double progress = offsetFromBegin / Duration.TimeSpan.Ticks;
+            var offsetFromBegin = timeSpan.Ticks % (durationTicks * scalingFactor);
+            
+            if (offsetFromBegin > durationTicks)
+                offsetFromBegin = durationTicks * 2 - offsetFromBegin;
+           
+            double progress = offsetFromBegin / durationTicks;
 
             if (EasingFunction != null)
                 progress = EasingFunction.Ease(progress);
