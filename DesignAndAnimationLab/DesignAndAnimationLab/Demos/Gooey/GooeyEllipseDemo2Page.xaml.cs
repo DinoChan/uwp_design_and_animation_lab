@@ -13,7 +13,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
     /// <summary>
     /// https://codepen.io/Chokcoco/pen/QqWBqV
     /// </summary>
-    public sealed partial class GooeyEllipseDemoPage : Page
+    public sealed partial class GooeyEllipseDemo2Page : Page
     {
         private GaussianBlurEffect _effect;
         private ICanvasImage _image;
@@ -25,7 +25,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
         private ICanvasBrush _leftBrush;
         private ICanvasBrush _rightBrush;
 
-        public GooeyEllipseDemoPage()
+        public GooeyEllipseDemo2Page()
         {
             InitializeComponent();
             var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
@@ -35,8 +35,8 @@ namespace DesignAndAnimationLab.Demos.Gooey
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-            _leftBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black); 
-            _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue); 
+            _leftBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.IndianRed);
+            _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.PaleVioletRed);
             var effect1 = new GaussianBlurEffect()
             {
                 BlurAmount = 20f,

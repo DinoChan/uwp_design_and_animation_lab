@@ -186,6 +186,9 @@
     <Compile Include="Demos\GooeyButtonDemo\GooeyButtonDemoPage.xaml.cs">
       <DependentUpon>GooeyButtonDemoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\Gooey\GooeyEllipseDemo2Page.xaml.cs">
+      <DependentUpon>GooeyEllipseDemo2Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\Gooey\GooeyEllipseDemoPage.xaml.cs">
       <DependentUpon>GooeyEllipseDemoPage.xaml</DependentUpon>
     </Compile>
@@ -329,6 +332,10 @@
     <Page Include="Demos\GooeyButtonDemo\GooeyButtonDemoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\Gooey\GooeyEllipseDemo2Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Demos\Gooey\GooeyEllipseDemoPage.xaml">
       <SubType>Designer</SubType>
