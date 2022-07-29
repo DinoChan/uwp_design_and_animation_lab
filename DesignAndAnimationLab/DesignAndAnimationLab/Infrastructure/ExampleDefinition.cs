@@ -53,6 +53,8 @@ namespace DesignAndAnimationLab
         public static ExampleDefinition[] Definitions { get; } = {
              new ExampleDefinition("Gooey Ellipse", typeof(GooeyEllipseDemoPage),new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
                new ExampleDefinition("Gooey Ellipse 2", typeof(GooeyEllipseDemo2Page),new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
+                   new ExampleDefinition("Gooey Footer", typeof(GooeyFooter),new Uri("https://www.cnblogs.com/coco1s/p/16445448.html")),
+               
           new ExampleDefinition("Three Actions With One Click", typeof(ThreeActionsWithOneClick)),
           new ExampleDefinition("Popup UserControl", typeof(PopupUserControlDemo)),
           new ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
