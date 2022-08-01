@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace DesignAndAnimationLab.AnimationTimelines
 {
@@ -10,18 +11,18 @@ namespace DesignAndAnimationLab.AnimationTimelines
     {
         private TimelineProgresser _progresser;
 
-        public DoubleTimeline(double from = 0, double to = 1, double seconds = 1, bool autoReverse = true, EasingFunctionBase easingFunction = null)
+        public DoubleTimeline(double from = 0, double to = 1, double seconds = 1, TimeSpan? beginTime = null, bool autoReverse = true, EasingFunctionBase easingFunction = null)
         {
-            _progresser = new TimelineProgresser(seconds, autoReverse) { EasingFunction = easingFunction };
+            _progresser = new TimelineProgresser(seconds, autoReverse) { EasingFunction = easingFunction, BeginTime = beginTime };
             From = from;
             To = to;
-            Seconds = seconds;
+            Duration = new Duration(TimeSpan.FromSeconds(seconds));
             AutoReverse = autoReverse;
         }
 
         public double From { get; }
         public double To { get; }
-        public double Seconds { get; }
+        public Duration Duration { get; }
         public bool AutoReverse { get; }
 
         public double GetCurrentProgress(TimeSpan timeSpan)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace DesignAndAnimationLab.AnimationTimelines
 {
@@ -11,18 +12,19 @@ namespace DesignAndAnimationLab.AnimationTimelines
     {
         private TimelineProgresser _progresser;
 
-        public Vector2Timeline(Vector2 from, Vector2 to, double seconds = 1, bool autoReverse = true, EasingFunctionBase easingFunction = null)
+        public Vector2Timeline(Vector2 from, Vector2 to, double seconds = 1, TimeSpan? beginTime = null, bool autoReverse = true, EasingFunctionBase easingFunction = null)
         {
-            _progresser = new TimelineProgresser(seconds, autoReverse) { EasingFunction = easingFunction };
+            _progresser = new TimelineProgresser(seconds, autoReverse) { EasingFunction = easingFunction, BeginTime = beginTime };
             From = from;
             To = to;
-            Seconds = seconds;
+            Duration = new Duration(TimeSpan.FromSeconds(seconds));
             AutoReverse = autoReverse;
         }
 
+
         public Vector2 From { get; }
         public Vector2 To { get; }
-        public double Seconds { get; }
+        public Duration Duration { get; }
         public bool AutoReverse { get; }
 
         public Vector2 GetCurrentValue(TimeSpan timeSpan)
