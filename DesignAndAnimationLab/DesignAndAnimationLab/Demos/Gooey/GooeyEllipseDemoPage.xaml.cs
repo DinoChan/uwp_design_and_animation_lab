@@ -29,8 +29,8 @@ namespace DesignAndAnimationLab.Demos.Gooey
         {
             InitializeComponent();
             var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
-            _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2,null, true, easingFunction);
-            _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2,null, true, easingFunction);
+            _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2,null, true, true, easingFunction);
+            _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2,null, true, true, easingFunction);
         }
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)

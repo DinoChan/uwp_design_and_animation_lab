@@ -195,6 +195,9 @@
     <Compile Include="Demos\Gooey\GooeyFooter.xaml.cs">
       <DependentUpon>GooeyFooter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Demos\Gooey\TextMorph.xaml.cs">
+      <DependentUpon>TextMorph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\LikeButtons\LikeButtonsDemo.xaml.cs">
       <DependentUpon>LikeButtonsDemo.xaml</DependentUpon>
     </Compile>
@@ -345,6 +348,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Demos\Gooey\GooeyFooter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\Gooey\TextMorph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
