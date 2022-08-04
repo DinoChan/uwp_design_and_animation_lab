@@ -12,6 +12,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
 {
     /// <summary>
     /// https://codepen.io/Chokcoco/pen/QqWBqV
+    /// https://codepen.io/Fieve/pen/bogzQW
     /// </summary>
     public sealed partial class GooeyEllipseDemo2Page : Page
     {
