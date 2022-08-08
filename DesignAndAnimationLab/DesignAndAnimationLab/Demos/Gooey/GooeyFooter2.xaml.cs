@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
 namespace DesignAndAnimationLab.Demos.Gooey
@@ -14,7 +15,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class GooeyFooter : Page
+    public sealed partial class GooeyFooter2 : Page
     {
         private GaussianBlurEffect _effect;
         private ICanvasImage _image;
@@ -27,7 +28,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
         private ICanvasBrush _rightBrush;
         private List<GooeyBubble> _bubbles;
 
-        public GooeyFooter()
+        public GooeyFooter2()
         {
             InitializeComponent();
             var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
@@ -50,7 +51,8 @@ namespace DesignAndAnimationLab.Demos.Gooey
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-            _brush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black);
+            _brush = new CanvasSolidColorBrush(sender, Windows.UI.Color.FromArgb(114, 255, 85, 101));
+            //_brush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black);
             _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue);
             var effect1 = new GaussianBlurEffect()
             {
@@ -78,42 +80,15 @@ namespace DesignAndAnimationLab.Demos.Gooey
                     M41 = 0,
                     M42 = 0,
                     M43 = 0,
-                    M44 = 18,
+                    M44 = 255,
                     M51 = 0,
                     M52 = 0,
                     M53 = 0,
-                    M54 = -7,
+                    M54 = 0,
                 },
                 Source = effect1
             };
-            //var effect3 = new ColorMatrixEffect()
-            //{
-            //    ColorMatrix = new Matrix5x4()
-            //    {
-            //        M11 = 1,
-            //        M12 = 0,
-            //        M13 = 0,
-            //        M14 = 0,
-            //        M21 = 0,
-            //        M22 = 1,
-            //        M23 = 0,
-            //        M24 = 0,
-            //        M31 = 0,
-            //        M32 = 0,
-            //        M33 = 1,
-            //        M34 = 0,
-            //        M41 = 0,
-            //        M42 = 0,
-            //        M43 = 0,
-            //        M44 = 1,
-            //        M51 = 1,
-            //        M52 = 85f/255,
-            //        M53 = 101f/255,
-            //        M54 = 0,
-            //    },
-            //    Source = effect2
-            //};
-            //_image = effect3;
+           
             _image = effect2;
         }
 
@@ -146,14 +121,4 @@ namespace DesignAndAnimationLab.Demos.Gooey
             _centerPoint = Canvas.ActualSize / 2;
         }
     }
-
-    public class GooeyBubble
-    {
-        public double X { get; set; }
-
-        public DoubleTimeline OffsetTimeline { get; set; }
-
-        public DoubleTimeline SizeTimeline { get; set; }
-    }
 }
-

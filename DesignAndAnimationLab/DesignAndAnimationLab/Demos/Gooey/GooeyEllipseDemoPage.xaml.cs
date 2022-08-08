@@ -63,7 +63,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
                     M41 = 0,
                     M42 = 0,
                     M43 = 0,
-                    M44 = 18,
+                    M44 = 100,
                     M51 = 0,
                     M52 = 0,
                     M53 = 0,
