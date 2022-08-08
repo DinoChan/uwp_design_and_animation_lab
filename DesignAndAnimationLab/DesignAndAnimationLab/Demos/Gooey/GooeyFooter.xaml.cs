@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using DesignAndAnimationLab.AnimationTimelines;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
@@ -23,6 +25,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
 
         private ICanvasBrush _brush;
         private ICanvasBrush _rightBrush;
+        private List<GooeyBubble> _bubbles;
 
         public GooeyFooter()
         {
@@ -30,11 +33,25 @@ namespace DesignAndAnimationLab.Demos.Gooey
             var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
             _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2, null, true, true, easingFunction);
             _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2, null, true, true, easingFunction);
+            _bubbles = new List<GooeyBubble>();
+            var unit = 16;
+            for (int i = 0; i < 128; i++)
+            {
+                Random random = new Random();
+                var seconds = 2 + random.NextDouble() * 2;
+                var delay = TimeSpan.FromSeconds(2 + random.NextDouble() * 2);
+
+                var offsetTimeline = new DoubleTimeline(-(6 + random.NextDouble() * 4) * unit, 10 * unit, seconds, delay, false);
+                var sizeTimeline = new DoubleTimeline((2 + random.NextDouble() * 4) * unit, 0, seconds, delay, false);
+                var x = random.NextDouble();
+                _bubbles.Add(new GooeyBubble { X = x, OffsetTimeline = offsetTimeline, SizeTimeline = sizeTimeline });
+            }
         }
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-            _brush = new CanvasSolidColorBrush(sender, Windows.UI.Color.FromArgb(114 ,255, 85, 101));
+            //_brush = new CanvasSolidColorBrush(sender, Windows.UI.Color.FromArgb(114, 255, 85, 101));
+            _brush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black);
             _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue);
             var effect1 = new GaussianBlurEffect()
             {
@@ -81,10 +98,17 @@ namespace DesignAndAnimationLab.Demos.Gooey
             using (var ds = source.CreateDrawingSession())
             {
                 ds.FillRectangle(-100, _centerPoint.Y, _centerPoint.X * 2 + 200, _centerPoint.Y + 100, _brush);
-                ds.FillCircle(_centerPoint + _leftTimeline.GetCurrentValue(totalTime), 100, _brush);
-                ds.FillCircle(_centerPoint + _rightTimeline.GetCurrentValue(totalTime), 60, _rightBrush);
+                //ds.FillCircle(_centerPoint + _leftTimeline.GetCurrentValue(totalTime), 100, _brush);
+                //ds.FillCircle(_centerPoint + _rightTimeline.GetCurrentValue(totalTime), 60, _rightBrush);
 
-            
+                foreach (var bubble in _bubbles)
+                {
+                    var x = bubble.X * _centerPoint.X * 2;
+                    var y = _centerPoint.Y - bubble.OffsetTimeline.GetCurrentProgress(totalTime);
+                    var size = bubble.SizeTimeline.GetCurrentProgress(totalTime);
+                    ds.FillCircle(new Vector2((float)x, (float)y), (float)size, _brush);
+                }
+
             }
 
             _effect.Source = source;
@@ -95,6 +119,15 @@ namespace DesignAndAnimationLab.Demos.Gooey
         {
             _centerPoint = Canvas.ActualSize / 2;
         }
+    }
+
+    public class GooeyBubble
+    {
+        public double X { get; set; }
+
+        public DoubleTimeline OffsetTimeline { get; set; }
+
+        public DoubleTimeline SizeTimeline { get; set; }
     }
 }
 
