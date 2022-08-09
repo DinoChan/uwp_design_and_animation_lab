@@ -12,6 +12,6 @@
         <xaml:CanvasAnimatedControl x:Name="Canvas"
                                     CreateResources="OnCreateResource"
                                     Draw="OnDraw"
-                                    SizeChanged="OnCanvasSizeChanged"/>
+                                    SizeChanged="OnCanvasSizeChanged" />
     </Grid>
 </Page>

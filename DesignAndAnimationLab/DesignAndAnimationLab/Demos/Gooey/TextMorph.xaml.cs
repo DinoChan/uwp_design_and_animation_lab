@@ -22,9 +22,9 @@ namespace DesignAndAnimationLab.Demos.Gooey
     /// </summary>
     public sealed partial class TextMorph : Page
     {
+        private GaussianBlurEffect _blurEffect;
         private Vector2 _centerPoint;
         private ColorMatrixEffect _colorMatrixEffect;
-        private GaussianBlurEffect _effect;
         private List<MorphItem> _morphItems;
 
         private CanvasTextFormat _textFormat;
@@ -38,6 +38,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
             "to",
             "watch?"
        };
+
         public TextMorph()
         {
             this.InitializeComponent();
@@ -66,14 +67,12 @@ namespace DesignAndAnimationLab.Demos.Gooey
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-            var effect1 = new GaussianBlurEffect()
+            _blurEffect = new GaussianBlurEffect()
             {
                 BlurAmount = 0f,
             };
 
-            _effect = effect1;
-            var effect3 = new ColorMatrixEffect();
-            var effect2 = new ColorMatrixEffect()
+            _colorMatrixEffect = new ColorMatrixEffect()
             {
                 ColorMatrix = new Matrix5x4()
                 {
@@ -98,10 +97,8 @@ namespace DesignAndAnimationLab.Demos.Gooey
                     M53 = 0,
                     M54 = -7,
                 },
-                Source = effect1
+                Source = _blurEffect
             };
-
-            _colorMatrixEffect = effect2;
         }
 
         private void OnDraw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
@@ -110,44 +107,22 @@ namespace DesignAndAnimationLab.Demos.Gooey
 
             var totalTime = TimeSpan.FromSeconds(args.Timing.TotalTime.TotalSeconds % 15);
             double maxProgress = 0;
-            using (var ds = source.CreateDrawingSession())
+            using (var drawingSession = source.CreateDrawingSession())
             {
                 foreach (var item in _morphItems)
                 {
                     var progress = item.Timeline.GetCurrentProgress(totalTime);
                     maxProgress = Math.Max(maxProgress, progress);
-                    ds.DrawText(item.Text, _centerPoint, new CanvasSolidColorBrush(sender, Colors.Black)
+                    drawingSession.DrawText(item.Text, _centerPoint, new CanvasSolidColorBrush(sender, Colors.Black)
                     {
                         Opacity = Convert.ToSingle(progress)
                     }, _textFormat);
                 }
             }
 
-            _effect.BlurAmount = Convert.ToSingle(20 * (1 - maxProgress));
-            _effect.Source = source;
-            //_colorMatrixEffect.ColorMatrix = new Matrix5x4()
-            //{
-            //    M11 = 1,
-            //    M12 = 0,
-            //    M13 = 0,
-            //    M14 = 0,
-            //    M21 = 0,
-            //    M22 = 1,
-            //    M23 = 0,
-            //    M24 = 0,
-            //    M31 = 0,
-            //    M32 = 0,
-            //    M33 = 1,
-            //    M34 = 0,
-            //    M41 = 0,
-            //    M42 = 0,
-            //    M43 = 0,
-            //    M44 = Convert.ToSingle(18 - maxProgress * 17),
-            //    M51 = 0,
-            //    M52 = 0,
-            //    M53 = 0,
-            //    M54 = Convert.ToSingle(-7 + 7 * maxProgress),
-            //};
+            _blurEffect.BlurAmount = Convert.ToSingle(20 * (1 - maxProgress));
+            _blurEffect.Source = source;
+
             args.DrawingSession.DrawImage(_colorMatrixEffect);
         }
 

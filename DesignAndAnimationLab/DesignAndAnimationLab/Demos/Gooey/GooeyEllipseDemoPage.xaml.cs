@@ -15,36 +15,36 @@ namespace DesignAndAnimationLab.Demos.Gooey
     /// </summary>
     public sealed partial class GooeyEllipseDemoPage : Page
     {
-        private GaussianBlurEffect _effect;
-        private ICanvasImage _image;
+        private GaussianBlurEffect _blurEffect;
         private Vector2 _centerPoint;
-
-        private Vector2Timeline _leftTimeline;
-        private Vector2Timeline _rightTimeline;
-
+        private ICanvasImage _image;
         private ICanvasBrush _leftBrush;
+        private Vector2Timeline _leftTimeline;
         private ICanvasBrush _rightBrush;
-
+        private Vector2Timeline _rightTimeline;
         public GooeyEllipseDemoPage()
         {
             InitializeComponent();
             var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
-            _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2,null, true, true, easingFunction);
-            _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2,null, true, true, easingFunction);
+            _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2, null, true, true, easingFunction);
+            _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2, null, true, true, easingFunction);
+        }
+
+        private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _centerPoint = Canvas.ActualSize / 2;
         }
 
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-            _leftBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black); 
-            _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue); 
-            var effect1 = new GaussianBlurEffect()
+            _leftBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black);
+            _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue);
+            _blurEffect = new GaussianBlurEffect()
             {
                 BlurAmount = 20f,
             };
 
-            _effect = effect1;
-
-            var effect2 = new ColorMatrixEffect()
+            _image = new ColorMatrixEffect()
             {
                 ColorMatrix = new Matrix5x4()
                 {
@@ -69,29 +69,22 @@ namespace DesignAndAnimationLab.Demos.Gooey
                     M53 = 0,
                     M54 = -7,
                 },
-                Source = effect1
+                Source = _blurEffect
             };
-
-            _image = effect2;
         }
 
         private void OnDraw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
         {
             var source = new CanvasCommandList(sender);
             var totalTime = args.Timing.TotalTime;
-            using (var ds = source.CreateDrawingSession())
+            using (var drawingSession = source.CreateDrawingSession())
             {
-                ds.FillCircle(_centerPoint + _leftTimeline.GetCurrentValue(totalTime), 100, _leftBrush);
-                ds.FillCircle(_centerPoint + _rightTimeline.GetCurrentValue(totalTime), 60, _rightBrush);
+                drawingSession.FillCircle(_centerPoint + _leftTimeline.GetCurrentValue(totalTime), 100, _leftBrush);
+                drawingSession.FillCircle(_centerPoint + _rightTimeline.GetCurrentValue(totalTime), 60, _rightBrush);
             }
 
-            _effect.Source = source;
+            _blurEffect.Source = source;
             args.DrawingSession.DrawImage(_image);
-        }
-
-        private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            _centerPoint = Canvas.ActualSize / 2;
         }
     }
 }
