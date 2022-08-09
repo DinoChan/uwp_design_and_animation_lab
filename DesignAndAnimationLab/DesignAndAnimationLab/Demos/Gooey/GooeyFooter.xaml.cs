@@ -35,7 +35,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
             _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2, null, true, true, easingFunction);
             _bubbles = new List<GooeyBubble>();
             var unit = 16;
-            for (int i = 0; i < 128; i++)
+            for (int i = 0; i < 168; i++)
             {
                 Random random = new Random();
                 var seconds = 2 + random.NextDouble() * 2;
@@ -51,10 +51,11 @@ namespace DesignAndAnimationLab.Demos.Gooey
         private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
             _brush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black);
+            _brush = new CanvasSolidColorBrush(sender, Windows.UI.Color.FromArgb(255, 237, 85, 101));
             _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue);
             var effect1 = new GaussianBlurEffect()
             {
-                BlurAmount = 20f,
+                BlurAmount = 10f,
             };
 
             _effect = effect1;
@@ -78,12 +79,13 @@ namespace DesignAndAnimationLab.Demos.Gooey
                     M41 = 0,
                     M42 = 0,
                     M43 = 0,
-                    M44 = 18,
+                    M44 = 19,
                     M51 = 0,
                     M52 = 0,
                     M53 = 0,
-                    M54 = -7,
+                    M54 = -9,
                 },
+                ClampOutput = true,
                 Source = effect1
             };
             //var effect3 = new ColorMatrixEffect()
