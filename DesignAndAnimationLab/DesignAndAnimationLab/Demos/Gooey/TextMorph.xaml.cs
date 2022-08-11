@@ -7,6 +7,8 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
+using Microsoft.Graphics.Canvas.UI;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -65,7 +67,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
             _centerPoint = Canvas.ActualSize / 2;
         }
 
-        private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
+        private void OnCreateResource(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
             _blurEffect = new GaussianBlurEffect()
             {
@@ -101,7 +103,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
             };
         }
 
-        private void OnDraw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
+        private void OnDraw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
             var source = new CanvasCommandList(sender);
 

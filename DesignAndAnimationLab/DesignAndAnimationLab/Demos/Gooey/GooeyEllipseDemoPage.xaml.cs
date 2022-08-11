@@ -3,6 +3,8 @@ using DesignAndAnimationLab.AnimationTimelines;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.UI;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -22,6 +24,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
         private Vector2Timeline _leftTimeline;
         private ICanvasBrush _rightBrush;
         private Vector2Timeline _rightTimeline;
+
         public GooeyEllipseDemoPage()
         {
             InitializeComponent();
@@ -35,7 +38,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
             _centerPoint = Canvas.ActualSize / 2;
         }
 
-        private void OnCreateResource(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
+        private void OnCreateResource(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
             _leftBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black);
             _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue);
@@ -73,7 +76,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
             };
         }
 
-        private void OnDraw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
+        private void OnDraw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
             var source = new CanvasCommandList(sender);
             var totalTime = args.Timing.TotalTime;
