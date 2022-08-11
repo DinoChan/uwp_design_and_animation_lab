@@ -10,11 +10,10 @@ namespace DesignAndAnimationLab
 {
     public class GooeyButtonItemsPanel : Canvas
     {
-        public double Duration => 1.8d;
-        public double CloseDuration => Duration - 0.6d;
-
-        private List<Storyboard> openStoryboards = new List<Storyboard>();
         private List<Storyboard> closeStoryboards = new List<Storyboard>();
+        private List<Storyboard> openStoryboards = new List<Storyboard>();
+        public double CloseDuration => Duration - 0.6d;
+        public double Duration => 1.8d;
 
         #region Override Methods
 
@@ -52,36 +51,45 @@ namespace DesignAndAnimationLab
 
         #region Methods
 
-        private void StartAnimation()
+        private Storyboard CreateTranslateStoryboard(double x, double y, DependencyObject element, TranslateTransform translate, EasingFunctionBase easing, double duration = 0.8)
         {
-            ItemsAnimationStarted?.Invoke(this, EventArgs.Empty);
-            if (openStoryboards.Count != Children.Count)
-            {
-                ResetAnimation();
-            }
+            var sb = new Storyboard();
 
-            foreach (var item in Children)
-            {
-                if (item is GooeyButtonItem gooeyButtonItem)
-                {
-                    gooeyButtonItem.Visibility = Visibility.Visible;
-                }
-            }
+            var dax = new DoubleAnimation();
+            Storyboard.SetTarget(dax, translate);
+            Storyboard.SetTargetProperty(dax, "X");
+            dax.To = x;
+            dax.Duration = TimeSpan.FromSeconds(duration);
+            dax.EasingFunction = easing;
+            sb.Children.Add(dax);
 
-            if (Expanded)
-            {
-                foreach (var sb in openStoryboards)
-                {
-                    sb.Begin();
-                }
-            }
-            else
-            {
-                foreach (var sb in closeStoryboards)
-                {
-                    sb.Begin();
-                }
-            }
+            var day = new DoubleAnimation();
+            Storyboard.SetTarget(day, translate);
+            Storyboard.SetTargetProperty(day, "Y");
+            day.To = y;
+            day.Duration = TimeSpan.FromSeconds(duration);
+            day.EasingFunction = easing;
+            sb.Children.Add(day);
+
+            var wdax = new DoubleAnimation();
+            Storyboard.SetTarget(wdax, element);
+            Storyboard.SetTargetProperty(wdax, "Win2DTranslateX");
+            wdax.To = x;
+            wdax.Duration = TimeSpan.FromSeconds(duration);
+            wdax.EasingFunction = easing;
+            wdax.EnableDependentAnimation = true;
+            sb.Children.Add(wdax);
+
+            var wday = new DoubleAnimation();
+            Storyboard.SetTarget(wday, element);
+            Storyboard.SetTargetProperty(wday, "Win2DTranslateY");
+            wday.To = y;
+            wday.Duration = TimeSpan.FromSeconds(duration);
+            wday.EasingFunction = easing;
+            wday.EnableDependentAnimation = true;
+            sb.Children.Add(wday);
+
+            return sb;
         }
 
         private void ResetAnimation()
@@ -175,54 +183,45 @@ namespace DesignAndAnimationLab
             }
         }
 
-        private Storyboard CreateTranslateStoryboard(double x, double y, DependencyObject element, TranslateTransform translate, EasingFunctionBase easing, double duration = 0.8)
+        private void StartAnimation()
         {
-            var sb = new Storyboard();
+            ItemsAnimationStarted?.Invoke(this, EventArgs.Empty);
+            if (openStoryboards.Count != Children.Count)
+            {
+                ResetAnimation();
+            }
 
-            var dax = new DoubleAnimation();
-            Storyboard.SetTarget(dax, translate);
-            Storyboard.SetTargetProperty(dax, "X");
-            dax.To = x;
-            dax.Duration = TimeSpan.FromSeconds(duration);
-            dax.EasingFunction = easing;
-            sb.Children.Add(dax);
+            foreach (var item in Children)
+            {
+                if (item is GooeyButtonItem gooeyButtonItem)
+                {
+                    gooeyButtonItem.Visibility = Visibility.Visible;
+                }
+            }
 
-            var day = new DoubleAnimation();
-            Storyboard.SetTarget(day, translate);
-            Storyboard.SetTargetProperty(day, "Y");
-            day.To = y;
-            day.Duration = TimeSpan.FromSeconds(duration);
-            day.EasingFunction = easing;
-            sb.Children.Add(day);
-
-            var wdax = new DoubleAnimation();
-            Storyboard.SetTarget(wdax, element);
-            Storyboard.SetTargetProperty(wdax, "Win2DTranslateX");
-            wdax.To = x;
-            wdax.Duration = TimeSpan.FromSeconds(duration);
-            wdax.EasingFunction = easing;
-            wdax.EnableDependentAnimation = true;
-            sb.Children.Add(wdax);
-
-            var wday = new DoubleAnimation();
-            Storyboard.SetTarget(wday, element);
-            Storyboard.SetTargetProperty(wday, "Win2DTranslateY");
-            wday.To = y;
-            wday.Duration = TimeSpan.FromSeconds(duration);
-            wday.EasingFunction = easing;
-            wday.EnableDependentAnimation = true;
-            sb.Children.Add(wday);
-
-            return sb;
+            if (Expanded)
+            {
+                foreach (var sb in openStoryboards)
+                {
+                    sb.Begin();
+                }
+            }
+            else
+            {
+                foreach (var sb in closeStoryboards)
+                {
+                    sb.Begin();
+                }
+            }
         }
 
         #endregion Methods
 
         #region Events
 
-        public event EventHandler ItemsAnimationStarted;
-
         public event EventHandler ItemsAnimationCompleted;
+
+        public event EventHandler ItemsAnimationStarted;
 
         #endregion Events
 
@@ -247,15 +246,17 @@ namespace DesignAndAnimationLab
 
         #region Dependency Properties
 
-        public bool Expanded
-        {
-            get { return (bool)GetValue(ExpandedProperty); }
-            set { SetValue(ExpandedProperty, value); }
-        }
+        // Using a DependencyProperty as the backing store for Distance.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DistanceProperty =
+            DependencyProperty.Register("Distance", typeof(double), typeof(GooeyButtonItemsPanel), new PropertyMetadata(0d, OnDistanceChanged));
 
         // Using a DependencyProperty as the backing store for Expanded.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ExpandedProperty =
             DependencyProperty.Register("Expanded", typeof(bool), typeof(GooeyButtonItemsPanel), new PropertyMetadata(false, OnExpandedChanged));
+
+        // Using a DependencyProperty as the backing store for ItemsPosition.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemsPositionProperty =
+            DependencyProperty.Register("ItemsPosition", typeof(GooeyButtonItemsPosition), typeof(GooeyButton), new PropertyMetadata(GooeyButtonItemsPosition.LeftTop, OnItemsPositionChanged));
 
         public double Distance
         {
@@ -263,19 +264,17 @@ namespace DesignAndAnimationLab
             set { SetValue(DistanceProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Distance.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DistanceProperty =
-            DependencyProperty.Register("Distance", typeof(double), typeof(GooeyButtonItemsPanel), new PropertyMetadata(0d, OnDistanceChanged));
+        public bool Expanded
+        {
+            get { return (bool)GetValue(ExpandedProperty); }
+            set { SetValue(ExpandedProperty, value); }
+        }
 
         public GooeyButtonItemsPosition ItemsPosition
         {
             get { return (GooeyButtonItemsPosition)GetValue(ItemsPositionProperty); }
             set { SetValue(ItemsPositionProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for ItemsPosition.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ItemsPositionProperty =
-            DependencyProperty.Register("ItemsPosition", typeof(GooeyButtonItemsPosition), typeof(GooeyButton), new PropertyMetadata(GooeyButtonItemsPosition.LeftTop, OnItemsPositionChanged));
 
         private static void OnDistanceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

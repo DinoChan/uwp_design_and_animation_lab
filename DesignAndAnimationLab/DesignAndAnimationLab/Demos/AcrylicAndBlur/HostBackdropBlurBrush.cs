@@ -8,6 +8,15 @@ namespace DesignAndAnimationLab.Demos
     public class HostBackdropBlurBrush : XamlCompositionEffectBrushBase
     {
         /// <summary>
+        /// Identifies the <see cref="Amount"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty AmountProperty = DependencyProperty.Register(
+            nameof(Amount),
+            typeof(double),
+            typeof(HostBackdropBlurBrush),
+            new PropertyMetadata(0.0, new PropertyChangedCallback(OnAmountChanged)));
+
+        /// <summary>
         /// The <see cref="EffectSetter{T}"/> instance currently in use
         /// </summary>
         private EffectSetter<float> amountSetter;
@@ -21,14 +30,11 @@ namespace DesignAndAnimationLab.Demos
             set => SetValue(AmountProperty, value);
         }
 
-        /// <summary>
-        /// Identifies the <see cref="Amount"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty AmountProperty = DependencyProperty.Register(
-            nameof(Amount),
-            typeof(double),
-            typeof(HostBackdropBlurBrush),
-            new PropertyMetadata(0.0, new PropertyChangedCallback(OnAmountChanged)));
+        /// <inheritdoc/>
+        protected override PipelineBuilder OnPipelineRequested()
+        {
+            return PipelineBuilder.FromHostBackdrop().Blur((float)Amount, out this.amountSetter);
+        }
 
         /// <summary>
         /// Updates the UI when <see cref="Amount"/> changes
@@ -42,12 +48,6 @@ namespace DesignAndAnimationLab.Demos
             {
                 brush.amountSetter?.Invoke(target, (float)brush.Amount);
             }
-        }
-
-        /// <inheritdoc/>
-        protected override PipelineBuilder OnPipelineRequested()
-        {
-            return PipelineBuilder.FromHostBackdrop().Blur((float)Amount, out this.amountSetter);
         }
     }
 }

@@ -48,21 +48,9 @@ namespace DesignAndAnimationLab.Demos
             UpdateCustomPipelineBrushDark();
         }
 
-        public bool HasLuminanceToAlpha { get; set; }
-
-        public bool HasOpacity { get; set; }
-
-        public double EffectOpacity { get; set; }
-
-        public bool HasBlur { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public double BlurAmount { get; set; }
-
-        public Color ShadeColor { get; set; }
-
-        public double ShadeIntensity { get; set; }
-
-        public bool HasShade { get; set; }
 
         public Brush CustomPipelineBrush
         {
@@ -84,7 +72,15 @@ namespace DesignAndAnimationLab.Demos
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public double EffectOpacity { get; set; }
+        public bool HasBlur { get; set; }
+        public bool HasLuminanceToAlpha { get; set; }
+
+        public bool HasOpacity { get; set; }
+        public bool HasShade { get; set; }
+        public Color ShadeColor { get; set; }
+
+        public double ShadeIntensity { get; set; }
 
         private void OnAcceptCustomBrush(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {

@@ -5,14 +5,14 @@ namespace DesignAndAnimationLab.Demos
 {
     public interface IAppPopup
     {
-        Guid _popupId { get; set; }
         Popup _popup { get; set; }
+        Guid _popupId { get; set; }
+        double Height { get; set; }
 
-        void ShowPopup();
+        double Width { get; set; }
 
         void HidePopup();
 
-        double Width { get; set; }
-        double Height { get; set; }
+        void ShowPopup();
     }
 }

@@ -22,21 +22,6 @@ namespace DesignAndAnimationLab.Demos
             ElementCompositionPreview.SetElementChildVisual(BackgroundElement2, CreateVisual("sea2.jpg"));
         }
 
-        private SpriteVisual CreateVisual(string imageName)
-        {
-            var compositor = Window.Current.Compositor;
-            var (foreground, foregroundBrush) = CreateBrush(imageName, Colors.Cyan);
-            var (background, backgroundBrush) = CreateBrush(imageName, Colors.Red);
-            foregroundBrush.Offset = new Vector2(10, 0);
-
-            var brush = CreateBrush(foreground, background, BlendEffectMode.Darken);
-
-            var imageVisual = compositor.CreateSpriteVisual();
-            imageVisual.Brush = brush;
-            imageVisual.Size = new Vector2(800, 384);
-            return imageVisual;
-        }
-
         private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush(string imageName, Color color)
         {
             var compositor = Window.Current.Compositor;
@@ -62,6 +47,21 @@ namespace DesignAndAnimationLab.Demos
             compositionBrush.SetSourceParameter("Tint", background);
 
             return compositionBrush;
+        }
+
+        private SpriteVisual CreateVisual(string imageName)
+        {
+            var compositor = Window.Current.Compositor;
+            var (foreground, foregroundBrush) = CreateBrush(imageName, Colors.Cyan);
+            var (background, backgroundBrush) = CreateBrush(imageName, Colors.Red);
+            foregroundBrush.Offset = new Vector2(10, 0);
+
+            var brush = CreateBrush(foreground, background, BlendEffectMode.Darken);
+
+            var imageVisual = compositor.CreateSpriteVisual();
+            imageVisual.Brush = brush;
+            imageVisual.Size = new Vector2(800, 384);
+            return imageVisual;
         }
     }
 }

@@ -13,6 +13,52 @@ using Windows.UI.Xaml.Navigation;
 namespace DesignAndAnimationLab
 {
     /// <summary>
+    /// Represents the method that will handle the <see cref="NavigationHelper.LoadState"/>event
+    /// </summary>
+    public delegate void LoadStateEventHandler(object sender, LoadStateEventArgs e);
+
+    /// <summary>
+    /// Represents the method that will handle the <see cref="NavigationHelper.SaveState"/>event
+    /// </summary>
+    public delegate void SaveStateEventHandler(object sender, SaveStateEventArgs e);
+
+    /// <summary>
+    /// Class used to hold the event data required when a page attempts to load state.
+    /// </summary>
+    public class LoadStateEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoadStateEventArgs"/> class.
+        /// </summary>
+        /// <param name="navigationParameter">
+        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/>
+        /// when this page was initially requested.
+        /// </param>
+        /// <param name="pageState">
+        /// A dictionary of state preserved by this page during an earlier
+        /// session.  This will be null the first time a page is visited.
+        /// </param>
+        public LoadStateEventArgs(Object navigationParameter, Dictionary<string, Object> pageState)
+            : base()
+        {
+            this.NavigationParameter = navigationParameter;
+            this.PageState = pageState;
+        }
+
+        /// <summary>
+        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/>
+        /// when this page was initially requested.
+        /// </summary>
+        public Object NavigationParameter { get; private set; }
+
+        /// <summary>
+        /// A dictionary of state preserved by this page during an earlier
+        /// session.  This will be null the first time a page is visited.
+        /// </summary>
+        public Dictionary<string, Object> PageState { get; private set; }
+    }
+
+    /// <summary>
     /// NavigationHelper aids in navigation between pages.  It provides commands used to
     /// navigate back and forward as well as registers for standard mouse and keyboard
     /// shortcuts used to go back and forward in Windows and the hardware back button in
@@ -59,10 +105,6 @@ namespace DesignAndAnimationLab
     [Windows.Foundation.Metadata.WebHostHidden]
     public class NavigationHelper : DependencyObject
     {
-        private Page Page { get; set; }
-        private Frame Frame
-        { get { return this.Page.Frame; } }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationHelper"/> class.
         /// </summary>
@@ -105,6 +147,11 @@ namespace DesignAndAnimationLab
                     this.CoreWindow_PointerPressed;
             };
         }
+
+        private Frame Frame
+        { get { return this.Page.Frame; } }
+
+        private Page Page { get; set; }
 
         #region Navigation support
 
@@ -204,15 +251,6 @@ namespace DesignAndAnimationLab
             if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
         }
 
-        private void NavigationHelper_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            if (this.GoBackCommand.CanExecute(null))
-            {
-                e.Handled = true;
-                this.GoBackCommand.Execute(null);
-            }
-        }
-
         /// <summary>
         /// Invoked on every keystroke, including system keys such as Alt key combinations, when
         /// this page is active and occupies the entire window.  Used to detect keyboard navigation
@@ -285,6 +323,15 @@ namespace DesignAndAnimationLab
             }
         }
 
+        private void NavigationHelper_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (this.GoBackCommand.CanExecute(null))
+            {
+                e.Handled = true;
+                this.GoBackCommand.Execute(null);
+            }
+        }
+
         #endregion Navigation support
 
         #region Process lifetime management
@@ -305,6 +352,24 @@ namespace DesignAndAnimationLab
         /// the navigaqtion cache.
         /// </summary>
         public event SaveStateEventHandler SaveState;
+
+        /// <summary>
+        /// Invoked when this page will no longer be displayed in a Frame.
+        /// This method calls <see cref="SaveState"/>, where all page specific
+        /// navigation and process lifetime management logic should be placed.
+        /// </summary>
+        /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        /// property provides the group to be displayed.</param>
+        public void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+            var pageState = new Dictionary<String, Object>();
+            if (this.SaveState != null)
+            {
+                this.SaveState(this, new SaveStateEventArgs(pageState));
+            }
+            frameState[_pageKey] = pageState;
+        }
 
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
@@ -350,71 +415,7 @@ namespace DesignAndAnimationLab
             }
         }
 
-        /// <summary>
-        /// Invoked when this page will no longer be displayed in a Frame.
-        /// This method calls <see cref="SaveState"/>, where all page specific
-        /// navigation and process lifetime management logic should be placed.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property provides the group to be displayed.</param>
-        public void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            var pageState = new Dictionary<String, Object>();
-            if (this.SaveState != null)
-            {
-                this.SaveState(this, new SaveStateEventArgs(pageState));
-            }
-            frameState[_pageKey] = pageState;
-        }
-
         #endregion Process lifetime management
-    }
-
-    /// <summary>
-    /// Represents the method that will handle the <see cref="NavigationHelper.LoadState"/>event
-    /// </summary>
-    public delegate void LoadStateEventHandler(object sender, LoadStateEventArgs e);
-
-    /// <summary>
-    /// Represents the method that will handle the <see cref="NavigationHelper.SaveState"/>event
-    /// </summary>
-    public delegate void SaveStateEventHandler(object sender, SaveStateEventArgs e);
-
-    /// <summary>
-    /// Class used to hold the event data required when a page attempts to load state.
-    /// </summary>
-    public class LoadStateEventArgs : EventArgs
-    {
-        /// <summary>
-        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/>
-        /// when this page was initially requested.
-        /// </summary>
-        public Object NavigationParameter { get; private set; }
-
-        /// <summary>
-        /// A dictionary of state preserved by this page during an earlier
-        /// session.  This will be null the first time a page is visited.
-        /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LoadStateEventArgs"/> class.
-        /// </summary>
-        /// <param name="navigationParameter">
-        /// The parameter value passed to <see cref="Frame.Navigate(Type, Object)"/>
-        /// when this page was initially requested.
-        /// </param>
-        /// <param name="pageState">
-        /// A dictionary of state preserved by this page during an earlier
-        /// session.  This will be null the first time a page is visited.
-        /// </param>
-        public LoadStateEventArgs(Object navigationParameter, Dictionary<string, Object> pageState)
-            : base()
-        {
-            this.NavigationParameter = navigationParameter;
-            this.PageState = pageState;
-        }
     }
 
     /// <summary>
@@ -422,11 +423,6 @@ namespace DesignAndAnimationLab
     /// </summary>
     public class SaveStateEventArgs : EventArgs
     {
-        /// <summary>
-        /// An empty dictionary to be populated with serializable state.
-        /// </summary>
-        public Dictionary<string, Object> PageState { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveStateEventArgs"/> class.
         /// </summary>
@@ -436,5 +432,10 @@ namespace DesignAndAnimationLab
         {
             this.PageState = pageState;
         }
+
+        /// <summary>
+        /// An empty dictionary to be populated with serializable state.
+        /// </summary>
+        public Dictionary<string, Object> PageState { get; private set; }
     }
 }

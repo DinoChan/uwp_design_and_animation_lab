@@ -16,9 +16,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 {
     public sealed partial class GlitchText2 : UserControl
     {
-        private Compositor Compositor => Window.Current.Compositor;
-        public string Text { get; }
-
         public GlitchText2()
         {
             this.InitializeComponent();
@@ -57,6 +54,9 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
              };
         }
 
+        public string Text { get; }
+        private Compositor Compositor => Window.Current.Compositor;
+
         public TextToBrushWrapper CreateTextToBrushWrapper(double shadowOffsetX, Color shadowColor)
         {
             var result = new TextToBrushWrapper
@@ -92,26 +92,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             return compositionBrush;
         }
 
-        private void StartOffsetAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
-        {
-            var offsetAnimation = Compositor.CreateVector3KeyFrameAnimation();
-            offsetAnimation.Duration = duration;
-            offsetAnimation.DelayTime = delay;
-            offsetAnimation.IterationBehavior = AnimationIterationBehavior.Forever;
-            var easing = Compositor.CreateCubicBezierEasingFunction(new Vector2(0.1f, 0.9f), new Vector2(0.2f, 1f));
-            void addKey(float key, float top)
-            {
-                offsetAnimation.InsertKeyFrame(key, new Vector3(0, top, 0), easing);
-            };
-
-            addKey(.08f, 95);
-            addKey(.14f, 20);
-            addKey(.20f, 105);
-            addKey(.32f, 5);
-            addKey(.99f, 75);
-            visual.StartAnimation(nameof(CompositionSurfaceBrush.Offset), offsetAnimation);
-        }
-
         private void StartHeightAnimation(TextToBrushWrapper brush, List<(double, double)> keyFrames, TimeSpan duration, TimeSpan delay)
         {
             var storyboard = new Storyboard();
@@ -131,6 +111,26 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             storyboard.BeginTime = delay;
             storyboard.Begin();
+        }
+
+        private void StartOffsetAnimation(SpriteVisual visual, TimeSpan duration, TimeSpan delay)
+        {
+            var offsetAnimation = Compositor.CreateVector3KeyFrameAnimation();
+            offsetAnimation.Duration = duration;
+            offsetAnimation.DelayTime = delay;
+            offsetAnimation.IterationBehavior = AnimationIterationBehavior.Forever;
+            var easing = Compositor.CreateCubicBezierEasingFunction(new Vector2(0.1f, 0.9f), new Vector2(0.2f, 1f));
+            void addKey(float key, float top)
+            {
+                offsetAnimation.InsertKeyFrame(key, new Vector3(0, top, 0), easing);
+            };
+
+            addKey(.08f, 95);
+            addKey(.14f, 20);
+            addKey(.20f, 105);
+            addKey(.32f, 5);
+            addKey(.99f, 75);
+            visual.StartAnimation(nameof(CompositionSurfaceBrush.Offset), offsetAnimation);
         }
     }
 }

@@ -18,6 +18,40 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
 {
     public class BubbleView : Control
     {
+        public static readonly DependencyProperty IsBubbingProperty =
+            DependencyProperty.Register("IsBubbing", typeof(bool), typeof(BubbleView), new PropertyMetadata(false, (s, a) =>
+            {
+                if (a.NewValue != a.OldValue)
+                {
+                    if (s is BubbleView sender)
+                    {
+                        if (a.NewValue is true)
+                        {
+                            sender.ShowBubbles();
+                            sender.SetValue(IsBubbingProperty, false);
+                        }
+                    }
+                }
+            }));
+
+        private ContainerVisual _BubblesVisual;
+
+        private CanvasDevice _canvasDevice;
+
+        private Compositor _Compositor;
+
+        private CompositionGraphicsDevice _graphicsDevice;
+
+        private Visual _HostVisual;
+
+        private Rectangle BubbleHost;
+
+        private List<Bubble> Bubbles;
+
+        private Color ForegroundColor;
+
+        private long ForegroundPropertyChangedToken;
+
         public BubbleView()
         {
             this.DefaultStyleKey = typeof(BubbleView);
@@ -25,19 +59,23 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             this.Unloaded += BubbleView_Unloaded;
         }
 
-        private Rectangle BubbleHost;
-        private Color ForegroundColor;
+        //当设置IsBubbing = true时，触发ShowBubbles，并将IsBubbing设置为false，等待下次设置IsBubbing = true
+        public bool IsBubbing
+        {
+            get { return (bool)GetValue(IsBubbingProperty); }
+            set { SetValue(IsBubbingProperty, value); }
+        }
 
-        private Compositor _Compositor;
-        private Visual _HostVisual;
-        private ContainerVisual _BubblesVisual;
-
-        private CanvasDevice _canvasDevice;
-        private CompositionGraphicsDevice _graphicsDevice;
-
-        private List<Bubble> Bubbles;
-
-        private long ForegroundPropertyChangedToken;
+        public void ShowBubbles()
+        {
+            if (Bubbles != null)
+            {
+                foreach (var bubble in Bubbles)
+                {
+                    bubble.Start();
+                }
+            }
+        }
 
         protected override void OnApplyTemplate()
         {
@@ -49,48 +87,31 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             SetupDevices();
         }
 
-        private void SetupComposition()
+        //当设备丢失时，重新设置设备
+        private void _canvasDevice_DeviceLost(CanvasDevice sender, object args)
         {
-            _HostVisual = ElementCompositionPreview.GetElementVisual(BubbleHost);
-            _Compositor = _HostVisual.Compositor;
-
-            _BubblesVisual = _Compositor.CreateContainerVisual();
-            _BubblesVisual.BindSize(_HostVisual);
-
-            ElementCompositionPreview.SetElementChildVisual(BubbleHost, _BubblesVisual);
+            ResetDevices(true);
         }
 
-        //初始化CanvasDevice和GraphicsDevice
-        private void SetupDevices()
+        //GraphicsDevice的绘制设备重置时，即触发CanvasComposition.SetCanvasDevice时，重新绘制气泡
+        private void _graphicsDevice_RenderingDeviceReplaced(CompositionGraphicsDevice sender, RenderingDeviceReplacedEventArgs args)
         {
-            DisplayInformation.DisplayContentsInvalidated += DisplayInformation_DisplayContentsInvalidated;
-
-            _canvasDevice = CanvasDevice.GetSharedDevice();
-            _graphicsDevice = CanvasComposition.CreateCompositionGraphicsDevice(_Compositor, _canvasDevice);
-
-            _canvasDevice.DeviceLost += _canvasDevice_DeviceLost;
-            _graphicsDevice.RenderingDeviceReplaced += _graphicsDevice_RenderingDeviceReplaced;
+            CreateBubbles();
         }
 
-        //重新设置CanvasDevice和GraphicsDevice
-        private void ResetDevices(bool IsDeviceLost)
+        private void BubbleHost_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            try
-            {
-                if (IsDeviceLost)
-                {
-                    _canvasDevice.DeviceLost -= _canvasDevice_DeviceLost;
-                    _canvasDevice = CanvasDevice.GetSharedDevice();
-                    _canvasDevice.DeviceLost += _canvasDevice_DeviceLost;
-                }
-                //重新设置GraphicsDevice，在CanvasDevice丢失时会触发异常
-                CanvasComposition.SetCanvasDevice(_graphicsDevice, _canvasDevice);
-            }
-            catch (Exception e) when (_canvasDevice != null && _canvasDevice.IsDeviceLost(e.HResult))
-            {
-                //通知设备已丢失，并触发CanvasDevice.DeviceLost
-                _canvasDevice.RaiseDeviceLost();
-            }
+            CreateBubbles();
+        }
+
+        private void BubbleView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ClearBubbles();
+            _BubblesVisual?.Dispose();
+            _BubblesVisual = null;
+            _canvasDevice = null;
+            _graphicsDevice?.Dispose();
+            _graphicsDevice = null;
         }
 
         private void ClearBubbles()
@@ -140,49 +161,11 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             }
         }
 
-        public void ShowBubbles()
-        {
-            if (Bubbles != null)
-            {
-                foreach (var bubble in Bubbles)
-                {
-                    bubble.Start();
-                }
-            }
-        }
-
         //当显示需要重绘时，尝试重新给GraphicsDevice设置CanvasDevice，如果抛出异常，则说明CanvasDevice已丢失
         private void DisplayInformation_DisplayContentsInvalidated(DisplayInformation sender, object args)
         {
             System.Diagnostics.Debug.WriteLine("Display Contents Invalidated");
             ResetDevices(false);
-        }
-
-        //当设备丢失时，重新设置设备
-        private void _canvasDevice_DeviceLost(CanvasDevice sender, object args)
-        {
-            ResetDevices(true);
-        }
-
-        //GraphicsDevice的绘制设备重置时，即触发CanvasComposition.SetCanvasDevice时，重新绘制气泡
-        private void _graphicsDevice_RenderingDeviceReplaced(CompositionGraphicsDevice sender, RenderingDeviceReplacedEventArgs args)
-        {
-            CreateBubbles();
-        }
-
-        private void BubbleHost_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            CreateBubbles();
-        }
-
-        private void BubbleView_Unloaded(object sender, RoutedEventArgs e)
-        {
-            ClearBubbles();
-            _BubblesVisual?.Dispose();
-            _BubblesVisual = null;
-            _canvasDevice = null;
-            _graphicsDevice?.Dispose();
-            _graphicsDevice = null;
         }
 
         private void ForegroundPropertyChanged(DependencyObject sender, DependencyProperty dp)
@@ -194,27 +177,48 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             CreateBubbles();
         }
 
-        //当设置IsBubbing = true时，触发ShowBubbles，并将IsBubbing设置为false，等待下次设置IsBubbing = true
-        public bool IsBubbing
+        //重新设置CanvasDevice和GraphicsDevice
+        private void ResetDevices(bool IsDeviceLost)
         {
-            get { return (bool)GetValue(IsBubbingProperty); }
-            set { SetValue(IsBubbingProperty, value); }
+            try
+            {
+                if (IsDeviceLost)
+                {
+                    _canvasDevice.DeviceLost -= _canvasDevice_DeviceLost;
+                    _canvasDevice = CanvasDevice.GetSharedDevice();
+                    _canvasDevice.DeviceLost += _canvasDevice_DeviceLost;
+                }
+                //重新设置GraphicsDevice，在CanvasDevice丢失时会触发异常
+                CanvasComposition.SetCanvasDevice(_graphicsDevice, _canvasDevice);
+            }
+            catch (Exception e) when (_canvasDevice != null && _canvasDevice.IsDeviceLost(e.HResult))
+            {
+                //通知设备已丢失，并触发CanvasDevice.DeviceLost
+                _canvasDevice.RaiseDeviceLost();
+            }
         }
 
-        public static readonly DependencyProperty IsBubbingProperty =
-            DependencyProperty.Register("IsBubbing", typeof(bool), typeof(BubbleView), new PropertyMetadata(false, (s, a) =>
-            {
-                if (a.NewValue != a.OldValue)
-                {
-                    if (s is BubbleView sender)
-                    {
-                        if (a.NewValue is true)
-                        {
-                            sender.ShowBubbles();
-                            sender.SetValue(IsBubbingProperty, false);
-                        }
-                    }
-                }
-            }));
+        private void SetupComposition()
+        {
+            _HostVisual = ElementCompositionPreview.GetElementVisual(BubbleHost);
+            _Compositor = _HostVisual.Compositor;
+
+            _BubblesVisual = _Compositor.CreateContainerVisual();
+            _BubblesVisual.BindSize(_HostVisual);
+
+            ElementCompositionPreview.SetElementChildVisual(BubbleHost, _BubblesVisual);
+        }
+
+        //初始化CanvasDevice和GraphicsDevice
+        private void SetupDevices()
+        {
+            DisplayInformation.DisplayContentsInvalidated += DisplayInformation_DisplayContentsInvalidated;
+
+            _canvasDevice = CanvasDevice.GetSharedDevice();
+            _graphicsDevice = CanvasComposition.CreateCompositionGraphicsDevice(_Compositor, _canvasDevice);
+
+            _canvasDevice.DeviceLost += _canvasDevice_DeviceLost;
+            _graphicsDevice.RenderingDeviceReplaced += _graphicsDevice_RenderingDeviceReplaced;
+        }
     }
 }

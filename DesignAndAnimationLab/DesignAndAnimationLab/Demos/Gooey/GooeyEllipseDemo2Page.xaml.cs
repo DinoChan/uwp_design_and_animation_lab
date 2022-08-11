@@ -25,6 +25,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
         private Vector2Timeline _leftTimeline;
         private ICanvasBrush _rightBrush;
         private Vector2Timeline _rightTimeline;
+
         public GooeyEllipseDemo2Page()
         {
             InitializeComponent();

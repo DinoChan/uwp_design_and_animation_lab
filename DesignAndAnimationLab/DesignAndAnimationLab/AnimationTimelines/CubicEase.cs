@@ -15,6 +15,5 @@ namespace DesignAndAnimationLab.AnimationTimelines
         {
             return normalizedTime * normalizedTime * normalizedTime;
         }
-
     }
 }

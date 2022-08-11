@@ -13,8 +13,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 {
     public sealed partial class GlitchText : UserControl
     {
-        private Compositor Compositor => Window.Current.Compositor;
-
         public GlitchText()
         {
             this.InitializeComponent();
@@ -57,6 +55,8 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
                   StartOffsetAnimation(lineVisual, TimeSpan.FromSeconds(10), TimeSpan.Zero);
               };
         }
+
+        private Compositor Compositor => Window.Current.Compositor;
 
         private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
         {

@@ -22,14 +22,13 @@ namespace DesignAndAnimationLab
             InspiredBy = inspiredBy;
         }
 
-        public string Name { get; private set; }
         public Type Control { get; private set; }
-
         public Uri InspiredBy { get; private set; }
+        public string Name { get; private set; }
 
-        public override string ToString()
+        public string ThumbnailNarrow
         {
-            return this.Name;
+            get { return "ms-appx:///Thumbnails/" + ThumbnailFilename(""); }
         }
 
         public string ThumbnailWide
@@ -37,14 +36,14 @@ namespace DesignAndAnimationLab
             get { return "ms-appx:///Thumbnails/" + ThumbnailFilename(""); }
         }
 
-        public string ThumbnailNarrow
-        {
-            get { return "ms-appx:///Thumbnails/" + ThumbnailFilename(""); }
-        }
-
         public string ThumbnailFilename(string suffix)
         {
             return Name.Replace(" ", "") + suffix + ".png";
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
         }
     }
 

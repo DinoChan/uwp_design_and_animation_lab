@@ -11,6 +11,8 @@ namespace DesignAndAnimationLab.Demos.GooeyButtonDemo
     /// </summary>
     public sealed partial class GooeyButtonDemoPage : Page
     {
+        private Random rnd = new Random();
+
         public GooeyButtonDemoPage()
         {
             this.InitializeComponent();
@@ -23,7 +25,6 @@ namespace DesignAndAnimationLab.Demos.GooeyButtonDemo
         }
 
         private ObservableCollection<Symbol> strings { get; set; }
-        private Random rnd = new Random();
 
         private void gooeyButton_Invoked(object sender, GooeyButton.GooeyButtonInvokedEventArgs args)
         {

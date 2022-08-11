@@ -7,15 +7,24 @@ namespace DesignAndAnimationLab.Common
 {
     public static class VisualExtensions
     {
-        public static string GetScale(DependencyObject obj)
-        {
-            return (string)obj.GetValue(ScaleProperty);
-        }
-
-        public static void SetScale(DependencyObject obj, string value)
-        {
-            obj.SetValue(ScaleProperty, value);
-        }
+        public static readonly DependencyProperty IsBindCenterPointProperty =
+            DependencyProperty.RegisterAttached("IsBindCenterPoint", typeof(bool), typeof(VisualExtensions), new PropertyMetadata(false, (s, a) =>
+            {
+                if (a.NewValue != a.OldValue)
+                {
+                    if (s is UIElement ele)
+                    {
+                        if (a.NewValue is true)
+                        {
+                            ElementCompositionPreview.GetElementVisual(ele).BindCenterPoint();
+                        }
+                        else
+                        {
+                            ElementCompositionPreview.GetElementVisual(ele).StopAnimation("CenterPoint");
+                        }
+                    }
+                }
+            }));
 
         public static readonly DependencyProperty ScaleProperty =
             DependencyProperty.RegisterAttached("Scale", typeof(string), typeof(VisualExtensions), new PropertyMetadata("1,1,1", (s, a) =>
@@ -39,45 +48,6 @@ namespace DesignAndAnimationLab.Common
                     }
                 }
             }));
-
-        public static bool GetIsBindCenterPoint(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsBindCenterPointProperty);
-        }
-
-        public static void SetIsBindCenterPoint(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsBindCenterPointProperty, value);
-        }
-
-        public static readonly DependencyProperty IsBindCenterPointProperty =
-            DependencyProperty.RegisterAttached("IsBindCenterPoint", typeof(bool), typeof(VisualExtensions), new PropertyMetadata(false, (s, a) =>
-            {
-                if (a.NewValue != a.OldValue)
-                {
-                    if (s is UIElement ele)
-                    {
-                        if (a.NewValue is true)
-                        {
-                            ElementCompositionPreview.GetElementVisual(ele).BindCenterPoint();
-                        }
-                        else
-                        {
-                            ElementCompositionPreview.GetElementVisual(ele).StopAnimation("CenterPoint");
-                        }
-                    }
-                }
-            }));
-
-        public static string GetTransations(DependencyObject obj)
-        {
-            return (string)obj.GetValue(TransationsProperty);
-        }
-
-        public static void SetTransations(DependencyObject obj, string value)
-        {
-            obj.SetValue(TransationsProperty, value);
-        }
 
         public static readonly DependencyProperty TransationsProperty =
             DependencyProperty.RegisterAttached("Transations", typeof(string), typeof(VisualExtensions), new PropertyMetadata(null, (s, a) =>
@@ -104,5 +74,35 @@ namespace DesignAndAnimationLab.Common
                     }
                 }
             }));
+
+        public static bool GetIsBindCenterPoint(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsBindCenterPointProperty);
+        }
+
+        public static string GetScale(DependencyObject obj)
+        {
+            return (string)obj.GetValue(ScaleProperty);
+        }
+
+        public static string GetTransations(DependencyObject obj)
+        {
+            return (string)obj.GetValue(TransationsProperty);
+        }
+
+        public static void SetIsBindCenterPoint(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsBindCenterPointProperty, value);
+        }
+
+        public static void SetScale(DependencyObject obj, string value)
+        {
+            obj.SetValue(ScaleProperty, value);
+        }
+
+        public static void SetTransations(DependencyObject obj, string value)
+        {
+            obj.SetValue(TransationsProperty, value);
+        }
     }
 }

@@ -18,8 +18,6 @@ namespace DesignAndAnimationLab.AnimationTimelines
         {
         }
 
-
-
         /// <summary>
         /// Specifies the factor which controls the shape of easing.
         /// </summary>
@@ -37,7 +35,5 @@ namespace DesignAndAnimationLab.AnimationTimelines
                 return (Math.Exp(factor * normalizedTime) - 1.0) / (Math.Exp(factor) - 1.0);
             }
         }
-
-
     }
 }

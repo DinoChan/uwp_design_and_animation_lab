@@ -18,16 +18,13 @@ namespace DesignAndAnimationLab.AnimationTimelines
         {
         }
 
-      
-
         /// <summary>
         /// Specifies the number of bounces.  This does not include the final half bounce.
         /// </summary>
         public int Bounces { get; set; } = 3;
 
-        
         /// <summary>
-        ///     Specifies the amount of bounciness.  This corresponds to the scale difference between a bounce and the next bounce.  
+        ///     Specifies the amount of bounciness.  This corresponds to the scale difference between a bounce and the next bounce.
         ///     For example, Bounciness = 2.0 correspondes to the next bounce being twices as high and taking twice as long.
         /// </summary>
         public double Bounciness { get; set; } = 2.0;
@@ -55,7 +52,7 @@ namespace DesignAndAnimationLab.AnimationTimelines
 
             double pow = Math.Pow(bounciness, bounces);
             double oneMinusBounciness = 1.0 - bounciness;
-            
+
             // 'unit' space calculations.
             // Our bounces grow in the x axis exponentially.  we define the first bounce as having a 'unit' width of 1.0 and compute
             // the total number of 'units' using a geometric series.
@@ -66,7 +63,7 @@ namespace DesignAndAnimationLab.AnimationTimelines
             // 'bounce' space calculations.
             // Now that we know which 'unit' the current time is in, we can determine which bounce we're in by solving the geometric equation:
             // unitAtT = (1 - bounciness^bounce) / (1 - bounciness), for bounce.
-            double bounceAtT = Math.Log(-unitAtT * (1.0-bounciness) + 1.0, bounciness);
+            double bounceAtT = Math.Log(-unitAtT * (1.0 - bounciness) + 1.0, bounciness);
             double start = Math.Floor(bounceAtT);
             double end = start + 1.0;
 
@@ -84,6 +81,5 @@ namespace DesignAndAnimationLab.AnimationTimelines
             // Evaluate a quadratic that hits (startTime,0), (endTime, 0), and peaks at amplitude.
             return (-amplitude / (radius * radius)) * (timeRelativeToPeak - radius) * (timeRelativeToPeak + radius);
         }
-
     }
 }

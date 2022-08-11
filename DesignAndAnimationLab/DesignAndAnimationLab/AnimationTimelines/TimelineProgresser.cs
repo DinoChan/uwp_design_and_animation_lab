@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace DesignAndAnimationLab.AnimationTimelines
 {
@@ -17,14 +11,10 @@ namespace DesignAndAnimationLab.AnimationTimelines
             AutoReverse = autoReverse;
         }
 
-        public EasingFunctionBase EasingFunction { get; set; }
-
-        public Duration Duration { get; set; } = new Duration(TimeSpan.FromSeconds(1));
-
-        public TimeSpan? BeginTime { get; set; }
-
         public bool AutoReverse { get; set; }
-
+        public TimeSpan? BeginTime { get; set; }
+        public Duration Duration { get; set; } = new Duration(TimeSpan.FromSeconds(1));
+        public EasingFunctionBase EasingFunction { get; set; }
         public bool Forever { get; set; }
 
         public double GetCurrentProgress(TimeSpan timeSpan)

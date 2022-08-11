@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesignAndAnimationLab.AnimationTimelines
+﻿namespace DesignAndAnimationLab.AnimationTimelines
 {
     public abstract class EasingFunctionBase
     {    /// <summary>
@@ -24,9 +18,11 @@ namespace DesignAndAnimationLab.AnimationTimelines
             {
                 case EasingMode.EaseIn:
                     return EaseInCore(normalizedTime);
+
                 case EasingMode.EaseOut:
                     // EaseOut is the same as EaseIn, except time is reversed & the result is flipped.
                     return 1.0 - EaseInCore(1.0 - normalizedTime);
+
                 case EasingMode.EaseInOut:
                 default:
                     // EaseInOut is a combination of EaseIn & EaseOut fit to the 0-1, 0-1 range.
@@ -42,7 +38,7 @@ namespace DesignAndAnimationLab.AnimationTimelines
         /// <param name="normalizedTime">normalized time (progress) of the animation</param>
         /// <returns>transformed progress</returns>
         /// <remarks>
-        ///     You only have to specifiy your easing function for the 'EaseIn' case because the implementation 
+        ///     You only have to specifiy your easing function for the 'EaseIn' case because the implementation
         ///     of Ease will handle transforming normalizedTime & the result of this method to handle 'EaseOut' & 'EaseInOut'.
         /// </remarks>
         protected abstract double EaseInCore(double normalizedTime);

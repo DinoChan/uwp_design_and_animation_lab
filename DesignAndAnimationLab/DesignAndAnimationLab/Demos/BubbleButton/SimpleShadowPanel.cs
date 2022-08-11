@@ -13,6 +13,16 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
 {
     public class SimpleShadowPanel : ContentControl
     {
+        private Compositor _Compositor;
+
+        private DropShadow _Shadow;
+
+        private SpriteVisual _ShadowVisual;
+
+        private Visual HostVisual;
+
+        private Rectangle ShadowHost;
+
         public SimpleShadowPanel()
         {
             this.DefaultStyleKey = typeof(SimpleShadowPanel);
@@ -20,12 +30,6 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             RegisterPropertyChangedCallback(BackgroundProperty, BackgroundPropertyChanged);
             this.SizeChanged += SimpleShadowPanel_SizeChanged;
         }
-
-        private Rectangle ShadowHost;
-        private Visual HostVisual;
-        private Compositor _Compositor;
-        private SpriteVisual _ShadowVisual;
-        private DropShadow _Shadow;
 
         protected override void OnApplyTemplate()
         {
@@ -35,6 +39,25 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
 
             SetupComposition();
             UpdateShadow();
+        }
+
+        private void BackgroundPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            UpdateShadow();
+        }
+
+        private void ContentPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            UpdateShadow();
+        }
+
+        private Color GetBackgroundColor()
+        {
+            if (Background is SolidColorBrush brush)
+            {
+                return brush.Color;
+            }
+            return Colors.Transparent;
         }
 
         private void SetupComposition()
@@ -55,13 +78,9 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             ElementCompositionPreview.SetElementChildVisual(ShadowHost, _ShadowVisual);
         }
 
-        private Color GetBackgroundColor()
+        private void SimpleShadowPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (Background is SolidColorBrush brush)
-            {
-                return brush.Color;
-            }
-            return Colors.Transparent;
+            UpdateShadow();
         }
 
         private void UpdateShadow()
@@ -74,21 +93,6 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
                     _Shadow.Mask = rect.GetAlphaMask();
                 }
             }
-        }
-
-        private void SimpleShadowPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateShadow();
-        }
-
-        private void BackgroundPropertyChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateShadow();
-        }
-
-        private void ContentPropertyChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateShadow();
         }
     }
 }

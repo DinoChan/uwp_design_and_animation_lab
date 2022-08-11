@@ -16,6 +16,19 @@ namespace DesignAndAnimationLab.Demos
             SizeChanged += OnSizeChanged;
         }
 
+        private CompositionPath GetLine(Vector2 pt1, Vector2 pt2)
+        {
+            CanvasGeometry result;
+            using (var builder = new CanvasPathBuilder(null))
+            {
+                builder.BeginFigure(pt1);
+                builder.AddLine(pt2);
+                builder.EndFigure(CanvasFigureLoop.Open);
+                result = CanvasGeometry.CreatePath(builder);
+            }
+            return new CompositionPath(result);
+        }
+
         private void OnSizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
             var length = (float)Math.Min(e.NewSize.Width, e.NewSize.Height) * 0.95;
@@ -68,19 +81,6 @@ namespace DesignAndAnimationLab.Demos
             visual.Shapes.Add(shape3);
             visual.Size = e.NewSize.ToVector2();
             ElementCompositionPreview.SetElementChildVisual(this, visual);
-        }
-
-        private CompositionPath GetLine(Vector2 pt1, Vector2 pt2)
-        {
-            CanvasGeometry result;
-            using (var builder = new CanvasPathBuilder(null))
-            {
-                builder.BeginFigure(pt1);
-                builder.AddLine(pt2);
-                builder.EndFigure(CanvasFigureLoop.Open);
-                result = CanvasGeometry.CreatePath(builder);
-            }
-            return new CompositionPath(result);
         }
     }
 }

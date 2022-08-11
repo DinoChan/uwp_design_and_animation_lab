@@ -17,8 +17,6 @@ namespace DesignAndAnimationLab
         private long brushOpacityToken = -1;
         private bool isAnimating = false;
 
-        public GooeyButtonItemProperty ItemProperty { get; }
-
         public GooeyButtonItem()
         {
             this.DefaultStyleKey = typeof(GooeyButtonItem);
@@ -28,6 +26,8 @@ namespace DesignAndAnimationLab
             RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundChanged);
             RegisterPropertyChangedCallback(OpacityProperty, OnOpacityChanged);
         }
+
+        public GooeyButtonItemProperty ItemProperty { get; }
 
         #region Override Methods
 
@@ -51,11 +51,6 @@ namespace DesignAndAnimationLab
         }
 
         #region Update Property
-
-        private void OnOpacityChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            OnGooeyButtonItemPropertyChanged();
-        }
 
         private void OnBackgroundChanged(DependencyObject sender, DependencyProperty dp)
         {
@@ -90,6 +85,11 @@ namespace DesignAndAnimationLab
             OnGooeyButtonItemPropertyChanged();
         }
 
+        private void OnOpacityChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            OnGooeyButtonItemPropertyChanged();
+        }
+
         #endregion Update Property
 
         #endregion Event Methods
@@ -108,12 +108,6 @@ namespace DesignAndAnimationLab
 
         #region Dependency Properties
 
-        public double Win2DTranslateX
-        {
-            get { return (double)GetValue(Win2DTranslateXProperty); }
-            set { SetValue(Win2DTranslateXProperty, value); }
-        }
-
         public static readonly DependencyProperty Win2DTranslateXProperty =
             DependencyProperty.Register("Win2DTranslateX", typeof(double), typeof(GooeyButtonItem), new PropertyMetadata(0d, (s, a) =>
             {
@@ -126,12 +120,6 @@ namespace DesignAndAnimationLab
                 }
             }));
 
-        public double Win2DTranslateY
-        {
-            get { return (double)GetValue(Win2DTranslateYProperty); }
-            set { SetValue(Win2DTranslateYProperty, value); }
-        }
-
         public static readonly DependencyProperty Win2DTranslateYProperty =
             DependencyProperty.Register("Win2DTranslateY", typeof(double), typeof(GooeyButtonItem), new PropertyMetadata(0d, (s, a) =>
             {
@@ -143,6 +131,18 @@ namespace DesignAndAnimationLab
                     }
                 }
             }));
+
+        public double Win2DTranslateX
+        {
+            get { return (double)GetValue(Win2DTranslateXProperty); }
+            set { SetValue(Win2DTranslateXProperty, value); }
+        }
+
+        public double Win2DTranslateY
+        {
+            get { return (double)GetValue(Win2DTranslateYProperty); }
+            set { SetValue(Win2DTranslateYProperty, value); }
+        }
 
         #endregion Dependency Properties
 

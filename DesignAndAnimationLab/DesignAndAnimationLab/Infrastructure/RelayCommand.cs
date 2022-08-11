@@ -16,13 +16,8 @@ namespace DesignAndAnimationLab
     /// </summary>
     public class RelayCommand : ICommand
     {
-        private readonly Action _execute;
         private readonly Func<bool> _canExecute;
-
-        /// <summary>
-        /// Raised when RaiseCanExecuteChanged is called.
-        /// </summary>
-        public event EventHandler CanExecuteChanged;
+        private readonly Action _execute;
 
         /// <summary>
         /// Creates a new command that can always execute.
@@ -45,6 +40,11 @@ namespace DesignAndAnimationLab
             _execute = execute;
             _canExecute = canExecute;
         }
+
+        /// <summary>
+        /// Raised when RaiseCanExecuteChanged is called.
+        /// </summary>
+        public event EventHandler CanExecuteChanged;
 
         /// <summary>
         /// Determines whether this <see cref="RelayCommand"/> can execute in its current state.

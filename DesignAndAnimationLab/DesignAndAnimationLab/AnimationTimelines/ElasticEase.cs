@@ -18,8 +18,6 @@ namespace DesignAndAnimationLab.AnimationTimelines
         {
         }
 
-
-
         /// <summary>
         /// Specifies the number of oscillations
         /// </summary>
@@ -46,7 +44,5 @@ namespace DesignAndAnimationLab.AnimationTimelines
 
             return expo * (Math.Sin((Math.PI * 2.0 * oscillations + Math.PI * 0.5) * normalizedTime));
         }
-
-        
     }
 }

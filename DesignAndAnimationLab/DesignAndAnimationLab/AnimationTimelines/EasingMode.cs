@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesignAndAnimationLab.AnimationTimelines
+﻿namespace DesignAndAnimationLab.AnimationTimelines
 {
     /// <summary>
     ///     This enum defines the modes in which classes deriving from EasingFunctioBase

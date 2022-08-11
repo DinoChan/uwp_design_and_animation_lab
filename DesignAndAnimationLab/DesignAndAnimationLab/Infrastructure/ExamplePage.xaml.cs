@@ -35,6 +35,11 @@ namespace DesignAndAnimationLab
             get { return this.navigationHelper; }
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.navigationHelper.OnNavigatedFrom(e);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
@@ -50,11 +55,6 @@ namespace DesignAndAnimationLab
                     this.exampleContent.Children.Add(control);
                 }
             }
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.navigationHelper.OnNavigatedFrom(e);
         }
     }
 }

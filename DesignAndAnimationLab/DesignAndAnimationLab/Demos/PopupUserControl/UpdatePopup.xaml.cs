@@ -9,8 +9,6 @@ namespace DesignAndAnimationLab.Demos
 {
     public sealed partial class UpdatePopup : UserControl, IAppPopup
     {
-        public Popup _popup { get; set; }
-        public Guid _popupId { get; set; }
         private string version = "";
 
         public UpdatePopup()
@@ -19,17 +17,20 @@ namespace DesignAndAnimationLab.Demos
             this.PopupInit();
         }
 
-        public void ShowPopup()
-        {
-            this.PopupShow();
-            PopupIn.Begin();
-        }
+        public Popup _popup { get; set; }
+        public Guid _popupId { get; set; }
 
         public void HidePopup()
         {
             PopupOut.Begin();
             PopupOut.Completed -= PopupOut_Completed;
             PopupOut.Completed += PopupOut_Completed;
+        }
+
+        public void ShowPopup()
+        {
+            this.PopupShow();
+            PopupIn.Begin();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

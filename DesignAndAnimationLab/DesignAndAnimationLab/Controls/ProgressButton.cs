@@ -18,8 +18,8 @@ namespace DesignAndAnimationLab
     [ContentProperty(Name = nameof(Content))]
     public partial class ProgressButton : RangeBase
     {
-        private bool _isPointerCaptured;
         private GestureRecognizer _gestureRecognizer = new GestureRecognizer();
+        private bool _isPointerCaptured;
 
         public ProgressButton()
         {
@@ -30,11 +30,11 @@ namespace DesignAndAnimationLab
             IsEnabledChanged += OnIsEnabledChanged;
         }
 
-        public event EventHandler StateChanged;
-
         public event EventHandler<HoldingEventArgs> GestureRecognizerHolding;
 
         public event EventHandler<TappedEventArgs> GestureRecognizerTapped;
+
+        public event EventHandler StateChanged;
 
         protected override void OnApplyTemplate()
         {
@@ -42,16 +42,41 @@ namespace DesignAndAnimationLab
             UpdateVisualStates(false);
         }
 
-        protected virtual void OnStateChanged(ProgressState oldValue, ProgressState newValue)
-        {
-            StateChanged?.Invoke(this, EventArgs.Empty);
-            UpdateVisualStates(true);
-        }
-
         protected override void OnPointerCaptureLost(PointerRoutedEventArgs e)
         {
             base.OnPointerCaptureLost(e);
             _isPointerCaptured = false;
+        }
+
+        protected override void OnPointerEntered(PointerRoutedEventArgs e)
+        {
+            base.OnPointerEntered(e);
+            IsPointerOver = true;
+            UpdateVisualStates();
+        }
+
+        protected override void OnPointerExited(PointerRoutedEventArgs e)
+        {
+            base.OnPointerExited(e);
+            IsPointerOver = false;
+            UpdateVisualStates();
+        }
+
+        protected override void OnPointerMoved(PointerRoutedEventArgs e)
+        {
+            base.OnPointerMoved(e);
+            _gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
+            e.Handled = true;
+            if (_isPointerCaptured == false)
+                return;
+
+            var position = e.GetCurrentPoint(this).Position;
+            if (position.X < 0 || position.Y < 0 || position.X > ActualWidth || position.Y > ActualHeight)
+                IsPressed = false;
+            else
+                IsPressed = true;
+
+            UpdateVisualStates();
         }
 
         protected override void OnPointerPressed(PointerRoutedEventArgs e)
@@ -104,34 +129,31 @@ namespace DesignAndAnimationLab
             }
         }
 
-        protected override void OnPointerMoved(PointerRoutedEventArgs e)
+        protected virtual void OnStateChanged(ProgressState oldValue, ProgressState newValue)
         {
-            base.OnPointerMoved(e);
-            _gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
-            e.Handled = true;
-            if (_isPointerCaptured == false)
-                return;
+            StateChanged?.Invoke(this, EventArgs.Empty);
+            UpdateVisualStates(true);
+        }
 
-            var position = e.GetCurrentPoint(this).Position;
-            if (position.X < 0 || position.Y < 0 || position.X > ActualWidth || position.Y > ActualHeight)
+        private void OnGestureRecognizerHolding(GestureRecognizer sender, HoldingEventArgs args)
+        {
+            GestureRecognizerHolding?.Invoke(this, args);
+        }
+
+        private void OnGestureRecognizerTapped(GestureRecognizer sender, TappedEventArgs args)
+        {
+            GestureRecognizerTapped?.Invoke(this, args);
+        }
+
+        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!IsEnabled)
+            {
                 IsPressed = false;
-            else
-                IsPressed = true;
+                IsPointerOver = false;
+                _isPointerCaptured = false;
+            }
 
-            UpdateVisualStates();
-        }
-
-        protected override void OnPointerEntered(PointerRoutedEventArgs e)
-        {
-            base.OnPointerEntered(e);
-            IsPointerOver = true;
-            UpdateVisualStates();
-        }
-
-        protected override void OnPointerExited(PointerRoutedEventArgs e)
-        {
-            base.OnPointerExited(e);
-            IsPointerOver = false;
             UpdateVisualStates();
         }
 
@@ -168,28 +190,6 @@ namespace DesignAndAnimationLab
                 VisualStateManager.GoToState(this, StatePointerOver, useTransitions);
             else
                 VisualStateManager.GoToState(this, StateNormal, useTransitions);
-        }
-
-        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (!IsEnabled)
-            {
-                IsPressed = false;
-                IsPointerOver = false;
-                _isPointerCaptured = false;
-            }
-
-            UpdateVisualStates();
-        }
-
-        private void OnGestureRecognizerTapped(GestureRecognizer sender, TappedEventArgs args)
-        {
-            GestureRecognizerTapped?.Invoke(this, args);
-        }
-
-        private void OnGestureRecognizerHolding(GestureRecognizer sender, HoldingEventArgs args)
-        {
-            GestureRecognizerHolding?.Invoke(this, args);
         }
     }
 }

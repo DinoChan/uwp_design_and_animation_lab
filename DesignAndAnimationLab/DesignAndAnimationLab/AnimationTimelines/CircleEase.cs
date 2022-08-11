@@ -18,6 +18,5 @@ namespace DesignAndAnimationLab.AnimationTimelines
             normalizedTime = Math.Max(0.0, Math.Min(1.0, normalizedTime));
             return 1.0 - Math.Sqrt(1.0 - normalizedTime * normalizedTime);
         }
-
     }
 }

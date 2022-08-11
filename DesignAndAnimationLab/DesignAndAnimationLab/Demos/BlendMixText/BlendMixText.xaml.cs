@@ -14,8 +14,6 @@ namespace DesignAndAnimationLab.Demos
 {
     public sealed partial class BlendMixText : UserControl
     {
-        private Compositor Compositor => Window.Current.Compositor;
-
         public BlendMixText()
         {
             this.InitializeComponent();
@@ -43,6 +41,22 @@ namespace DesignAndAnimationLab.Demos
             AddTextToRoot(BlendEffectMode.VividLight);
         }
 
+        private Compositor Compositor => Window.Current.Compositor;
+
+        public TextToBrushWrapper CreateTextToBrushWrapper(string text, Windows.UI.Color fontColor)
+        {
+            var result = new TextToBrushWrapper
+            {
+                Text = text,
+                FontSize = 45,
+                Width = 400,
+                Height = 70,
+                FontColor = fontColor,
+            };
+            result.Brush.VerticalAlignmentRatio = 0;
+            return result;
+        }
+
         private void AddTextToRoot(BlendEffectMode blendEffectMode)
         {
             var redBrushWrapper = CreateTextToBrushWrapper(blendEffectMode.ToString(), Colors.Red);
@@ -57,37 +71,6 @@ namespace DesignAndAnimationLab.Demos
 
             ElementCompositionPreview.SetElementChildVisual(background, textVisual);
             Root.Children.Add(background);
-        }
-
-        private CompositionLinearGradientBrush CreateGradientBrush()
-        {
-            var gradientBrush = Compositor.CreateLinearGradientBrush();
-            gradientBrush.StartPoint = new Vector2(0.5f, 0); ;
-            gradientBrush.EndPoint = new Vector2(0.5f, 1);
-
-            var startGradientStop = Compositor.CreateColorGradientStop();
-            startGradientStop.Offset = 0.49f;
-            startGradientStop.Color = Colors.White;
-            var endGradientStop = Compositor.CreateColorGradientStop();
-            endGradientStop.Offset = 0.5f;
-            endGradientStop.Color = Colors.Transparent;
-            gradientBrush.ColorStops.Add(startGradientStop);
-            gradientBrush.ColorStops.Add(endGradientStop);
-            return gradientBrush;
-        }
-
-        public TextToBrushWrapper CreateTextToBrushWrapper(string text, Windows.UI.Color fontColor)
-        {
-            var result = new TextToBrushWrapper
-            {
-                Text = text,
-                FontSize = 45,
-                Width = 400,
-                Height = 70,
-                FontColor = fontColor,
-            };
-            result.Brush.VerticalAlignmentRatio = 0;
-            return result;
         }
 
         private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
@@ -105,6 +88,23 @@ namespace DesignAndAnimationLab.Demos
             compositionBrush.SetSourceParameter("Tint", background);
 
             return compositionBrush;
+        }
+
+        private CompositionLinearGradientBrush CreateGradientBrush()
+        {
+            var gradientBrush = Compositor.CreateLinearGradientBrush();
+            gradientBrush.StartPoint = new Vector2(0.5f, 0); ;
+            gradientBrush.EndPoint = new Vector2(0.5f, 1);
+
+            var startGradientStop = Compositor.CreateColorGradientStop();
+            startGradientStop.Offset = 0.49f;
+            startGradientStop.Color = Colors.White;
+            var endGradientStop = Compositor.CreateColorGradientStop();
+            endGradientStop.Offset = 0.5f;
+            endGradientStop.Color = Colors.Transparent;
+            gradientBrush.ColorStops.Add(startGradientStop);
+            gradientBrush.ColorStops.Add(endGradientStop);
+            return gradientBrush;
         }
     }
 }

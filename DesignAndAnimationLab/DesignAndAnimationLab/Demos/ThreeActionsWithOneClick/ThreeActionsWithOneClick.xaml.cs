@@ -9,8 +9,8 @@ namespace DesignAndAnimationLab.Demos
 {
     public sealed partial class ThreeActionsWithOneClick
     {
-        private Storyboard _progressStoryboard;
         private bool _isAnimateBegin;
+        private Storyboard _progressStoryboard;
 
         public ThreeActionsWithOneClick()
         {
@@ -18,21 +18,20 @@ namespace DesignAndAnimationLab.Demos
             _progressStoryboard = CreateStoryboard();
         }
 
-        private void OnLikeButtonTapped(object sender, TappedRoutedEventArgs e)
+        private Storyboard CreateStoryboard()
         {
-            if (LikeButton.State != ProgressState.Completed)
-                LikeButton.State = ProgressState.Completed;
-            else
-                LikeButton.State = ProgressState.Idle;
-        }
+            var animation = new DoubleAnimation
+            {
+                EnableDependentAnimation = true,
+                Duration = TimeSpan.FromSeconds(2)
+            };
 
-        private void OnGestureRecognizerTapped(object sender, Windows.UI.Input.TappedEventArgs e)
-        {
-            var progressButton = sender as ProgressButton;
-            if (progressButton.State == ProgressState.Idle)
-                progressButton.State = ProgressState.Completed;
-            else
-                progressButton.State = ProgressState.Idle;
+            Storyboard.SetTargetProperty(animation, nameof(ProgressButton.Value));
+            var storyboard = new Storyboard();
+            storyboard.Children.Add(animation);
+            storyboard.Completed += OnProgressStoryboardCompleted;
+            storyboard.FillBehavior = FillBehavior.Stop;
+            return storyboard;
         }
 
         private void OnGestureRecognizerHolding(object sender, Windows.UI.Input.HoldingEventArgs e)
@@ -56,20 +55,21 @@ namespace DesignAndAnimationLab.Demos
             }
         }
 
-        private Storyboard CreateStoryboard()
+        private void OnGestureRecognizerTapped(object sender, Windows.UI.Input.TappedEventArgs e)
         {
-            var animation = new DoubleAnimation
-            {
-                EnableDependentAnimation = true,
-                Duration = TimeSpan.FromSeconds(2)
-            };
+            var progressButton = sender as ProgressButton;
+            if (progressButton.State == ProgressState.Idle)
+                progressButton.State = ProgressState.Completed;
+            else
+                progressButton.State = ProgressState.Idle;
+        }
 
-            Storyboard.SetTargetProperty(animation, nameof(ProgressButton.Value));
-            var storyboard = new Storyboard();
-            storyboard.Children.Add(animation);
-            storyboard.Completed += OnProgressStoryboardCompleted;
-            storyboard.FillBehavior = FillBehavior.Stop;
-            return storyboard;
+        private void OnLikeButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (LikeButton.State != ProgressState.Completed)
+                LikeButton.State = ProgressState.Completed;
+            else
+                LikeButton.State = ProgressState.Idle;
         }
 
         private void OnProgressStoryboardCompleted(object sender, object e)

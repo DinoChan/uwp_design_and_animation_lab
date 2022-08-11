@@ -21,6 +21,11 @@ namespace DesignAndAnimationLab.Demos.LikeButtons
             InitializeComponent();
         }
 
+        private void OnChecked(object sender, RoutedEventArgs e)
+        {
+            _checkStoryboard.Begin();
+        }
+
         private void OnHeartLoaded(object sender, RoutedEventArgs e)
         {
             _heartTransform = (sender as Image).RenderTransform as CompositeTransform;
@@ -43,11 +48,6 @@ namespace DesignAndAnimationLab.Demos.LikeButtons
             _checkStoryboard.Children.Add(keyFrames);
 
             _checkStoryboard.FillBehavior = FillBehavior.HoldEnd;
-        }
-
-        private void OnChecked(object sender, RoutedEventArgs e)
-        {
-            _checkStoryboard.Begin();
         }
 
         private void OnUnchecked(object sender, RoutedEventArgs e)

@@ -14,6 +14,28 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
     /// </summary>
     public class Bubble : IDisposable
     {
+        private static readonly Random rnd = new Random();
+
+        private static CompositionEasingFunction easing;
+
+        private CompositionAnimationGroup _animations;
+
+        private CompositionSurfaceBrush _brush;
+
+        private CanvasDevice _canvasDevice;
+
+        private Compositor _compositor;
+
+        private CompositionGraphicsDevice _graphicsDevice;
+
+        private CompositionDrawingSurface _surface;
+
+        private SpriteVisual _visual;
+
+        private Vector3 Offset;
+
+        private Vector2 Size;
+
         public Bubble(Compositor Compositor, CanvasDevice canvasDevice, CompositionGraphicsDevice graphicsDevice, Size TargetSize, Color Color, TimeSpan Duration, bool OnTop, Size? Size = null, bool? IsFill = null)
         {
             _compositor = Compositor;
@@ -58,38 +80,20 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             Dispose(false);
         }
 
-        private static readonly Random rnd = new Random();
-
-        private static CompositionEasingFunction easing;
-
-        private Compositor _compositor;
-        private CanvasDevice _canvasDevice;
-        private CompositionGraphicsDevice _graphicsDevice;
-        private SpriteVisual _visual;
-        private CompositionAnimationGroup _animations;
-        private Vector2 Size;
-        private Vector3 Offset;
-        private CompositionDrawingSurface _surface;
-        private CompositionSurfaceBrush _brush;
-
-        private void Draw(bool IsFill, Color color)
+        public void AddTo(ContainerVisual container)
         {
-            _surface = _graphicsDevice.CreateDrawingSurface(Size.ToSize(), Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized, Windows.Graphics.DirectX.DirectXAlphaMode.Premultiplied);
-            using (var dc = CanvasComposition.CreateDrawingSession(_surface))
-            {
-                dc.Clear(Colors.Transparent);
-                if (IsFill)
-                {
-                    dc.FillCircle(Size / 2, Size.X / 2, color);
-                }
-                else
-                {
-                    dc.DrawCircle(Size / 2, Size.X / 2 - 2, color, 2f);
-                }
-                dc.Flush();
-            }
-            _brush = _compositor.CreateSurfaceBrush(_surface);
-            _visual.Brush = _brush;
+            container.Children.InsertAtBottom(_visual);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        public void Start()
+        {
+            _visual.StopAnimationGroup(_animations);
+            _visual.StartAnimationGroup(_animations);
         }
 
         private void CreateAnimation(Size TargetSize, Vector3 StartOffset, bool OnTop, TimeSpan Duration)
@@ -129,22 +133,6 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             _animations.Add(offsetan);
         }
 
-        public void AddTo(ContainerVisual container)
-        {
-            container.Children.InsertAtBottom(_visual);
-        }
-
-        public void Start()
-        {
-            _visual.StopAnimationGroup(_animations);
-            _visual.StartAnimationGroup(_animations);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
         private void Dispose(bool IsDisposing)
         {
             _visual?.Dispose();
@@ -163,6 +151,26 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             {
                 GC.SuppressFinalize(this);
             }
+        }
+
+        private void Draw(bool IsFill, Color color)
+        {
+            _surface = _graphicsDevice.CreateDrawingSurface(Size.ToSize(), Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized, Windows.Graphics.DirectX.DirectXAlphaMode.Premultiplied);
+            using (var dc = CanvasComposition.CreateDrawingSession(_surface))
+            {
+                dc.Clear(Colors.Transparent);
+                if (IsFill)
+                {
+                    dc.FillCircle(Size / 2, Size.X / 2, color);
+                }
+                else
+                {
+                    dc.DrawCircle(Size / 2, Size.X / 2 - 2, color, 2f);
+                }
+                dc.Flush();
+            }
+            _brush = _compositor.CreateSurfaceBrush(_surface);
+            _visual.Brush = _brush;
         }
     }
 }

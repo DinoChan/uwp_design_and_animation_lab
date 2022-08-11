@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace DesignAndAnimationLab.AnimationTimelines
@@ -22,12 +18,11 @@ namespace DesignAndAnimationLab.AnimationTimelines
             Forever = forever;
         }
 
-
+        public bool AutoReverse { get; }
+        public Duration Duration { get; }
+        public bool Forever { get; }
         public Vector2 From { get; }
         public Vector2 To { get; }
-        public Duration Duration { get; }
-        public bool AutoReverse { get; }
-        public bool Forever { get; }
 
         public Vector2 GetCurrentValue(TimeSpan timeSpan)
         {

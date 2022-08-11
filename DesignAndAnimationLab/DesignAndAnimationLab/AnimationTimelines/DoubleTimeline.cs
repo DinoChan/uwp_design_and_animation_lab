@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace DesignAndAnimationLab.AnimationTimelines
@@ -22,12 +18,12 @@ namespace DesignAndAnimationLab.AnimationTimelines
             Forever = forever;
         }
 
-        public double From { get; }
-        public double To { get; }
-        public Duration Duration { get; }
         public bool AutoReverse { get; }
         public TimeSpan? BeginTime { get; }
+        public Duration Duration { get; }
         public bool Forever { get; }
+        public double From { get; }
+        public double To { get; }
 
         public double GetCurrentProgress(TimeSpan timeSpan)
         {

@@ -10,14 +10,8 @@ namespace DesignAndAnimationLab
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private NavigationHelper navigationHelper;
-
-        // We track the last visual state we set to avoid redundant GoToState calls
-        // (these cause flickering on 8.1 apps running on Win10).
-        private enum VisualState
-        { Unknown, Big, Small, Tiny };
-
         private VisualState currentVisualState = VisualState.Unknown;
+        private NavigationHelper navigationHelper;
 
         public MainPage()
         {
@@ -26,15 +20,19 @@ namespace DesignAndAnimationLab
             this.navigationHelper = new NavigationHelper(this);
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var example = (ExampleDefinition)e.ClickedItem;
-            this.Frame.Navigate(typeof(ExamplePage), example);
-        }
+        // We track the last visual state we set to avoid redundant GoToState calls
+        // (these cause flickering on 8.1 apps running on Win10).
+        private enum VisualState
+        { Unknown, Big, Small, Tiny };
 
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.navigationHelper.OnNavigatedFrom(e);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -42,9 +40,10 @@ namespace DesignAndAnimationLab
             this.navigationHelper.OnNavigatedTo(e);
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);
+            var example = (ExampleDefinition)e.ClickedItem;
+            this.Frame.Navigate(typeof(ExamplePage), example);
         }
     }
 }
