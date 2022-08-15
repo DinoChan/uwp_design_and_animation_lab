@@ -5,13 +5,10 @@
 namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    ///     可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class GlitchArtWithManyWordsDemoPage : Page
     {
-        public GlitchArtWithManyWordsDemoPage()
-        {
-            this.InitializeComponent();
-        }
+        public GlitchArtWithManyWordsDemoPage() => InitializeComponent();
     }
 }

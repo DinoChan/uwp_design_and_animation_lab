@@ -6,9 +6,6 @@ namespace DesignAndAnimationLab.Demos
 {
     public sealed partial class LiquidFill : UserControl
     {
-        public LiquidFill()
-        {
-            this.InitializeComponent();
-        }
+        public LiquidFill() => InitializeComponent();
     }
 }

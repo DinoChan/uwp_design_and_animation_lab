@@ -14,26 +14,20 @@ namespace DesignAndAnimationLab.AnimationTimelines
     /// </summary>
     public class ExponentialEase : EasingFunctionBase
     {
-        public ExponentialEase()
-        {
-        }
-
         /// <summary>
-        /// Specifies the factor which controls the shape of easing.
+        ///     Specifies the factor which controls the shape of easing.
         /// </summary>
         public double Exponent { get; set; } = 2;
 
         protected override double EaseInCore(double normalizedTime)
         {
-            double factor = Exponent;
+            var factor = Exponent;
             if (DoubleUtil.IsZero(factor))
             {
                 return normalizedTime;
             }
-            else
-            {
-                return (Math.Exp(factor * normalizedTime) - 1.0) / (Math.Exp(factor) - 1.0);
-            }
+
+            return (Math.Exp(factor * normalizedTime) - 1.0) / (Math.Exp(factor) - 1.0);
         }
     }
 }

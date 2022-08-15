@@ -13,7 +13,7 @@ namespace DesignAndAnimationLab.Demos
 
         public UpdatePopup()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             this.PopupInit();
         }
 
@@ -33,14 +33,8 @@ namespace DesignAndAnimationLab.Demos
             PopupIn.Begin();
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            HidePopup();
-        }
+        private void CloseButton_Click(object sender, RoutedEventArgs e) => HidePopup();
 
-        private void PopupOut_Completed(object sender, object e)
-        {
-            _popup.IsOpen = false;
-        }
+        private void PopupOut_Completed(object sender, object e) => _popup.IsOpen = false;
     }
 }

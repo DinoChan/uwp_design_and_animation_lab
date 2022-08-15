@@ -6,11 +6,15 @@ namespace DesignAndAnimationLab.AnimationTimelines
 {
     public class Vector2Timeline
     {
-        private TimelineProgresser _progresser;
+        private readonly TimelineProgresser _progresser;
 
-        public Vector2Timeline(Vector2 from, Vector2 to, double seconds = 1, TimeSpan? beginTime = null, bool autoReverse = true, bool forever = true, EasingFunctionBase easingFunction = null)
+        public Vector2Timeline(Vector2 from, Vector2 to, double seconds = 1, TimeSpan? beginTime = null,
+            bool autoReverse = true, bool forever = true, EasingFunctionBase easingFunction = null)
         {
-            _progresser = new TimelineProgresser(seconds, autoReverse) { EasingFunction = easingFunction, BeginTime = beginTime, Forever = forever };
+            _progresser = new TimelineProgresser(seconds, autoReverse)
+            {
+                EasingFunction = easingFunction, BeginTime = beginTime, Forever = forever
+            };
             From = from;
             To = to;
             Duration = new Duration(TimeSpan.FromSeconds(seconds));

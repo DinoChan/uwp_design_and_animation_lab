@@ -11,9 +11,7 @@ namespace DesignAndAnimationLab.AnimationTimelines
     /// </summary>
     public class QuinticEase : EasingFunctionBase
     {
-        protected override double EaseInCore(double normalizedTime)
-        {
-            return normalizedTime * normalizedTime * normalizedTime * normalizedTime * normalizedTime;
-        }
+        protected override double EaseInCore(double normalizedTime) =>
+            normalizedTime * normalizedTime * normalizedTime * normalizedTime * normalizedTime;
     }
 }

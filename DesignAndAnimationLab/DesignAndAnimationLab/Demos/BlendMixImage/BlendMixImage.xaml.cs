@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Numerics;
-using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
+using Microsoft.Graphics.Canvas.Effects;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
@@ -16,30 +16,33 @@ namespace DesignAndAnimationLab.Demos
     {
         public BlendMixImage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             ElementCompositionPreview.SetElementChildVisual(BackgroundElement, CreateVisual("sea.jpg"));
             ElementCompositionPreview.SetElementChildVisual(BackgroundElement2, CreateVisual("sea2.jpg"));
         }
 
-        private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush(string imageName, Color color)
+        private (CompositionBrush compositionBrush, CompositionSurfaceBrush compositionSurfaceBrush) CreateBrush(
+            string imageName, Color color)
         {
             var compositor = Window.Current.Compositor;
             var loadedSurface = LoadedImageSurface.StartLoadFromUri(new Uri("ms-appx:///Assets/Images/" + imageName));
             var compositionSurfaceBrush = compositor.CreateSurfaceBrush();
             compositionSurfaceBrush.Surface = loadedSurface;
-            var compositionBrush = CreateBrush(compositionSurfaceBrush, compositor.CreateColorBrush(color), BlendEffectMode.Lighten);
+            var compositionBrush = CreateBrush(compositionSurfaceBrush, compositor.CreateColorBrush(color),
+                BlendEffectMode.Lighten);
             return (compositionBrush, compositionSurfaceBrush);
         }
 
-        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
+        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background,
+            BlendEffectMode blendEffectMode)
         {
             var compositor = Window.Current.Compositor;
-            var effect = new BlendEffect()
+            var effect = new BlendEffect
             {
                 Mode = blendEffectMode,
                 Foreground = new CompositionEffectSourceParameter("Main"),
-                Background = new CompositionEffectSourceParameter("Tint"),
+                Background = new CompositionEffectSourceParameter("Tint")
             };
             var effectFactory = compositor.CreateEffectFactory(effect);
             var compositionBrush = effectFactory.CreateBrush();

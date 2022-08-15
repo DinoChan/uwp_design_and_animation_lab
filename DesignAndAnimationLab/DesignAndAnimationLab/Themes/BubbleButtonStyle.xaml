@@ -80,7 +80,8 @@
                                         <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY" To="1.05" Duration="0" />
                                     </Storyboard>-->
                                     <VisualState.Setters>
-                                        <Setter Target="ContentGrid.(common:VisualExtensions.Scale)" Value="1.05,1.05,1" />
+                                        <Setter Target="ContentGrid.(common:VisualExtensions.Scale)"
+                                                Value="1.05,1.05,1" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -89,7 +90,8 @@
                                         <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY" To="0.95" Duration="0" />
                                     </Storyboard>-->
                                     <VisualState.Setters>
-                                        <Setter Target="ContentGrid.(common:VisualExtensions.Scale)" Value="0.95,0.95,1" />
+                                        <Setter Target="ContentGrid.(common:VisualExtensions.Scale)"
+                                                Value="0.95,0.95,1" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Disabled" />

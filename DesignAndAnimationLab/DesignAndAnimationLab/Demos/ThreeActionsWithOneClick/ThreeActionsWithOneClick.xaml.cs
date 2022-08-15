@@ -10,21 +10,17 @@ namespace DesignAndAnimationLab.Demos
     public sealed partial class ThreeActionsWithOneClick
     {
         private bool _isAnimateBegin;
-        private Storyboard _progressStoryboard;
+        private readonly Storyboard _progressStoryboard;
 
         public ThreeActionsWithOneClick()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _progressStoryboard = CreateStoryboard();
         }
 
         private Storyboard CreateStoryboard()
         {
-            var animation = new DoubleAnimation
-            {
-                EnableDependentAnimation = true,
-                Duration = TimeSpan.FromSeconds(2)
-            };
+            var animation = new DoubleAnimation { EnableDependentAnimation = true, Duration = TimeSpan.FromSeconds(2) };
 
             Storyboard.SetTargetProperty(animation, nameof(ProgressButton.Value));
             var storyboard = new Storyboard();
@@ -34,7 +30,7 @@ namespace DesignAndAnimationLab.Demos
             return storyboard;
         }
 
-        private void OnGestureRecognizerHolding(object sender, Windows.UI.Input.HoldingEventArgs e)
+        private void OnGestureRecognizerHolding(object sender, HoldingEventArgs e)
         {
             var progressButton = sender as ProgressButton;
             if (e.HoldingState == HoldingState.Started)
@@ -55,21 +51,29 @@ namespace DesignAndAnimationLab.Demos
             }
         }
 
-        private void OnGestureRecognizerTapped(object sender, Windows.UI.Input.TappedEventArgs e)
+        private void OnGestureRecognizerTapped(object sender, TappedEventArgs e)
         {
             var progressButton = sender as ProgressButton;
             if (progressButton.State == ProgressState.Idle)
+            {
                 progressButton.State = ProgressState.Completed;
+            }
             else
+            {
                 progressButton.State = ProgressState.Idle;
+            }
         }
 
         private void OnLikeButtonTapped(object sender, TappedRoutedEventArgs e)
         {
             if (LikeButton.State != ProgressState.Completed)
+            {
                 LikeButton.State = ProgressState.Completed;
+            }
             else
+            {
                 LikeButton.State = ProgressState.Idle;
+            }
         }
 
         private void OnProgressStoryboardCompleted(object sender, object e)

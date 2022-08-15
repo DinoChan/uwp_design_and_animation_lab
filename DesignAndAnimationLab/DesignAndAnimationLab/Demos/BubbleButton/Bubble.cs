@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Numerics;
+using Windows.Foundation;
+using Windows.Graphics.DirectX;
+using Windows.UI;
+using Windows.UI.Composition;
 using DesignAndAnimationLab.Common;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Composition;
-using Windows.Foundation;
-using Windows.UI;
-using Windows.UI.Composition;
 
 namespace DesignAndAnimationLab.Demos.BubbleButton
 {
     /// <summary>
-    /// 气泡类
+    ///     气泡类
     /// </summary>
     public class Bubble : IDisposable
     {
@@ -24,19 +25,20 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
 
         private CanvasDevice _canvasDevice;
 
-        private Compositor _compositor;
+        private readonly Compositor _compositor;
 
-        private CompositionGraphicsDevice _graphicsDevice;
+        private readonly CompositionGraphicsDevice _graphicsDevice;
 
         private CompositionDrawingSurface _surface;
 
         private SpriteVisual _visual;
 
-        private Vector3 Offset;
+        private readonly Vector3 Offset;
 
-        private Vector2 Size;
+        private readonly Vector2 Size;
 
-        public Bubble(Compositor Compositor, CanvasDevice canvasDevice, CompositionGraphicsDevice graphicsDevice, Size TargetSize, Color Color, TimeSpan Duration, bool OnTop, Size? Size = null, bool? IsFill = null)
+        public Bubble(Compositor Compositor, CanvasDevice canvasDevice, CompositionGraphicsDevice graphicsDevice,
+            Size TargetSize, Color Color, TimeSpan Duration, bool OnTop, Size? Size = null, bool? IsFill = null)
         {
             _compositor = Compositor;
             _canvasDevice = canvasDevice;
@@ -65,6 +67,7 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
                     this.Size = new Vector2(rnd.Next(maxRadius / 6, maxRadius / 3));
                 }
             }
+
             Draw(IsFill.Value, Color);
 
             Offset = new Vector3((float)TargetSize.Width / 2, (float)TargetSize.Height / 2, 0f);
@@ -75,20 +78,11 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             CreateAnimation(TargetSize, _visual.Offset, OnTop, Duration);
         }
 
-        ~Bubble()
-        {
-            Dispose(false);
-        }
+        public void Dispose() => Dispose(true);
 
-        public void AddTo(ContainerVisual container)
-        {
-            container.Children.InsertAtBottom(_visual);
-        }
+        ~Bubble() => Dispose(false);
 
-        public void Dispose()
-        {
-            Dispose(true);
-        }
+        public void AddTo(ContainerVisual container) => container.Children.InsertAtBottom(_visual);
 
         public void Start()
         {
@@ -100,7 +94,8 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
         {
             if (easing == null)
             {
-                easing = _compositor.CreateCubicBezierEasingFunction(new Vector2(0.17f, 0.67f), new Vector2(0.44f, 0.999f));
+                easing = _compositor.CreateCubicBezierEasingFunction(new Vector2(0.17f, 0.67f),
+                    new Vector2(0.44f, 0.999f));
             }
 
             _animations = _compositor.CreateAnimationGroup();
@@ -118,13 +113,18 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             if (OnTop)
             {
                 //在上半部分
-                offsetan.InsertKeyFrame(1f, new Vector3(rnd.Next(-(int)TargetSize.Width, (int)TargetSize.Width) + (int)TargetSize.Width / 2, rnd.Next(-(int)(TargetSize.Height * 1.5), 0) + (int)TargetSize.Height / 2, 0f), easing);
+                offsetan.InsertKeyFrame(1f,
+                    new Vector3(rnd.Next(-(int)TargetSize.Width, (int)TargetSize.Width) + (int)TargetSize.Width / 2,
+                        rnd.Next(-(int)(TargetSize.Height * 1.5), 0) + (int)TargetSize.Height / 2, 0f), easing);
             }
             else
             {
                 //在下半部分
-                offsetan.InsertKeyFrame(1f, new Vector3(rnd.Next(-(int)TargetSize.Width, (int)TargetSize.Width) + (int)TargetSize.Width / 2, rnd.Next(0, (int)(TargetSize.Height * 1.5)) + (int)TargetSize.Height / 2, 0f), easing);
+                offsetan.InsertKeyFrame(1f,
+                    new Vector3(rnd.Next(-(int)TargetSize.Width, (int)TargetSize.Width) + (int)TargetSize.Width / 2,
+                        rnd.Next(0, (int)(TargetSize.Height * 1.5)) + (int)TargetSize.Height / 2, 0f), easing);
             }
+
             offsetan.Duration = Duration;
             offsetan.Target = "Offset";
             offsetan.StopBehavior = AnimationStopBehavior.SetToInitialValue;
@@ -155,7 +155,8 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
 
         private void Draw(bool IsFill, Color color)
         {
-            _surface = _graphicsDevice.CreateDrawingSurface(Size.ToSize(), Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized, Windows.Graphics.DirectX.DirectXAlphaMode.Premultiplied);
+            _surface = _graphicsDevice.CreateDrawingSurface(Size.ToSize(), DirectXPixelFormat.B8G8R8A8UIntNormalized,
+                DirectXAlphaMode.Premultiplied);
             using (var dc = CanvasComposition.CreateDrawingSession(_surface))
             {
                 dc.Clear(Colors.Transparent);
@@ -167,8 +168,10 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
                 {
                     dc.DrawCircle(Size / 2, Size.X / 2 - 2, color, 2f);
                 }
+
                 dc.Flush();
             }
+
             _brush = _compositor.CreateSurfaceBrush(_surface);
             _visual.Brush = _brush;
         }

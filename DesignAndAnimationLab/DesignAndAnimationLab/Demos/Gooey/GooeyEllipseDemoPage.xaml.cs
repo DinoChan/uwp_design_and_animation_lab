@@ -1,19 +1,20 @@
 ﻿using System.Numerics;
+using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using DesignAndAnimationLab.AnimationTimelines;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
 namespace DesignAndAnimationLab.Demos.Gooey
 {
     /// <summary>
-    /// https://codepen.io/Chokcoco/pen/QqWBqV
+    ///     https://codepen.io/Chokcoco/pen/QqWBqV
     /// </summary>
     public sealed partial class GooeyEllipseDemoPage : Page
     {
@@ -21,35 +22,31 @@ namespace DesignAndAnimationLab.Demos.Gooey
         private Vector2 _centerPoint;
         private ICanvasImage _image;
         private ICanvasBrush _leftBrush;
-        private Vector2Timeline _leftTimeline;
+        private readonly Vector2Timeline _leftTimeline;
         private ICanvasBrush _rightBrush;
-        private Vector2Timeline _rightTimeline;
+        private readonly Vector2Timeline _rightTimeline;
 
         public GooeyEllipseDemoPage()
         {
             InitializeComponent();
             var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
-            _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2, null, true, true, easingFunction);
-            _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2, null, true, true, easingFunction);
+            _leftTimeline = new Vector2Timeline(new Vector2(-100, 0), new Vector2(100, 0), 2, null, true, true,
+                easingFunction);
+            _rightTimeline = new Vector2Timeline(new Vector2(100, 0), new Vector2(-100, 0), 2, null, true, true,
+                easingFunction);
         }
 
-        private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            _centerPoint = Canvas.ActualSize / 2;
-        }
+        private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e) => _centerPoint = Canvas.ActualSize / 2;
 
         private void OnCreateResource(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
-            _leftBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Black);
-            _rightBrush = new CanvasSolidColorBrush(sender, Windows.UI.Colors.Blue);
-            _blurEffect = new GaussianBlurEffect()
-            {
-                BlurAmount = 20f,
-            };
+            _leftBrush = new CanvasSolidColorBrush(sender, Colors.Black);
+            _rightBrush = new CanvasSolidColorBrush(sender, Colors.Blue);
+            _blurEffect = new GaussianBlurEffect { BlurAmount = 20f };
 
-            _image = new ColorMatrixEffect()
+            _image = new ColorMatrixEffect
             {
-                ColorMatrix = new Matrix5x4()
+                ColorMatrix = new Matrix5x4
                 {
                     M11 = 1,
                     M12 = 0,
@@ -70,7 +67,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
                     M51 = 0,
                     M52 = 0,
                     M53 = 0,
-                    M54 = -7,
+                    M54 = -7
                 },
                 Source = _blurEffect
             };

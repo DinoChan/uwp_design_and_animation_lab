@@ -22,53 +22,47 @@ namespace DesignAndAnimationLab
             InspiredBy = inspiredBy;
         }
 
-        public Type Control { get; private set; }
-        public Uri InspiredBy { get; private set; }
-        public string Name { get; private set; }
+        public Type Control { get; }
+        public Uri InspiredBy { get; }
+        public string Name { get; }
 
-        public string ThumbnailNarrow
-        {
-            get { return "ms-appx:///Thumbnails/" + ThumbnailFilename(""); }
-        }
+        public string ThumbnailNarrow => "ms-appx:///Thumbnails/" + ThumbnailFilename("");
 
-        public string ThumbnailWide
-        {
-            get { return "ms-appx:///Thumbnails/" + ThumbnailFilename(""); }
-        }
+        public string ThumbnailWide => "ms-appx:///Thumbnails/" + ThumbnailFilename("");
 
-        public string ThumbnailFilename(string suffix)
-        {
-            return Name.Replace(" ", "") + suffix + ".png";
-        }
+        public string ThumbnailFilename(string suffix) => Name.Replace(" ", "") + suffix + ".png";
 
-        public override string ToString()
-        {
-            return this.Name;
-        }
+        public override string ToString() => Name;
     }
 
     public class ExampleDefinitions
     {
-        public static ExampleDefinition[] Definitions { get; } = {
-             new ExampleDefinition("Gooey Ellipse", typeof(GooeyEllipseDemoPage),new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
-               new ExampleDefinition("Gooey Ellipse 2", typeof(GooeyEllipseDemo2Page),new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
-                   new ExampleDefinition("Gooey Footer", typeof(GooeyFooter),new Uri("https://www.cnblogs.com/coco1s/p/16445448.html")),
-                              new ExampleDefinition("Gooey Footer2", typeof(GooeyFooter2),new Uri("https://www.cnblogs.com/coco1s/p/16445448.html")),
-                 new ExampleDefinition("Text Morph", typeof(TextMorph),new Uri("https://codepen.io/Valgo/pen/PowZaNY")),
-          new ExampleDefinition("Three Actions With One Click", typeof(ThreeActionsWithOneClick)),
-          new ExampleDefinition("Popup UserControl", typeof(PopupUserControlDemo)),
-          new ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
-          new ExampleDefinition("Glitch Art", typeof(GlitchArtDemoPage)),
-          new ExampleDefinition("Glitch Art Many Words", typeof(GlitchArtWithManyWordsDemoPage)),
-          new ExampleDefinition("Blend Mix Image", typeof(BlendMixImage)),
-          new ExampleDefinition("Blend Mix Text", typeof(BlendMixText)),
-          new ExampleDefinition("Bubble Button", typeof(BubbleButtonDemo),new Uri("https://github.com/cnbluefire/BubbleButton")),
-          new ExampleDefinition("Twitter Like Button", typeof(MattHenleysLikeButton)),
-          new ExampleDefinition("Walking Cat", typeof(WalkingCat)),
-          new ExampleDefinition("Transparent Cube", typeof(TransparentCube)),
-          new ExampleDefinition("Acrylic and Blur", typeof(AcrylicAndBlurDemo)),
+        public static ExampleDefinition[] Definitions { get; } =
+        {
+            new ExampleDefinition("Gooey Ellipse", typeof(GooeyEllipseDemoPage),
+                new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
+            new ExampleDefinition("Gooey Ellipse 2", typeof(GooeyEllipseDemo2Page),
+                new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
+            new ExampleDefinition("Gooey Footer", typeof(GooeyFooter),
+                new Uri("https://www.cnblogs.com/coco1s/p/16445448.html")),
+            new ExampleDefinition("Gooey Footer2", typeof(GooeyFooter2),
+                new Uri("https://www.cnblogs.com/coco1s/p/16445448.html")),
+            new ExampleDefinition("Text Morph", typeof(TextMorph), new Uri("https://codepen.io/Valgo/pen/PowZaNY")),
+            new ExampleDefinition("Three Actions With One Click", typeof(ThreeActionsWithOneClick)),
+            new ExampleDefinition("Popup UserControl", typeof(PopupUserControlDemo)),
+            new ExampleDefinition("Gooey Button", typeof(GooeyButtonDemoPage)),
+            new ExampleDefinition("Glitch Art", typeof(GlitchArtDemoPage)),
+            new ExampleDefinition("Glitch Art Many Words", typeof(GlitchArtWithManyWordsDemoPage)),
+            new ExampleDefinition("Blend Mix Image", typeof(BlendMixImage)),
+            new ExampleDefinition("Blend Mix Text", typeof(BlendMixText)),
+            new ExampleDefinition("Bubble Button", typeof(BubbleButtonDemo),
+                new Uri("https://github.com/cnbluefire/BubbleButton")),
+            new ExampleDefinition("Twitter Like Button", typeof(MattHenleysLikeButton)),
+            new ExampleDefinition("Walking Cat", typeof(WalkingCat)),
+            new ExampleDefinition("Transparent Cube", typeof(TransparentCube)),
+            new ExampleDefinition("Acrylic and Blur", typeof(AcrylicAndBlurDemo)),
             new ExampleDefinition("Control Center", typeof(ControlCenterDemo)),
-               new ExampleDefinition("Galaxy Shuttle", typeof(GalaxyShuttleDemo)),
+            new ExampleDefinition("Galaxy Shuttle", typeof(GalaxyShuttleDemo))
 
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),

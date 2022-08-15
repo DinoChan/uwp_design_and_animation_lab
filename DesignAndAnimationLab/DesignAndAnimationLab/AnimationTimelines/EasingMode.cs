@@ -6,8 +6,8 @@
     /// </summary>
     public enum EasingMode
     {
-        EaseIn,    // the easing is performed at the start of the animation
-        EaseOut,   // the easing is performed at the end of the animation
-        EaseInOut, // the easing is performed both at the start and the end of the animation
+        EaseIn, // the easing is performed at the start of the animation
+        EaseOut, // the easing is performed at the end of the animation
+        EaseInOut // the easing is performed both at the start and the end of the animation
     }
 }

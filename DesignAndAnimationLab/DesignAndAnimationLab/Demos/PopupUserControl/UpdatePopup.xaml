@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:DesignAndAnimationLab.Demos"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="400"
@@ -11,70 +10,16 @@
 
     <UserControl.Resources>
 
-        <AcrylicBrush x:Key="SideBackground"
-                      BackgroundSource="HostBackdrop"
-                      FallbackColor="#f9fafe"
-                      TintColor="White"
-                      TintOpacity="0.8" />
-        <AcrylicBrush x:Key="PaneBackground"
-                      BackgroundSource="Backdrop"
-                      FallbackColor="#f9fafe"
-                      TintColor="White"
-                      TintOpacity="0.8" />
-        <AcrylicBrush x:Key="MaskAcrylicBackground"
-                      BackgroundSource="Backdrop"
-                      FallbackColor="#f9fafe"
-                      TintColor="White"
-                      TintOpacity="0.4" />
-        <SolidColorBrush x:Key="PopupBackground" Color="#f2f7fd" />
         <SolidColorBrush x:Key="PageBackground" Color="#F1F6FA" />
-        <SolidColorBrush x:Key="PageOverBackground" Color="#DEE5EB" />
-        <SolidColorBrush x:Key="CardBackground" Color="White" />
-        <SolidColorBrush x:Key="CardBackgroundOver" Color="#DAE1E8" />
-        <SolidColorBrush x:Key="PointerOverMaskBackground"
-                         Opacity="0.2"
-                         Color="Gray" />
-        <SolidColorBrush x:Key="TransparentBackground"
-                         Opacity="0.01"
-                         Color="White" />
-
-        <SolidColorBrush x:Key="ImportantTextColor" Color="#000000" />
-        <SolidColorBrush x:Key="NormalTextColor" Color="#2E2F33" />
-        <SolidColorBrush x:Key="TipTextColor" Color="#999AA1" />
-        <SolidColorBrush x:Key="MaskTextColor" Color="#d3dbe8" />
 
         <Color x:Key="ShadowColor">#AAAAAA</Color>
 
-        <SolidColorBrush x:Key="LineColor" Color="#E1E1E1" />
-        <SolidColorBrush x:Key="LineColorOver" Color="#D9D9D9" />
-
-        <SolidColorBrush x:Key="ProgressColor"
-                         Opacity="0.4"
-                         Color="#E1E1E1" />
         <SolidColorBrush x:Key="ScreenMaskColor"
                          Opacity="0.5"
                          Color="White" />
 
-        <SolidColorBrush x:Key="PrimaryColorOpacity"
-                         Opacity="0.1"
-                         Color="#ED5B8C" />
         <SolidColorBrush x:Key="PrimaryColor" Color="#ED5B8C" />
         <SolidColorBrush x:Key="PrimaryColorOver" Color="#DB356D" />
-        <SolidColorBrush x:Key="SecondaryColorOpacity"
-                         Opacity="0.2"
-                         Color="#00A1D6" />
-        <SolidColorBrush x:Key="SecondaryColor" Color="#00A1D6" />
-        <SolidColorBrush x:Key="SecondaryColorOver" Color="#0E78CB" />
-        <SolidColorBrush x:Key="SuccessColorOpacity"
-                         Opacity="0.2"
-                         Color="#99B42D" />
-        <SolidColorBrush x:Key="SuccessColor" Color="#ADC744" />
-        <SolidColorBrush x:Key="SuccessColorOver" Color="#A1BD2F" />
-        <SolidColorBrush x:Key="ErrorColor" Color="#F63340" />
-        <SolidColorBrush x:Key="ErrorColorOpacity"
-                         Opacity="0.2"
-                         Color="#F63340" />
-        <SolidColorBrush x:Key="ErrorColorOver" Color="#E32528" />
 
         <Style x:Key="PrimaryCircleButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource PrimaryColor}" />
@@ -118,30 +63,40 @@
                                     </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrimaryColorOver}" />
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                           Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{ThemeResource PrimaryColorOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrimaryColorOver}" />
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                           Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{ThemeResource PrimaryColorOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                           Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{ThemeResource ButtonBackgroundDisabled}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                           Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{ThemeResource ButtonBorderBrushDisabled}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                           Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{ThemeResource ButtonForegroundDisabled}" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>

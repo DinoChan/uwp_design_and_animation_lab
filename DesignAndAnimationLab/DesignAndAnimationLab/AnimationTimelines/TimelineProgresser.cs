@@ -22,24 +22,35 @@ namespace DesignAndAnimationLab.AnimationTimelines
             var beginTimeTicks = 0l;
 
             if (BeginTime != null)
+            {
                 beginTimeTicks = BeginTime.Value.Ticks;
+            }
+
             if (timeSpan.Ticks <= beginTimeTicks)
+            {
                 return 0;
+            }
 
             var durationTicks = Duration.TimeSpan.Ticks;
             var scalingFactor = AutoReverse ? 2d : 1d;
-            if ((timeSpan.Ticks - beginTimeTicks) > (durationTicks * scalingFactor) && Forever == false)
+            if (timeSpan.Ticks - beginTimeTicks > durationTicks * scalingFactor && Forever == false)
+            {
                 return 0;
+            }
 
             var offsetFromBegin = (timeSpan.Ticks - beginTimeTicks) % (durationTicks * scalingFactor);
 
             if (offsetFromBegin > durationTicks)
+            {
                 offsetFromBegin = durationTicks * 2 - offsetFromBegin;
+            }
 
-            double progress = offsetFromBegin / durationTicks;
+            var progress = offsetFromBegin / durationTicks;
 
             if (EasingFunction != null)
+            {
                 progress = EasingFunction.Ease(progress);
+            }
 
             return progress;
         }

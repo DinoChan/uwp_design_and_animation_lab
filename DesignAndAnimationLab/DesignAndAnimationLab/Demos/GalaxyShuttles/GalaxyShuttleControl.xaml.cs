@@ -11,7 +11,7 @@ namespace DesignAndAnimationLab.Demos.GalaxyShuttles
     {
         public GalaxyShuttleControl()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Loaded += GalaxyShettleControl_Loaded;
         }
 

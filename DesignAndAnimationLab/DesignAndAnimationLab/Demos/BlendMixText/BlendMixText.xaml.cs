@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
-using DesignAndAnimationLab.Demos.GlitchArtDemo;
-using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Shapes;
+using DesignAndAnimationLab.Demos.GlitchArtDemo;
+using Microsoft.Graphics.Canvas.Effects;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
@@ -16,7 +16,7 @@ namespace DesignAndAnimationLab.Demos
     {
         public BlendMixText()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             AddTextToRoot(BlendEffectMode.ColorBurn);
             AddTextToRoot(BlendEffectMode.ColorDodge);
             AddTextToRoot(BlendEffectMode.Darken);
@@ -43,7 +43,7 @@ namespace DesignAndAnimationLab.Demos
 
         private Compositor Compositor => Window.Current.Compositor;
 
-        public TextToBrushWrapper CreateTextToBrushWrapper(string text, Windows.UI.Color fontColor)
+        public TextToBrushWrapper CreateTextToBrushWrapper(string text, Color fontColor)
         {
             var result = new TextToBrushWrapper
             {
@@ -51,7 +51,7 @@ namespace DesignAndAnimationLab.Demos
                 FontSize = 45,
                 Width = 400,
                 Height = 70,
-                FontColor = fontColor,
+                FontColor = fontColor
             };
             result.Brush.VerticalAlignmentRatio = 0;
             return result;
@@ -73,14 +73,15 @@ namespace DesignAndAnimationLab.Demos
             Root.Children.Add(background);
         }
 
-        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
+        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background,
+            BlendEffectMode blendEffectMode)
         {
             var compositor = Window.Current.Compositor;
-            var effect = new BlendEffect()
+            var effect = new BlendEffect
             {
                 Mode = blendEffectMode,
                 Foreground = new CompositionEffectSourceParameter("Main"),
-                Background = new CompositionEffectSourceParameter("Tint"),
+                Background = new CompositionEffectSourceParameter("Tint")
             };
             var effectFactory = compositor.CreateEffectFactory(effect);
             var compositionBrush = effectFactory.CreateBrush();
@@ -93,7 +94,8 @@ namespace DesignAndAnimationLab.Demos
         private CompositionLinearGradientBrush CreateGradientBrush()
         {
             var gradientBrush = Compositor.CreateLinearGradientBrush();
-            gradientBrush.StartPoint = new Vector2(0.5f, 0); ;
+            gradientBrush.StartPoint = new Vector2(0.5f, 0);
+            ;
             gradientBrush.EndPoint = new Vector2(0.5f, 1);
 
             var startGradientStop = Compositor.CreateColorGradientStop();

@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using DesignAndAnimationLab.AnimationTimelines;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
 namespace DesignAndAnimationLab.Demos.Gooey
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    ///     可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class GooeyFooter2 : Page
     {
         private GaussianBlurEffect _blurEffect;
         private ICanvasBrush _brush;
-        private List<GooeyBubble> _bubbles;
+        private readonly List<GooeyBubble> _bubbles;
         private Vector2 _centerPoint;
         private ICanvasImage _image;
 
@@ -31,35 +32,30 @@ namespace DesignAndAnimationLab.Demos.Gooey
             var easingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut };
             _bubbles = new List<GooeyBubble>();
             var unit = 16;
-            for (int i = 0; i < 128; i++)
+            for (var i = 0; i < 128; i++)
             {
-                Random random = new Random();
+                var random = new Random();
                 var seconds = 2 + random.NextDouble() * 2;
                 var delay = TimeSpan.FromSeconds(2 + random.NextDouble() * 2);
 
-                var offsetTimeline = new DoubleTimeline(-(6 + random.NextDouble() * 4) * unit, 10 * unit, seconds, delay, false);
+                var offsetTimeline = new DoubleTimeline(-(6 + random.NextDouble() * 4) * unit, 10 * unit, seconds,
+                    delay, false);
                 var sizeTimeline = new DoubleTimeline((2 + random.NextDouble() * 4) * unit, 0, seconds, delay, false);
                 var x = random.NextDouble();
                 _bubbles.Add(new GooeyBubble { X = x, OffsetTimeline = offsetTimeline, SizeTimeline = sizeTimeline });
             }
         }
 
-        private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            _centerPoint = Canvas.ActualSize / 2;
-        }
+        private void OnCanvasSizeChanged(object sender, SizeChangedEventArgs e) => _centerPoint = Canvas.ActualSize / 2;
 
         private void OnCreateResource(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
-            _brush = new CanvasSolidColorBrush(sender, Windows.UI.Color.FromArgb(114, 255, 85, 101));
-            _blurEffect = new GaussianBlurEffect()
-            {
-                BlurAmount = 20f,
-            };
+            _brush = new CanvasSolidColorBrush(sender, Color.FromArgb(114, 255, 85, 101));
+            _blurEffect = new GaussianBlurEffect { BlurAmount = 20f };
 
-            _image = new ColorMatrixEffect()
+            _image = new ColorMatrixEffect
             {
-                ColorMatrix = new Matrix5x4()
+                ColorMatrix = new Matrix5x4
                 {
                     M11 = 1,
                     M12 = 0,
@@ -80,7 +76,7 @@ namespace DesignAndAnimationLab.Demos.Gooey
                     M51 = 0,
                     M52 = 0,
                     M53 = 0,
-                    M54 = 0,
+                    M54 = 0
                 },
                 Source = _blurEffect
             };
@@ -92,7 +88,8 @@ namespace DesignAndAnimationLab.Demos.Gooey
             var totalTime = args.Timing.TotalTime;
             using (var drawingSession = source.CreateDrawingSession())
             {
-                drawingSession.FillRectangle(-100, _centerPoint.Y, _centerPoint.X * 2 + 200, _centerPoint.Y + 100, _brush);
+                drawingSession.FillRectangle(-100, _centerPoint.Y, _centerPoint.X * 2 + 200, _centerPoint.Y + 100,
+                    _brush);
 
                 foreach (var bubble in _bubbles)
                 {

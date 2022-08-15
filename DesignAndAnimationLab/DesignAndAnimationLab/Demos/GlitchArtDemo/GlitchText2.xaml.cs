@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
@@ -9,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Microsoft.Graphics.Canvas.Effects;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
@@ -18,7 +18,7 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
     {
         public GlitchText2()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             Text = "TextAnimation";
 
@@ -29,7 +29,8 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             var containerVisual = Compositor.CreateContainerVisual();
             var foregroundVisual = Compositor.CreateSpriteVisual();
-            foregroundVisual.Brush = CreateBrush(blueBrushWrapper.Brush, redBrushWrapper.Brush, BlendEffectMode.Multiply);
+            foregroundVisual.Brush =
+                CreateBrush(blueBrushWrapper.Brush, redBrushWrapper.Brush, BlendEffectMode.Multiply);
             foregroundVisual.Size = new Vector2(800, 110);
             containerVisual.Children.InsertAtBottom(foregroundVisual);
 
@@ -47,11 +48,24 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             ElementCompositionPreview.SetElementChildVisual(TextBackground, containerVisual);
             Loaded += (s, e) =>
-             {
-                 StartHeightAnimation(redBrushWrapper, new List<(double, double)>() { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1), TimeSpan.Zero);
-                 StartHeightAnimation(blueBrushWrapper, new List<(double, double)>() { (0, 110), (20, 112.5), (35, 30), (50, 100), (60, 50), (70, 85), (80, 55), (100, 1) }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
-                 StartOffsetAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
-             };
+            {
+                StartHeightAnimation(redBrushWrapper,
+                    new List<(double, double)> { (0, 1), (20, 80), (60, 15), (100, 105) }, TimeSpan.FromSeconds(1),
+                    TimeSpan.Zero);
+                StartHeightAnimation(blueBrushWrapper,
+                    new List<(double, double)>
+                    {
+                        (0, 110),
+                        (20, 112.5),
+                        (35, 30),
+                        (50, 100),
+                        (60, 50),
+                        (70, 85),
+                        (80, 55),
+                        (100, 1)
+                    }, TimeSpan.FromSeconds(1.5), TimeSpan.Zero);
+                StartOffsetAnimation(lineVisual, TimeSpan.FromSeconds(3), TimeSpan.Zero);
+            };
         }
 
         public string Text { get; }
@@ -75,14 +89,15 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             return result;
         }
 
-        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
+        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background,
+            BlendEffectMode blendEffectMode)
         {
             var compositor = Window.Current.Compositor;
-            var effect = new BlendEffect()
+            var effect = new BlendEffect
             {
                 Mode = blendEffectMode,
                 Foreground = new CompositionEffectSourceParameter("Main"),
-                Background = new CompositionEffectSourceParameter("Tint"),
+                Background = new CompositionEffectSourceParameter("Tint")
             };
             var effectFactory = compositor.CreateEffectFactory(effect);
             var compositionBrush = effectFactory.CreateBrush();
@@ -92,18 +107,22 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             return compositionBrush;
         }
 
-        private void StartHeightAnimation(TextToBrushWrapper brush, List<(double, double)> keyFrames, TimeSpan duration, TimeSpan delay)
+        private void StartHeightAnimation(TextToBrushWrapper brush, List<(double, double)> keyFrames, TimeSpan duration,
+            TimeSpan delay)
         {
             var storyboard = new Storyboard();
 
             var animation = new DoubleAnimationUsingKeyFrames();
             animation.EnableDependentAnimation = true;
             Storyboard.SetTarget(animation, brush);
-            Storyboard.SetTargetProperty(animation, nameof(TextToBrushWrapper.Height));
+            Storyboard.SetTargetProperty(animation, nameof(Height));
 
             foreach (var item in keyFrames)
             {
-                animation.KeyFrames.Add(new LinearDoubleKeyFrame { KeyTime = duration / 100 * item.Item1, Value = item.Item2 });
+                animation.KeyFrames.Add(new LinearDoubleKeyFrame
+                {
+                    KeyTime = duration / 100 * item.Item1, Value = item.Item2
+                });
             }
 
             storyboard.Children.Add(animation);
@@ -120,10 +139,13 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             offsetAnimation.DelayTime = delay;
             offsetAnimation.IterationBehavior = AnimationIterationBehavior.Forever;
             var easing = Compositor.CreateCubicBezierEasingFunction(new Vector2(0.1f, 0.9f), new Vector2(0.2f, 1f));
+
             void addKey(float key, float top)
             {
                 offsetAnimation.InsertKeyFrame(key, new Vector3(0, top, 0), easing);
-            };
+            }
+
+            ;
 
             addKey(.08f, 95);
             addKey(.14f, 20);

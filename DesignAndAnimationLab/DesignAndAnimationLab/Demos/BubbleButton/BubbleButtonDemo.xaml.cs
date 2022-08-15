@@ -5,13 +5,10 @@
 namespace DesignAndAnimationLab.Demos.BubbleButton
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    ///     可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class BubbleButtonDemo : Page
     {
-        public BubbleButtonDemo()
-        {
-            this.InitializeComponent();
-        }
+        public BubbleButtonDemo() => InitializeComponent();
     }
 }

@@ -6,9 +6,6 @@ namespace DesignAndAnimationLab.Demos.LikeButtons
 {
     public sealed partial class LikeButtonsDemo : UserControl
     {
-        public LikeButtonsDemo()
-        {
-            this.InitializeComponent();
-        }
+        public LikeButtonsDemo() => InitializeComponent();
     }
 }

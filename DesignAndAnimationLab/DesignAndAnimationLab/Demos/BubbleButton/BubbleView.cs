@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DesignAndAnimationLab.Common;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.UI.Composition;
+using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -13,26 +11,30 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using DesignAndAnimationLab.Common;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Composition;
 
 namespace DesignAndAnimationLab.Demos.BubbleButton
 {
     public class BubbleView : Control
     {
         public static readonly DependencyProperty IsBubbingProperty =
-            DependencyProperty.Register("IsBubbing", typeof(bool), typeof(BubbleView), new PropertyMetadata(false, (s, a) =>
-            {
-                if (a.NewValue != a.OldValue)
+            DependencyProperty.Register("IsBubbing", typeof(bool), typeof(BubbleView), new PropertyMetadata(false,
+                (s, a) =>
                 {
-                    if (s is BubbleView sender)
+                    if (a.NewValue != a.OldValue)
                     {
-                        if (a.NewValue is true)
+                        if (s is BubbleView sender)
                         {
-                            sender.ShowBubbles();
-                            sender.SetValue(IsBubbingProperty, false);
+                            if (a.NewValue is true)
+                            {
+                                sender.ShowBubbles();
+                                sender.SetValue(IsBubbingProperty, false);
+                            }
                         }
                     }
-                }
-            }));
+                }));
 
         private ContainerVisual _BubblesVisual;
 
@@ -54,16 +56,17 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
 
         public BubbleView()
         {
-            this.DefaultStyleKey = typeof(BubbleView);
-            ForegroundPropertyChangedToken = RegisterPropertyChangedCallback(ForegroundProperty, ForegroundPropertyChanged);
-            this.Unloaded += BubbleView_Unloaded;
+            DefaultStyleKey = typeof(BubbleView);
+            ForegroundPropertyChangedToken =
+                RegisterPropertyChangedCallback(ForegroundProperty, ForegroundPropertyChanged);
+            Unloaded += BubbleView_Unloaded;
         }
 
         //当设置IsBubbing = true时，触发ShowBubbles，并将IsBubbing设置为false，等待下次设置IsBubbing = true
         public bool IsBubbing
         {
-            get { return (bool)GetValue(IsBubbingProperty); }
-            set { SetValue(IsBubbingProperty, value); }
+            get => (bool)GetValue(IsBubbingProperty);
+            set => SetValue(IsBubbingProperty, value);
         }
 
         public void ShowBubbles()
@@ -88,21 +91,13 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
         }
 
         //当设备丢失时，重新设置设备
-        private void _canvasDevice_DeviceLost(CanvasDevice sender, object args)
-        {
-            ResetDevices(true);
-        }
+        private void _canvasDevice_DeviceLost(CanvasDevice sender, object args) => ResetDevices(true);
 
         //GraphicsDevice的绘制设备重置时，即触发CanvasComposition.SetCanvasDevice时，重新绘制气泡
-        private void _graphicsDevice_RenderingDeviceReplaced(CompositionGraphicsDevice sender, RenderingDeviceReplacedEventArgs args)
-        {
-            CreateBubbles();
-        }
+        private void _graphicsDevice_RenderingDeviceReplaced(CompositionGraphicsDevice sender,
+            RenderingDeviceReplacedEventArgs args) => CreateBubbles();
 
-        private void BubbleHost_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            CreateBubbles();
-        }
+        private void BubbleHost_SizeChanged(object sender, SizeChangedEventArgs e) => CreateBubbles();
 
         private void BubbleView_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -122,6 +117,7 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
                 {
                     bubble.Dispose();
                 }
+
                 Bubbles.Clear();
                 Bubbles = null;
             }
@@ -135,9 +131,17 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
         private void CreateBubbles()
         {
             ClearBubbles();
-            if (DesignMode.DesignModeEnabled) return;
-            if (_canvasDevice == null || _graphicsDevice == null) return;
-            if (ForegroundColor != Colors.Transparent && this.ActualWidth > 0 && this.ActualHeight > 0)
+            if (DesignMode.DesignModeEnabled)
+            {
+                return;
+            }
+
+            if (_canvasDevice == null || _graphicsDevice == null)
+            {
+                return;
+            }
+
+            if (ForegroundColor != Colors.Transparent && ActualWidth > 0 && ActualHeight > 0)
             {
                 var count = 20;
 
@@ -145,18 +149,22 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
 
                 var duration = TimeSpan.FromSeconds(1d);
 
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
-                    var bubble = new Bubble(_Compositor, _canvasDevice, _graphicsDevice, new Size(this.ActualWidth, this.ActualHeight), ForegroundColor, duration, true);
+                    var bubble = new Bubble(_Compositor, _canvasDevice, _graphicsDevice,
+                        new Size(ActualWidth, ActualHeight), ForegroundColor, duration, true);
                     bubble.AddTo(_BubblesVisual);
                     _Bubbles.Add(bubble);
                 }
-                for (int i = 0; i < count; i++)
+
+                for (var i = 0; i < count; i++)
                 {
-                    var bubble = new Bubble(_Compositor, _canvasDevice, _graphicsDevice, new Size(this.ActualWidth, this.ActualHeight), ForegroundColor, duration, false);
+                    var bubble = new Bubble(_Compositor, _canvasDevice, _graphicsDevice,
+                        new Size(ActualWidth, ActualHeight), ForegroundColor, duration, false);
                     bubble.AddTo(_BubblesVisual);
                     _Bubbles.Add(bubble);
                 }
+
                 Bubbles = _Bubbles;
             }
         }
@@ -164,7 +172,7 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
         //当显示需要重绘时，尝试重新给GraphicsDevice设置CanvasDevice，如果抛出异常，则说明CanvasDevice已丢失
         private void DisplayInformation_DisplayContentsInvalidated(DisplayInformation sender, object args)
         {
-            System.Diagnostics.Debug.WriteLine("Display Contents Invalidated");
+            Debug.WriteLine("Display Contents Invalidated");
             ResetDevices(false);
         }
 
@@ -174,6 +182,7 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             {
                 ForegroundColor = brush.Color;
             }
+
             CreateBubbles();
         }
 
@@ -188,6 +197,7 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
                     _canvasDevice = CanvasDevice.GetSharedDevice();
                     _canvasDevice.DeviceLost += _canvasDevice_DeviceLost;
                 }
+
                 //重新设置GraphicsDevice，在CanvasDevice丢失时会触发异常
                 CanvasComposition.SetCanvasDevice(_graphicsDevice, _canvasDevice);
             }

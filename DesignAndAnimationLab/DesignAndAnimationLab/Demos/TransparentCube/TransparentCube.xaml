@@ -1,9 +1,7 @@
 ﻿<UserControl x:Class="DesignAndAnimationLab.Demos.TransparentCube"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Custom="using:System.Numerics"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:DesignAndAnimationLab.Demos"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:media3D="using:Windows.UI.Xaml.Media.Media3D"
              d:DesignHeight="600"
@@ -69,7 +67,8 @@
                 </Style>
             </Grid.Resources>
             <Grid.Transform3D>
-                <media3D:PerspectiveTransform3D x:Name="Transform3D" Depth="{Binding ElementName=DepthElement, Path=Value}" />
+                <media3D:PerspectiveTransform3D x:Name="Transform3D"
+                                                Depth="{Binding ElementName=DepthElement, Path=Value}" />
             </Grid.Transform3D>
             <Grid>
                 <!--<Grid.Transform3D>

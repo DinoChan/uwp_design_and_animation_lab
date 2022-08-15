@@ -5,11 +5,15 @@ namespace DesignAndAnimationLab.AnimationTimelines
 {
     public class DoubleTimeline
     {
-        private TimelineProgresser _progresser;
+        private readonly TimelineProgresser _progresser;
 
-        public DoubleTimeline(double from = 0, double to = 1, double seconds = 1, TimeSpan? beginTime = null, bool autoReverse = true, bool forever = true, EasingFunctionBase easingFunction = null)
+        public DoubleTimeline(double from = 0, double to = 1, double seconds = 1, TimeSpan? beginTime = null,
+            bool autoReverse = true, bool forever = true, EasingFunctionBase easingFunction = null)
         {
-            _progresser = new TimelineProgresser(seconds, autoReverse) { EasingFunction = easingFunction, BeginTime = beginTime, Forever = forever };
+            _progresser = new TimelineProgresser(seconds, autoReverse)
+            {
+                EasingFunction = easingFunction, BeginTime = beginTime, Forever = forever
+            };
             From = from;
             To = to;
             Duration = new Duration(TimeSpan.FromSeconds(seconds));

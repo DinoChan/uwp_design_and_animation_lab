@@ -46,7 +46,8 @@
             <effects:BlendEffect Mode="Multiply" Source="{effects:BackdropSource BackgroundSource=HostBackdrop}" />
             <effects:BlurEffect Amount="16" />
             <effects:ShadeEffect Intensity="0.2" Color="#FF222222" />
-            <effects:BlendEffect Mode="Overlay" Source="{effects:TileSource Uri=ms-appx:///Assets/BrushAssets/NoiseTexture.png}" />
+            <effects:BlendEffect Mode="Overlay"
+                                 Source="{effects:TileSource Uri=ms-appx:///Assets/BrushAssets/NoiseTexture.png}" />
         </brushes:PipelineBrush>
 
         <Style TargetType="ContentControl">
@@ -85,11 +86,15 @@
         <Grid Padding="8" Background="{StaticResource CustomAcrylicBackgroundBrush}">
             <ContentControl Content="AcrylicBrush" />
             <StackPanel Width="300" HorizontalAlignment="Right">
-                <Slider Header="TintOpacity" Value="{Binding TintOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
-                <Slider Header="TintLuminosityOpacity" Value="{Binding TintLuminosityOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                <Slider Header="TintOpacity"
+                        Value="{Binding TintOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                <Slider Header="TintLuminosityOpacity"
+                        Value="{Binding TintLuminosityOpacity, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
                 <controls:WrapPanel>
-                    <controls:ColorPickerButton Content="TintColor" SelectedColor="{Binding TintColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
-                    <controls:ColorPickerButton Content="FallbackColor" SelectedColor="{Binding FallbackColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                    <controls:ColorPickerButton Content="TintColor"
+                                                SelectedColor="{Binding TintColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
+                    <controls:ColorPickerButton Content="FallbackColor"
+                                                SelectedColor="{Binding FallbackColor, Source={StaticResource CustomAcrylicBackgroundBrush}, Mode=TwoWay}" />
                 </controls:WrapPanel>
             </StackPanel>
         </Grid>
@@ -99,11 +104,13 @@
               Background="{StaticResource ToolkitAcrylicBrush}">
             <ContentControl Content="ToolkitAcrylicBrush" />
             <StackPanel Width="300" HorizontalAlignment="Right">
-                <Slider Header="TintOpacity" Value="{Binding TintOpacity, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
+                <Slider Header="TintOpacity"
+                        Value="{Binding TintOpacity, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
                 <Slider Header="BlurAmount"
                         Maximum="32"
                         Value="{Binding BlurAmount, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
-                <controls:ColorPickerButton Content="TintColor" SelectedColor="{Binding TintColor, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
+                <controls:ColorPickerButton Content="TintColor"
+                                            SelectedColor="{Binding TintColor, Source={StaticResource ToolkitAcrylicBrush}, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
 

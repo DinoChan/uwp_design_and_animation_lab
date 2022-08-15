@@ -6,9 +6,6 @@ namespace DesignAndAnimationLab.Demos
 {
     public sealed partial class TransparentCube : UserControl
     {
-        public TransparentCube()
-        {
-            this.InitializeComponent();
-        }
+        public TransparentCube() => InitializeComponent();
     }
 }

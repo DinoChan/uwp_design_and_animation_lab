@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -7,29 +8,22 @@ using Windows.UI.Xaml.Controls;
 namespace DesignAndAnimationLab.Demos.GooeyButtonDemo
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    ///     可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class GooeyButtonDemoPage : Page
     {
-        private Random rnd = new Random();
+        private readonly Random rnd = new Random();
 
         public GooeyButtonDemoPage()
         {
-            this.InitializeComponent();
-            strings = new ObservableCollection<Symbol>()
-            {
-                Symbol.AddFriend,
-                Symbol.Forward,
-                Symbol.Share
-            };
+            InitializeComponent();
+            strings = new ObservableCollection<Symbol> { Symbol.AddFriend, Symbol.Forward, Symbol.Share };
         }
 
-        private ObservableCollection<Symbol> strings { get; set; }
+        private ObservableCollection<Symbol> strings { get; }
 
-        private void gooeyButton_Invoked(object sender, GooeyButton.GooeyButtonInvokedEventArgs args)
-        {
-            System.Diagnostics.Debug.WriteLine("Invoked");
-        }
+        private void gooeyButton_Invoked(object sender, GooeyButton.GooeyButtonInvokedEventArgs args) =>
+            Debug.WriteLine("Invoked");
 
         private void gooeyButton_ItemInvoked(object sender, GooeyButton.GooeyButtonItemInvokedEventArgs args)
         {
@@ -50,8 +44,12 @@ namespace DesignAndAnimationLab.Demos.GooeyButtonDemo
                 }
                 else if (symbol == Symbol.Forward)
                 {
-                    var pos = (int)(gooeyButton.ItemsPosition) + 1;
-                    if (pos == 4) pos = 0;
+                    var pos = (int)gooeyButton.ItemsPosition + 1;
+                    if (pos == 4)
+                    {
+                        pos = 0;
+                    }
+
                     gooeyButton.ItemsPosition = (GooeyButtonItemsPosition)pos;
                 }
                 else if (symbol == Symbol.Share)
@@ -60,7 +58,7 @@ namespace DesignAndAnimationLab.Demos.GooeyButtonDemo
                 }
             }
 
-            System.Diagnostics.Debug.WriteLine(args.Item.ToString());
+            Debug.WriteLine(args.Item.ToString());
         }
     }
 }

@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Brushes;
-using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas.UI;
-using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,6 +9,11 @@ using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Shapes;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
+using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.UI;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -51,11 +51,11 @@ namespace DesignAndAnimationLab
 
         private Button InnerButton;
 
-        private bool isAnimating = false;
+        private bool isAnimating;
 
         private Grid LayoutRoot;
 
-        private double mainButtonAnimationDuration = 0.6d;
+        private readonly double mainButtonAnimationDuration = 0.6d;
 
         private Storyboard mainButtonCloseStoryboard;
 
@@ -63,9 +63,9 @@ namespace DesignAndAnimationLab
 
         private GooeyButtonItemsPanel panel;
 
-        private GooeyButtonProperty property = new GooeyButtonProperty();
+        private readonly GooeyButtonProperty property = new GooeyButtonProperty();
 
-        private bool unloaded = false;
+        private bool unloaded;
 
         private CanvasAnimatedControl Win2DCanvas;
 
@@ -73,10 +73,10 @@ namespace DesignAndAnimationLab
 
         public GooeyButton()
         {
-            this.DefaultStyleKey = typeof(GooeyButton);
-            this.Loaded += OnLoaded;
-            this.Unloaded += OnUnloaded;
-            this.SizeChanged += OnSizeChanged;
+            DefaultStyleKey = typeof(GooeyButton);
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+            SizeChanged += OnSizeChanged;
             RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundChanged);
             RegisterPropertyChangedCallback(OpacityProperty, OnOpacityChanged);
         }
@@ -88,12 +88,15 @@ namespace DesignAndAnimationLab
         private void UpdateCloseStoryboard()
         {
             mainButtonCloseStoryboard = null;
-            if (panel == null) return;
+            if (panel == null)
+            {
+                return;
+            }
 
             var begin = 0.16d;
 
-            var ease1 = new CubicEase() { EasingMode = EasingMode.EaseOut };
-            var ease2 = new ElasticEase() { Oscillations = 1, Springiness = 5, EasingMode = EasingMode.EaseOut };
+            var ease1 = new CubicEase { EasingMode = EasingMode.EaseOut };
+            var ease2 = new ElasticEase { Oscillations = 1, Springiness = 5, EasingMode = EasingMode.EaseOut };
 
             var sb = new Storyboard();
             var x = ActualWidth / 25;
@@ -128,17 +131,13 @@ namespace DesignAndAnimationLab
             Storyboard.SetTargetProperty(dax, "X");
             dax.Duration = TimeSpan.FromSeconds(mainButtonAnimationDuration);
             dax.BeginTime = TimeSpan.FromSeconds(begin);
-            dax.KeyFrames.Add(new EasingDoubleKeyFrame()
+            dax.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3),
-                Value = x,
-                EasingFunction = ease1
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3), Value = x, EasingFunction = ease1
             });
-            dax.KeyFrames.Add(new EasingDoubleKeyFrame()
+            dax.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration),
-                Value = 0,
-                EasingFunction = ease2
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration), Value = 0, EasingFunction = ease2
             });
 
             var day = new DoubleAnimationUsingKeyFrames();
@@ -146,17 +145,13 @@ namespace DesignAndAnimationLab
             Storyboard.SetTargetProperty(day, "Y");
             day.Duration = TimeSpan.FromSeconds(mainButtonAnimationDuration);
             day.BeginTime = TimeSpan.FromSeconds(begin);
-            day.KeyFrames.Add(new EasingDoubleKeyFrame()
+            day.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3),
-                Value = y,
-                EasingFunction = ease1
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3), Value = y, EasingFunction = ease1
             });
-            day.KeyFrames.Add(new EasingDoubleKeyFrame()
+            day.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration),
-                Value = 0,
-                EasingFunction = ease2
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration), Value = 0, EasingFunction = ease2
             });
 
             var baan = new DoubleAnimation();
@@ -166,10 +161,7 @@ namespace DesignAndAnimationLab
             baan.BeginTime = TimeSpan.FromSeconds(begin / 3);
             baan.Duration = TimeSpan.FromSeconds(panel.Duration / 4);
             baan.To = 20d;
-            baan.EasingFunction = new CircleEase()
-            {
-                EasingMode = EasingMode.EaseOut
-            };
+            baan.EasingFunction = new CircleEase { EasingMode = EasingMode.EaseOut };
 
             sb.Children.Add(dax);
             sb.Children.Add(day);
@@ -183,12 +175,15 @@ namespace DesignAndAnimationLab
         private void UpdateOpenStoryboard()
         {
             mainButtonOpenStoryboard = null;
-            if (panel == null) return;
+            if (panel == null)
+            {
+                return;
+            }
 
             var duration = mainButtonAnimationDuration / 2;
 
-            var ease1 = new CubicEase() { EasingMode = EasingMode.EaseOut };
-            var ease2 = new ElasticEase() { Oscillations = 1, EasingMode = EasingMode.EaseOut };
+            var ease1 = new CubicEase { EasingMode = EasingMode.EaseOut };
+            var ease2 = new ElasticEase { Oscillations = 1, EasingMode = EasingMode.EaseOut };
 
             var sb = new Storyboard();
             var x = ActualWidth / 15;
@@ -218,34 +213,26 @@ namespace DesignAndAnimationLab
             Storyboard.SetTarget(dax, BackgroundShapeTranslate);
             Storyboard.SetTargetProperty(dax, "X");
             dax.Duration = TimeSpan.FromSeconds(mainButtonAnimationDuration);
-            dax.KeyFrames.Add(new EasingDoubleKeyFrame()
+            dax.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3),
-                Value = x,
-                EasingFunction = ease1
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3), Value = x, EasingFunction = ease1
             });
-            dax.KeyFrames.Add(new EasingDoubleKeyFrame()
+            dax.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration),
-                Value = 0,
-                EasingFunction = ease2
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration), Value = 0, EasingFunction = ease2
             });
 
             var day = new DoubleAnimationUsingKeyFrames();
             Storyboard.SetTarget(day, BackgroundShapeTranslate);
             Storyboard.SetTargetProperty(day, "Y");
             day.Duration = TimeSpan.FromSeconds(mainButtonAnimationDuration);
-            day.KeyFrames.Add(new EasingDoubleKeyFrame()
+            day.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3),
-                Value = y,
-                EasingFunction = ease1
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration / 3), Value = y, EasingFunction = ease1
             });
-            day.KeyFrames.Add(new EasingDoubleKeyFrame()
+            day.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration),
-                Value = 0,
-                EasingFunction = ease2
+                KeyTime = TimeSpan.FromSeconds(mainButtonAnimationDuration), Value = 0, EasingFunction = ease2
             });
 
             var baan = new DoubleAnimation();
@@ -254,10 +241,7 @@ namespace DesignAndAnimationLab
             baan.EnableDependentAnimation = true;
             baan.To = 0d;
             baan.Duration = TimeSpan.FromSeconds(0.3);
-            baan.EasingFunction = new CircleEase()
-            {
-                EasingMode = EasingMode.EaseIn
-            };
+            baan.EasingFunction = new CircleEase { EasingMode = EasingMode.EaseIn };
 
             sb.Children.Add(dax);
             sb.Children.Add(day);
@@ -287,8 +271,12 @@ namespace DesignAndAnimationLab
                     {
                         list.Add(bgItem.ItemProperty);
                     }
-                    else return;
+                    else
+                    {
+                        return;
+                    }
                 }
+
                 gooeyButtonItemsProperty = list;
             }
         }
@@ -302,6 +290,7 @@ namespace DesignAndAnimationLab
                 color = brush.Color;
                 opacity *= brush.Opacity;
             }
+
             property.BackgroundColor = color;
             property.Opacity = opacity;
             property.Radius = Math.Min(ActualWidth, ActualHeight) / 2;
@@ -309,13 +298,18 @@ namespace DesignAndAnimationLab
 
         private void UpdateWin2DCanvas()
         {
-            if (unloaded) return;
+            if (unloaded)
+            {
+                return;
+            }
+
             if (ItemsPanelRoot is GooeyButtonItemsPanel panel)
             {
                 if (this.panel == null)
                 {
                     this.panel = panel;
                 }
+
                 if (Win2DCanvas == null)
                 {
                     Win2DCanvas = new CanvasAnimatedControl();
@@ -324,7 +318,11 @@ namespace DesignAndAnimationLab
                     Win2DCanvas.CreateResources += OnWin2DCreateResources;
                     Win2DCanvas.Draw += OnWin2DDraw;
                 }
-                var radius = panel.Children.Count == 0 ? 0 : panel.Children.Max(c => c.RenderSize.IsEmpty ? 0 : Math.Max(c.RenderSize.Width, c.RenderSize.Height));
+
+                var radius = panel.Children.Count == 0
+                    ? 0
+                    : panel.Children.Max(c =>
+                        c.RenderSize.IsEmpty ? 0 : Math.Max(c.RenderSize.Width, c.RenderSize.Height));
                 var size = (Distance + radius * 4) * 2;
                 Win2DCanvas.Width = size;
                 Win2DCanvas.Height = size;
@@ -342,16 +340,13 @@ namespace DesignAndAnimationLab
 
         private void OnWin2DCreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
-            var effect1 = new GaussianBlurEffect()
-            {
-                BlurAmount = 20f,
-            };
+            var effect1 = new GaussianBlurEffect { BlurAmount = 20f };
 
             effect = effect1;
 
-            var effect2 = new ColorMatrixEffect()
+            var effect2 = new ColorMatrixEffect
             {
-                ColorMatrix = new Matrix5x4()
+                ColorMatrix = new Matrix5x4
                 {
                     M11 = 1,
                     M12 = 0,
@@ -372,7 +367,7 @@ namespace DesignAndAnimationLab
                     M51 = 0,
                     M52 = 0,
                     M53 = 0,
-                    M54 = -7,
+                    M54 = -7
                 },
                 Source = effect1
             };
@@ -387,19 +382,22 @@ namespace DesignAndAnimationLab
                 var source = new CanvasCommandList(sender);
                 using (var ds = source.CreateDrawingSession())
                 {
-                    ds.FillCircle(property.CenterPoint, (float)property.Radius - 1f, new CanvasSolidColorBrush(sender, property.BackgroundColor.Value)
-                    {
-                        Opacity = (float)property.Opacity
-                    });
+                    ds.FillCircle(property.CenterPoint, (float)property.Radius - 1f,
+                        new CanvasSolidColorBrush(sender, property.BackgroundColor.Value)
+                        {
+                            Opacity = (float)property.Opacity
+                        });
 
                     foreach (var item in gooeyButtonItemsProperty)
                     {
                         if (item.BackgroundColor.HasValue)
                         {
-                            ds.FillCircle(property.CenterPoint.X + (float)item.TranslateX, property.CenterPoint.Y + (float)item.TranslateY, (float)item.Radius, new CanvasSolidColorBrush(sender, item.BackgroundColor.Value)
-                            {
-                                Opacity = (float)item.Opacity
-                            });
+                            ds.FillCircle(property.CenterPoint.X + (float)item.TranslateX,
+                                property.CenterPoint.Y + (float)item.TranslateY, (float)item.Radius,
+                                new CanvasSolidColorBrush(sender, item.BackgroundColor.Value)
+                                {
+                                    Opacity = (float)item.Opacity
+                                });
                         }
                     }
                 }
@@ -422,15 +420,9 @@ namespace DesignAndAnimationLab
 
         #region ItemsPanel
 
-        private void OnItemsAnimationCompleted(object sender, EventArgs e)
-        {
-            isAnimating = false;
-        }
+        private void OnItemsAnimationCompleted(object sender, EventArgs e) => isAnimating = false;
 
-        private void OnItemsAnimationStarted(object sender, EventArgs e)
-        {
-            isAnimating = true;
-        }
+        private void OnItemsAnimationStarted(object sender, EventArgs e) => isAnimating = true;
 
         private void OnItemsPanelUnloaded(object sender, RoutedEventArgs e)
         {
@@ -448,7 +440,7 @@ namespace DesignAndAnimationLab
         {
             if (!OnInvoked())
             {
-                this.Expanded = !this.Expanded;
+                Expanded = !Expanded;
             }
         }
 
@@ -468,6 +460,7 @@ namespace DesignAndAnimationLab
                 {
                     this.panel = panel;
                 }
+
                 panel.Distance = Distance;
                 panel.Expanded = Expanded;
                 panel.ItemsPosition = ItemsPosition;
@@ -475,6 +468,7 @@ namespace DesignAndAnimationLab
                 panel.ItemsAnimationCompleted += OnItemsAnimationCompleted;
                 panel.Unloaded += OnItemsPanelUnloaded;
             }
+
             UpdateStoryboards();
             UpdateProperty();
             ResetItemsProperty();
@@ -502,40 +496,34 @@ namespace DesignAndAnimationLab
                 {
                     oldSolid.UnregisterPropertyChangedCallback(SolidColorBrush.ColorProperty, brushColorToken);
                 }
+
                 if (brushOpacityToken > -1)
                 {
-                    oldSolid.UnregisterPropertyChangedCallback(SolidColorBrush.OpacityProperty, brushOpacityToken);
+                    oldSolid.UnregisterPropertyChangedCallback(Brush.OpacityProperty, brushOpacityToken);
                 }
+
                 background = null;
             }
+
             if (sender.GetValue(dp) is SolidColorBrush newSolid)
             {
                 background = newSolid;
-                brushColorToken = newSolid.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnBrushColorChanged);
-                brushOpacityToken = newSolid.RegisterPropertyChangedCallback(SolidColorBrush.OpacityProperty, OnBrushOpacityChanged);
+                brushColorToken =
+                    newSolid.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, OnBrushColorChanged);
+                brushOpacityToken =
+                    newSolid.RegisterPropertyChangedCallback(Brush.OpacityProperty, OnBrushOpacityChanged);
             }
+
             UpdateProperty();
         }
 
-        private void OnBrushColorChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateProperty();
-        }
+        private void OnBrushColorChanged(DependencyObject sender, DependencyProperty dp) => UpdateProperty();
 
-        private void OnBrushOpacityChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateProperty();
-        }
+        private void OnBrushOpacityChanged(DependencyObject sender, DependencyProperty dp) => UpdateProperty();
 
-        private void OnOpacityChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateProperty();
-        }
+        private void OnOpacityChanged(DependencyObject sender, DependencyProperty dp) => UpdateProperty();
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateStoryboards();
-        }
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e) => UpdateStoryboards();
 
         #endregion Update Property
 
@@ -603,16 +591,17 @@ namespace DesignAndAnimationLab
 
         // Using a DependencyProperty as the backing store for BlurAmount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BlurAmountProperty =
-            DependencyProperty.Register("BlurAmount", typeof(double), typeof(GooeyButton), new PropertyMetadata(20d, (s, a) =>
-            {
-                if (s is GooeyButton sender)
+            DependencyProperty.Register("BlurAmount", typeof(double), typeof(GooeyButton), new PropertyMetadata(20d,
+                (s, a) =>
                 {
-                    if (a.NewValue != a.OldValue)
+                    if (s is GooeyButton sender)
                     {
-                        sender.property.BlurAmount = (double)a.NewValue;
+                        if (a.NewValue != a.OldValue)
+                        {
+                            sender.property.BlurAmount = (double)a.NewValue;
+                        }
                     }
-                }
-            }));
+                }));
 
         // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ContentProperty =
@@ -620,91 +609,98 @@ namespace DesignAndAnimationLab
 
         // Using a DependencyProperty as the backing store for Distance.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DistanceProperty =
-            DependencyProperty.Register("Distance", typeof(double), typeof(GooeyButton), new PropertyMetadata(0d, (s, a) =>
-            {
-                if (s is GooeyButton sender)
+            DependencyProperty.Register("Distance", typeof(double), typeof(GooeyButton), new PropertyMetadata(0d,
+                (s, a) =>
                 {
-                    if (a.NewValue != a.OldValue)
+                    if (s is GooeyButton sender)
                     {
-                        if (sender.ItemsPanelRoot is GooeyButtonItemsPanel panel)
+                        if (a.NewValue != a.OldValue)
                         {
-                            panel.Distance = (double)a.NewValue;
+                            if (sender.ItemsPanelRoot is GooeyButtonItemsPanel panel)
+                            {
+                                panel.Distance = (double)a.NewValue;
+                            }
+
+                            sender.UpdateWin2DCanvas();
                         }
-                        sender.UpdateWin2DCanvas();
                     }
-                }
-            }));
+                }));
 
         // Using a DependencyProperty as the backing store for Expanded.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ExpandedProperty =
-            DependencyProperty.Register("Expanded", typeof(bool), typeof(GooeyButton), new PropertyMetadata(false, (s, a) =>
-            {
-                if (s is GooeyButton sender)
+            DependencyProperty.Register("Expanded", typeof(bool), typeof(GooeyButton), new PropertyMetadata(false,
+                (s, a) =>
                 {
-                    if (a.NewValue != a.OldValue)
+                    if (s is GooeyButton sender)
                     {
-                        var v = (bool)a.NewValue;
-                        if (sender.ItemsPanelRoot is GooeyButtonItemsPanel panel)
+                        if (a.NewValue != a.OldValue)
                         {
-                            panel.Expanded = v;
-                        }
-                        if (v && sender.mainButtonOpenStoryboard != null)
-                        {
-                            sender.mainButtonOpenStoryboard.Begin();
-                        }
-                        if (!v && sender.mainButtonCloseStoryboard != null)
-                        {
-                            sender.mainButtonCloseStoryboard.Begin();
+                            var v = (bool)a.NewValue;
+                            if (sender.ItemsPanelRoot is GooeyButtonItemsPanel panel)
+                            {
+                                panel.Expanded = v;
+                            }
+
+                            if (v && sender.mainButtonOpenStoryboard != null)
+                            {
+                                sender.mainButtonOpenStoryboard.Begin();
+                            }
+
+                            if (!v && sender.mainButtonCloseStoryboard != null)
+                            {
+                                sender.mainButtonCloseStoryboard.Begin();
+                            }
                         }
                     }
-                }
-            }));
+                }));
 
         // Using a DependencyProperty as the backing store for ItemsPosition.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ItemsPositionProperty =
-            DependencyProperty.Register("ItemsPosition", typeof(GooeyButtonItemsPosition), typeof(GooeyButton), new PropertyMetadata(GooeyButtonItemsPosition.LeftTop, (s, a) =>
-            {
-                if (s is GooeyButton sender)
+            DependencyProperty.Register("ItemsPosition", typeof(GooeyButtonItemsPosition), typeof(GooeyButton),
+                new PropertyMetadata(GooeyButtonItemsPosition.LeftTop, (s, a) =>
                 {
-                    if (a.NewValue != a.OldValue)
+                    if (s is GooeyButton sender)
                     {
-                        if (sender.ItemsPanelRoot is GooeyButtonItemsPanel panel)
+                        if (a.NewValue != a.OldValue)
                         {
-                            panel.ItemsPosition = (GooeyButtonItemsPosition)a.NewValue;
+                            if (sender.ItemsPanelRoot is GooeyButtonItemsPanel panel)
+                            {
+                                panel.ItemsPosition = (GooeyButtonItemsPosition)a.NewValue;
+                            }
+
+                            sender.UpdateStoryboards();
                         }
-                        sender.UpdateStoryboards();
                     }
-                }
-            }));
+                }));
 
         public double BlurAmount
         {
-            get { return (double)GetValue(BlurAmountProperty); }
-            set { SetValue(BlurAmountProperty, value); }
+            get => (double)GetValue(BlurAmountProperty);
+            set => SetValue(BlurAmountProperty, value);
         }
 
         public object Content
         {
-            get { return (object)GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
+            get => GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
         }
 
         public double Distance
         {
-            get { return (double)GetValue(DistanceProperty); }
-            set { SetValue(DistanceProperty, value); }
+            get => (double)GetValue(DistanceProperty);
+            set => SetValue(DistanceProperty, value);
         }
 
         public bool Expanded
         {
-            get { return (bool)GetValue(ExpandedProperty); }
-            set { SetValue(ExpandedProperty, value); }
+            get => (bool)GetValue(ExpandedProperty);
+            set => SetValue(ExpandedProperty, value);
         }
 
         public GooeyButtonItemsPosition ItemsPosition
         {
-            get { return (GooeyButtonItemsPosition)GetValue(ItemsPositionProperty); }
-            set { SetValue(ItemsPositionProperty, value); }
+            get => (GooeyButtonItemsPosition)GetValue(ItemsPositionProperty);
+            set => SetValue(ItemsPositionProperty, value);
         }
 
         #endregion Dependency Properties
@@ -722,10 +718,7 @@ namespace DesignAndAnimationLab
 
         public class GooeyButtonItemInvokedEventArgs : EventArgs
         {
-            internal GooeyButtonItemInvokedEventArgs(object item)
-            {
-                Item = item;
-            }
+            internal GooeyButtonItemInvokedEventArgs(object item) => Item = item;
 
             public object Item { get; }
         }

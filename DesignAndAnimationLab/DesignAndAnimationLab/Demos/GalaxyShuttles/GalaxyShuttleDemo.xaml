@@ -9,7 +9,6 @@
              xmlns:galaxyshuttles="using:DesignAndAnimationLab.Demos.GalaxyShuttles"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
-             xmlns:media3D="using:Windows.UI.Xaml.Media.Media3D"
              d:DesignHeight="300"
              d:DesignWidth="600"
              mc:Ignorable="d">

@@ -18,13 +18,14 @@ namespace DesignAndAnimationLab
     [ContentProperty(Name = nameof(Content))]
     public partial class ProgressButton : RangeBase
     {
-        private GestureRecognizer _gestureRecognizer = new GestureRecognizer();
+        private readonly GestureRecognizer _gestureRecognizer = new GestureRecognizer();
         private bool _isPointerCaptured;
 
         public ProgressButton()
         {
             DefaultStyleKey = typeof(ProgressButton);
-            _gestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
+            _gestureRecognizer.GestureSettings =
+                GestureSettings.HoldWithMouse | GestureSettings.Tap | GestureSettings.Hold;
             _gestureRecognizer.Holding += OnGestureRecognizerHolding;
             _gestureRecognizer.Tapped += OnGestureRecognizerTapped;
             IsEnabledChanged += OnIsEnabledChanged;
@@ -68,13 +69,19 @@ namespace DesignAndAnimationLab
             _gestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
             e.Handled = true;
             if (_isPointerCaptured == false)
+            {
                 return;
+            }
 
             var position = e.GetCurrentPoint(this).Position;
             if (position.X < 0 || position.Y < 0 || position.X > ActualWidth || position.Y > ActualHeight)
+            {
                 IsPressed = false;
+            }
             else
+            {
                 IsPressed = true;
+            }
 
             UpdateVisualStates();
         }
@@ -83,15 +90,21 @@ namespace DesignAndAnimationLab
         {
             base.OnPointerPressed(e);
             if (e.Handled)
+            {
                 return;
+            }
 
             if (IsEnabled == false)
+            {
                 return;
+            }
 
             e.Handled = true;
             _isPointerCaptured = CapturePointer(e.Pointer);
             if (_isPointerCaptured == false)
+            {
                 return;
+            }
 
             IsPressed = true;
             Focus(FocusState.Pointer);
@@ -108,10 +121,14 @@ namespace DesignAndAnimationLab
         {
             base.OnPointerReleased(e);
             if (e.Handled)
+            {
                 return;
+            }
 
             if (IsEnabled == false)
+            {
                 return;
+            }
 
             e.Handled = true;
 
@@ -132,18 +149,14 @@ namespace DesignAndAnimationLab
         protected virtual void OnStateChanged(ProgressState oldValue, ProgressState newValue)
         {
             StateChanged?.Invoke(this, EventArgs.Empty);
-            UpdateVisualStates(true);
+            UpdateVisualStates();
         }
 
-        private void OnGestureRecognizerHolding(GestureRecognizer sender, HoldingEventArgs args)
-        {
+        private void OnGestureRecognizerHolding(GestureRecognizer sender, HoldingEventArgs args) =>
             GestureRecognizerHolding?.Invoke(this, args);
-        }
 
-        private void OnGestureRecognizerTapped(GestureRecognizer sender, TappedEventArgs args)
-        {
+        private void OnGestureRecognizerTapped(GestureRecognizer sender, TappedEventArgs args) =>
             GestureRecognizerTapped?.Invoke(this, args);
-        }
 
         private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -183,13 +196,21 @@ namespace DesignAndAnimationLab
             }
 
             if (IsEnabled == false)
+            {
                 VisualStateManager.GoToState(this, StateDisabled, useTransitions);
+            }
             else if (IsPressed)
+            {
                 VisualStateManager.GoToState(this, StatePressed, useTransitions);
+            }
             else if (IsPointerOver)
+            {
                 VisualStateManager.GoToState(this, StatePointerOver, useTransitions);
+            }
             else
+            {
                 VisualStateManager.GoToState(this, StateNormal, useTransitions);
+            }
         }
     }
 }

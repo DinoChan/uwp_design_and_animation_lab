@@ -11,9 +11,6 @@ namespace DesignAndAnimationLab.AnimationTimelines
     /// </summary>
     public class CubicEase : EasingFunctionBase
     {
-        protected override double EaseInCore(double normalizedTime)
-        {
-            return normalizedTime * normalizedTime * normalizedTime;
-        }
+        protected override double EaseInCore(double normalizedTime) => normalizedTime * normalizedTime * normalizedTime;
     }
 }

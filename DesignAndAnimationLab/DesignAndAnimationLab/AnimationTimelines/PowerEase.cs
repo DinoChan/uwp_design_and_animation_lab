@@ -15,18 +15,14 @@ namespace DesignAndAnimationLab.AnimationTimelines
     /// </summary>
     public class PowerEase : EasingFunctionBase
     {
-        public PowerEase()
-        {
-        }
-
         /// <summary>
-        /// Specifies the power for the polynomial equation.
+        ///     Specifies the power for the polynomial equation.
         /// </summary>
         public double Power { get; set; } = 2;
 
         protected override double EaseInCore(double normalizedTime)
         {
-            double power = Math.Max(0.0, Power);
+            var power = Math.Max(0.0, Power);
             return Math.Pow(normalizedTime, power);
         }
     }

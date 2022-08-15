@@ -5,13 +5,10 @@
 namespace DesignAndAnimationLab.Demos
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    ///     可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class ControlCenterDemo : Page
     {
-        public ControlCenterDemo()
-        {
-            this.InitializeComponent();
-        }
+        public ControlCenterDemo() => InitializeComponent();
     }
 }

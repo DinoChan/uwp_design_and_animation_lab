@@ -6,9 +6,6 @@ namespace DesignAndAnimationLab.Demos.GalaxyShuttles
 {
     public sealed partial class GalaxyShuttleDemo : UserControl
     {
-        public GalaxyShuttleDemo()
-        {
-            this.InitializeComponent();
-        }
+        public GalaxyShuttleDemo() => InitializeComponent();
     }
 }

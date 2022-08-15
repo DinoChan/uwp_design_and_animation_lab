@@ -10,18 +10,14 @@ namespace DesignAndAnimationLab.Demos
 {
     public sealed partial class WalkingCat : UserControl
     {
-        public WalkingCat()
-        {
-            this.InitializeComponent();
-        }
+        public WalkingCat() => InitializeComponent();
 
         private void OnCatLoaded(object sender, RoutedEventArgs e)
         {
             var transform = (sender as Image).RenderTransform as CompositeTransform;
             var storyboard = new Storyboard
             {
-                FillBehavior = FillBehavior.Stop,
-                RepeatBehavior = RepeatBehavior.Forever
+                FillBehavior = FillBehavior.Stop, RepeatBehavior = RepeatBehavior.Forever
             };
 
             var keyFrames = new DoubleAnimationUsingKeyFrames();
@@ -31,11 +27,11 @@ namespace DesignAndAnimationLab.Demos
             {
                 var keyFrame = new DiscreteDoubleKeyFrame
                 {
-                    KeyTime = TimeSpan.FromSeconds((i + 1d) / 12d),
-                    Value = -(i + 1) * 2391d / 12d
+                    KeyTime = TimeSpan.FromSeconds((i + 1d) / 12d), Value = -(i + 1) * 2391d / 12d
                 };
                 keyFrames.KeyFrames.Add(keyFrame);
             }
+
             storyboard.Children.Add(keyFrames);
             storyboard.Begin();
         }

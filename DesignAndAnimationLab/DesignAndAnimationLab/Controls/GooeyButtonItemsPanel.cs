@@ -10,8 +10,8 @@ namespace DesignAndAnimationLab
 {
     public class GooeyButtonItemsPanel : Canvas
     {
-        private List<Storyboard> closeStoryboards = new List<Storyboard>();
-        private List<Storyboard> openStoryboards = new List<Storyboard>();
+        private readonly List<Storyboard> closeStoryboards = new List<Storyboard>();
+        private readonly List<Storyboard> openStoryboards = new List<Storyboard>();
         public double CloseDuration => Duration - 0.6d;
         public double Duration => 1.8d;
 
@@ -29,6 +29,7 @@ namespace DesignAndAnimationLab
                 SetLeft(item, x);
                 SetTop(item, y);
             }
+
             if (Expanded)
             {
                 StartAnimation();
@@ -49,9 +50,30 @@ namespace DesignAndAnimationLab
 
         #endregion Override Methods
 
+        #region Event Methods
+
+        private void OnStoryboardCompleted(object sender, object e)
+        {
+            foreach (var item in Children)
+            {
+                if (item is GooeyButtonItem gooeyButtonItem)
+                {
+                    if (!Expanded)
+                    {
+                        gooeyButtonItem.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
+
+            ItemsAnimationCompleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion Event Methods
+
         #region Methods
 
-        private Storyboard CreateTranslateStoryboard(double x, double y, DependencyObject element, TranslateTransform translate, EasingFunctionBase easing, double duration = 0.8)
+        private Storyboard CreateTranslateStoryboard(double x, double y, DependencyObject element,
+            TranslateTransform translate, EasingFunctionBase easing, double duration = 0.8)
         {
             var sb = new Storyboard();
 
@@ -106,7 +128,10 @@ namespace DesignAndAnimationLab
                 closeStoryboards.Clear();
             }
 
-            if (Children.Count == 0) return;
+            if (Children.Count == 0)
+            {
+                return;
+            }
 
             // k = tan(alpha)
 
@@ -119,18 +144,10 @@ namespace DesignAndAnimationLab
             // 联立：
             // x^2 + y^2 = R^2
             // y = kx
-            var easing1 = new ElasticEase()
-            {
-                Oscillations = 3,
-                Springiness = 10
-            };
-            var easing2 = new ElasticEase()
-            {
-                Oscillations = 1,
-                Springiness = 8
-            };
-            bool sign = false;
-            for (int i = 0; i < Children.Count; i++)
+            var easing1 = new ElasticEase { Oscillations = 3, Springiness = 10 };
+            var easing2 = new ElasticEase { Oscillations = 1, Springiness = 8 };
+            var sign = false;
+            for (var i = 0; i < Children.Count; i++)
             {
                 var ik = Math.Tan(unitRad * i);
                 var x = Distance / Math.Sqrt(ik * ik + 1);
@@ -225,55 +242,39 @@ namespace DesignAndAnimationLab
 
         #endregion Events
 
-        #region Event Methods
-
-        private void OnStoryboardCompleted(object sender, object e)
-        {
-            foreach (var item in Children)
-            {
-                if (item is GooeyButtonItem gooeyButtonItem)
-                {
-                    if (!Expanded)
-                    {
-                        gooeyButtonItem.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-            ItemsAnimationCompleted?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion Event Methods
-
         #region Dependency Properties
 
         // Using a DependencyProperty as the backing store for Distance.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DistanceProperty =
-            DependencyProperty.Register("Distance", typeof(double), typeof(GooeyButtonItemsPanel), new PropertyMetadata(0d, OnDistanceChanged));
+            DependencyProperty.Register("Distance", typeof(double), typeof(GooeyButtonItemsPanel),
+                new PropertyMetadata(0d, OnDistanceChanged));
 
         // Using a DependencyProperty as the backing store for Expanded.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ExpandedProperty =
-            DependencyProperty.Register("Expanded", typeof(bool), typeof(GooeyButtonItemsPanel), new PropertyMetadata(false, OnExpandedChanged));
+            DependencyProperty.Register("Expanded", typeof(bool), typeof(GooeyButtonItemsPanel),
+                new PropertyMetadata(false, OnExpandedChanged));
 
         // Using a DependencyProperty as the backing store for ItemsPosition.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ItemsPositionProperty =
-            DependencyProperty.Register("ItemsPosition", typeof(GooeyButtonItemsPosition), typeof(GooeyButton), new PropertyMetadata(GooeyButtonItemsPosition.LeftTop, OnItemsPositionChanged));
+            DependencyProperty.Register("ItemsPosition", typeof(GooeyButtonItemsPosition), typeof(GooeyButton),
+                new PropertyMetadata(GooeyButtonItemsPosition.LeftTop, OnItemsPositionChanged));
 
         public double Distance
         {
-            get { return (double)GetValue(DistanceProperty); }
-            set { SetValue(DistanceProperty, value); }
+            get => (double)GetValue(DistanceProperty);
+            set => SetValue(DistanceProperty, value);
         }
 
         public bool Expanded
         {
-            get { return (bool)GetValue(ExpandedProperty); }
-            set { SetValue(ExpandedProperty, value); }
+            get => (bool)GetValue(ExpandedProperty);
+            set => SetValue(ExpandedProperty, value);
         }
 
         public GooeyButtonItemsPosition ItemsPosition
         {
-            get { return (GooeyButtonItemsPosition)GetValue(ItemsPositionProperty); }
-            set { SetValue(ItemsPositionProperty, value); }
+            get => (GooeyButtonItemsPosition)GetValue(ItemsPositionProperty);
+            set => SetValue(ItemsPositionProperty, value);
         }
 
         private static void OnDistanceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

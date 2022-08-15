@@ -5,6 +5,6 @@
         Idle,
         InProgress,
         Completed,
-        Faulted,
+        Faulted
     }
 }
