@@ -43,6 +43,8 @@ namespace DesignAndAnimationLab
                 new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
             new ExampleDefinition("Gooey Ellipse 2", typeof(GooeyEllipseDemo2Page),
                 new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
+            new ExampleDefinition("Gooey Ellipse PixelShader", typeof(GooeyEllipsePixelShaderPage),
+                new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
             new ExampleDefinition("Gooey Footer", typeof(GooeyFooter),
                 new Uri("https://www.cnblogs.com/coco1s/p/16445448.html")),
             new ExampleDefinition("Gooey Footer2", typeof(GooeyFooter2),
