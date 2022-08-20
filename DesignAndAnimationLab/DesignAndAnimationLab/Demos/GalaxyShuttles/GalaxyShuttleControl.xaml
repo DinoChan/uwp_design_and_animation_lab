@@ -1,39 +1,71 @@
-﻿<UserControl
-    x:Class="DesignAndAnimationLab.Demos.GalaxyShuttles.GalaxyShuttleControl"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DesignAndAnimationLab.Demos.GalaxyShuttles"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    xmlns:media3D="using:Windows.UI.Xaml.Media.Media3D"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+﻿<UserControl x:Class="DesignAndAnimationLab.Demos.GalaxyShuttles.GalaxyShuttleControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:media3D="using:Windows.UI.Xaml.Media.Media3D"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <ImageBrush x:Key="ImageBackground" ImageSource="/Demos/GalaxyShuttles/Galaxy.png" />
-        <media3D:CompositeTransform3D x:Name="TransformLeft" x:Key="TransformLeft" RotationY="-90" TranslateZ="100" />
-        <media3D:CompositeTransform3D x:Name="TransformUp" x:Key="TransformUp" RotationX="90" TranslateZ="50" />
-        <media3D:CompositeTransform3D x:Name="TransformRight" x:Key="TransformRight" RotationY="90" CenterX="300" TranslateZ="50"/>
-        <media3D:CompositeTransform3D x:Name="TransformDown" x:Key="TransformDown" RotationX="-90" CenterY="300" TranslateZ="50" />
+        <media3D:CompositeTransform3D x:Key="TransformLeft"
+                                      x:Name="TransformLeft"
+                                      RotationY="-90"
+                                      TranslateZ="100" />
+        <media3D:CompositeTransform3D x:Key="TransformUp"
+                                      x:Name="TransformUp"
+                                      RotationX="90"
+                                      TranslateZ="50" />
+        <media3D:CompositeTransform3D x:Key="TransformRight"
+                                      x:Name="TransformRight"
+                                      CenterX="300"
+                                      RotationY="90"
+                                      TranslateZ="50" />
+        <media3D:CompositeTransform3D x:Key="TransformDown"
+                                      x:Name="TransformDown"
+                                      CenterY="300"
+                                      RotationX="-90"
+                                      TranslateZ="50" />
 
-        <Storyboard x:Name="Move" x:Key="Move" RepeatBehavior="Forever">
-            <DoubleAnimation Storyboard.TargetName="TransformLeft" Storyboard.TargetProperty="TranslateZ" From="10" To="200" Duration="0:0:8"/>
-            <DoubleAnimation Storyboard.TargetName="TransformUp" Storyboard.TargetProperty="TranslateZ" From="10" To="200" Duration="0:0:8"/>
-            <DoubleAnimation Storyboard.TargetName="TransformRight" Storyboard.TargetProperty="TranslateZ" From="10" To="200" Duration="0:0:8"/>
-            <DoubleAnimation Storyboard.TargetName="TransformDown" Storyboard.TargetProperty="TranslateZ" From="10" To="200" Duration="0:0:8"/>
+        <Storyboard x:Key="Move"
+                    x:Name="Move"
+                    RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="TransformLeft"
+                             Storyboard.TargetProperty="TranslateZ"
+                             From="10"
+                             To="200"
+                             Duration="0:0:8" />
+            <DoubleAnimation Storyboard.TargetName="TransformUp"
+                             Storyboard.TargetProperty="TranslateZ"
+                             From="10"
+                             To="200"
+                             Duration="0:0:8" />
+            <DoubleAnimation Storyboard.TargetName="TransformRight"
+                             Storyboard.TargetProperty="TranslateZ"
+                             From="10"
+                             To="200"
+                             Duration="0:0:8" />
+            <DoubleAnimation Storyboard.TargetName="TransformDown"
+                             Storyboard.TargetProperty="TranslateZ"
+                             From="10"
+                             To="200"
+                             Duration="0:0:8" />
         </Storyboard>
         <Storyboard x:Name="Fade" RepeatBehavior="Forever">
-            <DoubleAnimationUsingKeyFrames  Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" Duration="0:0:8"  >
-                <LinearDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:4.8" Value="1"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:8" Value="0"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
+                                           Storyboard.TargetProperty="Opacity"
+                                           Duration="0:0:8">
+                <LinearDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <LinearDoubleKeyFrame KeyTime="0:0:2" Value="1" />
+                <LinearDoubleKeyFrame KeyTime="0:0:4.8" Value="1" />
+                <LinearDoubleKeyFrame KeyTime="0:0:8" Value="0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
     <Grid x:Name="Root">
-       
-        <Grid Height="300" Width="300">
+
+        <Grid Width="300" Height="300">
             <Grid.Transform3D>
                 <media3D:PerspectiveTransform3D Depth="2" />
             </Grid.Transform3D>

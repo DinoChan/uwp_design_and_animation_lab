@@ -34,7 +34,6 @@
                            Text="{Binding Name}" />
             </StackPanel>
         </DataTemplate>
-
     </Page.Resources>
 
     <ScrollViewer x:Name="scrollViewer"
@@ -72,7 +71,7 @@
                 </GridView.DataContext>
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" />
+                        <ItemsWrapGrid ItemHeight="250" Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>

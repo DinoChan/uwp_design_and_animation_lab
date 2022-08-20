@@ -1,23 +1,11 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
+using Microsoft.Graphics.Canvas.Effects;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
@@ -25,18 +13,16 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 {
     public sealed partial class GlitchText : UserControl
     {
-        private Compositor Compositor => Window.Current.Compositor;
-
         public GlitchText()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             var backgroundWrapper = new TextToBrushWrapper
             {
                 Text = "TextAnimation",
                 FontSize = 90,
-                Width=800,
-                Height=110,
+                Width = 800,
+                Height = 110,
                 FontColor = Colors.Red
             };
 
@@ -56,7 +42,6 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             var containerVisual = Compositor.CreateContainerVisual();
             containerVisual.Children.InsertAtBottom(imageVisual);
 
-
             var lineVisual = Compositor.CreateSpriteVisual();
             lineVisual.Brush = Compositor.CreateColorBrush(Colors.Black);
             lineVisual.Size = new Vector2(800, 2);
@@ -64,22 +49,24 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
 
             ElementCompositionPreview.SetElementChildVisual(TextBackground, containerVisual);
             Loaded += (s, e) =>
-              {
-                  StartOffsetAnimation(backgroundWrapper.Brush, TimeSpan.FromSeconds(0.95), TimeSpan.Zero);
-                  StartOffsetAnimation(foregroundWrapper.Brush, TimeSpan.FromSeconds(1.1), TimeSpan.FromSeconds(0.2));
-                  StartOffsetAnimation(lineVisual, TimeSpan.FromSeconds(10), TimeSpan.Zero);
-              };
+            {
+                StartOffsetAnimation(backgroundWrapper.Brush, TimeSpan.FromSeconds(0.95), TimeSpan.Zero);
+                StartOffsetAnimation(foregroundWrapper.Brush, TimeSpan.FromSeconds(1.1), TimeSpan.FromSeconds(0.2));
+                StartOffsetAnimation(lineVisual, TimeSpan.FromSeconds(10), TimeSpan.Zero);
+            };
         }
 
-      
-        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background, BlendEffectMode blendEffectMode)
+        private Compositor Compositor => Window.Current.Compositor;
+
+        private CompositionBrush CreateBrush(CompositionBrush foreground, CompositionBrush background,
+            BlendEffectMode blendEffectMode)
         {
             var compositor = Window.Current.Compositor;
-            var effect = new BlendEffect()
+            var effect = new BlendEffect
             {
                 Mode = blendEffectMode,
                 Foreground = new CompositionEffectSourceParameter("Main"),
-                Background = new CompositionEffectSourceParameter("Tint"),
+                Background = new CompositionEffectSourceParameter("Tint")
             };
             var effectFactory = compositor.CreateEffectFactory(effect);
             var compositionBrush = effectFactory.CreateBrush();
@@ -96,10 +83,13 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             offsetAnimation.DelayTime = delay;
             offsetAnimation.IterationBehavior = AnimationIterationBehavior.Forever;
             var easing = Compositor.CreateCubicBezierEasingFunction(new Vector2(0.1f, 0.9f), new Vector2(0.2f, 1f));
+
             void addKey(float key, float top)
             {
                 offsetAnimation.InsertKeyFrame(key, new Vector3(0, top, 0), easing);
-            };
+            }
+
+            ;
 
             addKey(.9f, 95);
             addKey(.14f, 20);
@@ -123,7 +113,9 @@ namespace DesignAndAnimationLab.Demos.GlitchArtDemo
             void addKey(float key, float top, float left)
             {
                 offsetAnimation.InsertKeyFrame(key, new Vector2(top * 2.5f, left * 2.5f));
-            };
+            }
+
+            ;
             addKey(.1f, -0.4f, -1.1f);
             addKey(.2f, 0.4f, -0.2f);
             addKey(.3f, 0f, .5f);

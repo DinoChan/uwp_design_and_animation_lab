@@ -15,7 +15,6 @@
                 <local:GlitchText Width="800" Height="400" />
 
                 <local:GlitchText2 Width="800" Height="400" />
-
             </controls:WrapPanel>
         </ScrollViewer>
     </Grid>

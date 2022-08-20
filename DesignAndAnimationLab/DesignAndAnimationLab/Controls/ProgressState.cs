@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesignAndAnimationLab
+﻿namespace DesignAndAnimationLab
 {
     public enum ProgressState
     {
         Idle,
         InProgress,
         Completed,
-        Faulted,
+        Faulted
     }
 }

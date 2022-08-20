@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:brushes="using:Microsoft.Toolkit.Uwp.UI.Media"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:DesignAndAnimationLab.Demos"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}"
@@ -28,7 +27,6 @@
                                           TintColor="Black"
                                           TintOpacity="0.3" />
 
-
                     <brushes:AcrylicBrush x:Key="DarkBorderBrush"
                                           BackgroundSource="Backdrop"
                                           BlurAmount="16"
@@ -41,7 +39,6 @@
                                           TintColor="White"
                                           TintOpacity="0.1" />
                 </ResourceDictionary>
-
 
                 <ResourceDictionary x:Key="Light">
                     <RevealBorderBrush x:Key="RevealBorderBrush"
@@ -59,7 +56,6 @@
                                           BlurAmount="16"
                                           TintColor="White"
                                           TintOpacity="0.3" />
-
 
                     <brushes:AcrylicBrush x:Key="DarkBorderBrush"
                                           BackgroundSource="Backdrop"
@@ -102,7 +98,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
 
             <Style x:Key="InnerPanel"
                    BasedOn="{StaticResource OutterPanel}"
@@ -184,8 +179,6 @@
                                 <TextBlock Text="FavoriteList" />
                             </StackPanel>
                         </StackPanel>
-
-
                     </ContentControl>
 
                     <ContentControl Grid.Column="2"
@@ -255,8 +248,6 @@
                                 <TextBlock Text="FavoriteList" />
                             </StackPanel>
                         </StackPanel>
-
-
                     </ContentControl>
 
                     <ContentControl Grid.Column="2"

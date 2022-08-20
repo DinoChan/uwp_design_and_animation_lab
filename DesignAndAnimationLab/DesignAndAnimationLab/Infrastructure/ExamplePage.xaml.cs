@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
 using System;
+using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -11,50 +12,42 @@ namespace DesignAndAnimationLab
 {
     public sealed partial class ExamplePage : Page
     {
-        private NavigationHelper navigationHelper;
-
         public ExamplePage()
         {
-            this.InitializeComponent();         
+            InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
+            NavigationHelper = new NavigationHelper(this);
 
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            if (DesignMode.DesignModeEnabled)
             {
-                this.DataContext = new ExampleDefinition("An Example", null);
+                DataContext = new ExampleDefinition("An Example", null);
             }
 
-            if (this.navigationHelper.HasHardwareButtons)
+            if (NavigationHelper.HasHardwareButtons)
             {
-                this.backButton.Visibility = Visibility.Collapsed;
+                backButton.Visibility = Visibility.Collapsed;
             }
         }
 
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
+        public NavigationHelper NavigationHelper { get; }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e) => NavigationHelper.OnNavigatedFrom(e);
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {            
-            this.navigationHelper.OnNavigatedTo(e);
+        {
+            NavigationHelper.OnNavigatedTo(e);
 
             var example = e.Parameter as ExampleDefinition;
             if (example != null)
             {
-                this.DataContext = example;
+                DataContext = example;
                 if (example.Control != null)
                 {
                     var control = Activator.CreateInstance(example.Control) as FrameworkElement;
-                    this.RequestedTheme = control.RequestedTheme;
-                    this.exampleContent.Children.Add(control);
-                }                
+                    RequestedTheme = control.RequestedTheme;
+                    exampleContent.Children.Add(control);
+                }
             }
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.navigationHelper.OnNavigatedFrom(e);
         }
     }
 }

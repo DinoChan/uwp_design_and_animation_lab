@@ -1,10 +1,4 @@
-﻿using DesignAndAnimationLab.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 using Windows.ApplicationModel;
 using Windows.UI;
 using Windows.UI.Composition;
@@ -13,25 +7,29 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using DesignAndAnimationLab.Common;
 
 namespace DesignAndAnimationLab.Demos.BubbleButton
 {
     public class SimpleShadowPanel : ContentControl
     {
+        private Compositor _Compositor;
+
+        private DropShadow _Shadow;
+
+        private SpriteVisual _ShadowVisual;
+
+        private Visual HostVisual;
+
+        private Rectangle ShadowHost;
+
         public SimpleShadowPanel()
         {
-            this.DefaultStyleKey = typeof(SimpleShadowPanel);
+            DefaultStyleKey = typeof(SimpleShadowPanel);
             RegisterPropertyChangedCallback(ContentProperty, ContentPropertyChanged);
             RegisterPropertyChangedCallback(BackgroundProperty, BackgroundPropertyChanged);
-            this.SizeChanged += SimpleShadowPanel_SizeChanged;
+            SizeChanged += SimpleShadowPanel_SizeChanged;
         }
-
-        Rectangle ShadowHost;
-        Visual HostVisual;
-        Compositor _Compositor;
-        SpriteVisual _ShadowVisual;
-        DropShadow _Shadow;
-
 
         protected override void OnApplyTemplate()
         {
@@ -43,9 +41,27 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             UpdateShadow();
         }
 
+        private void BackgroundPropertyChanged(DependencyObject sender, DependencyProperty dp) => UpdateShadow();
+
+        private void ContentPropertyChanged(DependencyObject sender, DependencyProperty dp) => UpdateShadow();
+
+        private Color GetBackgroundColor()
+        {
+            if (Background is SolidColorBrush brush)
+            {
+                return brush.Color;
+            }
+
+            return Colors.Transparent;
+        }
+
         private void SetupComposition()
         {
-            if (DesignMode.DesignModeEnabled) return;
+            if (DesignMode.DesignModeEnabled)
+            {
+                return;
+            }
+
             HostVisual = ElementCompositionPreview.GetElementVisual(ShadowHost);
             _Compositor = HostVisual.Compositor;
 
@@ -61,14 +77,7 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
             ElementCompositionPreview.SetElementChildVisual(ShadowHost, _ShadowVisual);
         }
 
-        private Color GetBackgroundColor()
-        {
-            if (Background is SolidColorBrush brush)
-            {
-                return brush.Color;
-            }
-            return Colors.Transparent;
-        }
+        private void SimpleShadowPanel_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateShadow();
 
         private void UpdateShadow()
         {
@@ -81,22 +90,5 @@ namespace DesignAndAnimationLab.Demos.BubbleButton
                 }
             }
         }
-
-
-        private void SimpleShadowPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateShadow();
-        }
-
-        private void BackgroundPropertyChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateShadow();
-        }
-
-        private void ContentPropertyChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateShadow();
-        }
-
     }
 }

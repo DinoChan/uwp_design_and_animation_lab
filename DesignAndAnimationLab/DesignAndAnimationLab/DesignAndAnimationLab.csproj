@@ -116,10 +116,28 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimationTimelines\BackEase.cs" />
+    <Compile Include="AnimationTimelines\BounceEase.cs" />
+    <Compile Include="AnimationTimelines\CircleEase.cs" />
+    <Compile Include="AnimationTimelines\CubicEase.cs" />
+    <Compile Include="AnimationTimelines\DoubleTimeline.cs" />
+    <Compile Include="AnimationTimelines\EasingFunctionBase.cs" />
+    <Compile Include="AnimationTimelines\EasingMode.cs" />
+    <Compile Include="AnimationTimelines\ElasticEase.cs" />
+    <Compile Include="AnimationTimelines\ExponentialEase.cs" />
+    <Compile Include="AnimationTimelines\PowerEase.cs" />
+    <Compile Include="AnimationTimelines\QuadraticEase.cs" />
+    <Compile Include="AnimationTimelines\QuarticEase.cs" />
+    <Compile Include="AnimationTimelines\QuinticEase.cs" />
+    <Compile Include="AnimationTimelines\SineEase.cs" />
+    <Compile Include="AnimationTimelines\Vector2Timeline.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AnimationTimelines\TimelineProgresser.cs" />
+    <Compile Include="Common\DoubleUtil.cs" />
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\Utils.cs" />
     <Compile Include="Common\VisualExtensions.cs" />
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
@@ -169,9 +187,23 @@
     <Compile Include="Demos\GooeyButtonDemo\GooeyButtonDemoPage.xaml.cs">
       <DependentUpon>GooeyButtonDemoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Demos\Gooey\ColorMatrixPipelineEffect.cs" />
+    <Compile Include="Demos\Gooey\GooeyEllipseDemo2Page.xaml.cs">
+      <DependentUpon>GooeyEllipseDemo2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\Gooey\GooeyEllipsePixelShaderPage.xaml.cs">
+      <DependentUpon>GooeyEllipsePixelShaderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Demos\Gooey\GooeyEllipseDemoPage.xaml.cs">
       <DependentUpon>GooeyEllipseDemoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\Gooey\GooeyFooter.xaml.cs">
+      <DependentUpon>GooeyFooter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\Gooey\GooeyFooter2.xaml.cs">
+      <DependentUpon>GooeyFooter2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\Gooey\TextMorph.xaml.cs">
+      <DependentUpon>TextMorph.xaml</DependentUpon>
     </Compile>
     <Compile Include="Demos\LikeButtons\LikeButtonsDemo.xaml.cs">
       <DependentUpon>LikeButtonsDemo.xaml</DependentUpon>
@@ -230,6 +262,11 @@
     <Content Include="Assets\Images\tuna_sprite.png" />
     <Content Include="Assets\Images\wallpaper.jpg" />
     <Content Include="Demos\GalaxyShuttles\Galaxy.png" />
+    <None Include="Shaders\CompileShaders.cmd" />
+    <Content Include="Shaders\SmoothOpacityThreshold.bin" />
+    <None Include="Shaders\SmoothOpacityThreshold.hlsl" />
+    <Content Include="Shaders\OpacityThreshold.bin" />
+    <None Include="Shaders\OpacityThreshold.hlsl" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -314,7 +351,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Demos\Gooey\GooeyEllipseDemo2Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Demos\Gooey\GooeyEllipsePixelShaderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Demos\Gooey\GooeyEllipseDemoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\Gooey\GooeyFooter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\Gooey\GooeyFooter2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\Gooey\TextMorph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
