@@ -39,7 +39,7 @@ namespace DesignAndAnimationLab
     {
         public static ExampleDefinition[] Definitions { get; } =
         {
-            new ExampleDefinition("Gooey Demo", typeof(GooeyDemo)),
+            //new ExampleDefinition("Gooey Demo", typeof(GooeyDemo)),
             new ExampleDefinition("Gooey Ellipse", typeof(GooeyEllipseDemoPage),
                 new Uri("https://codepen.io/Chokcoco/pen/QqWBqV")),
             new ExampleDefinition("Gooey Ellipse 2", typeof(GooeyEllipseDemo2Page),
