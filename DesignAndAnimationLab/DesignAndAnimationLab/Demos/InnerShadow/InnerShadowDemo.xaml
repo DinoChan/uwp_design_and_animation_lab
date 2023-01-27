@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="DesignAndAnimationLab.Demos.InnerShadow.InnerShadowDemo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:DesignAndAnimationLab.Demos.InnerShadow"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="800"
+             d:DesignWidth="1000"
+             mc:Ignorable="d">
+
+    <Grid Background="White">
+        <Grid Width="400"
+              Height="200" CornerRadius="20"
+              Margin="24">
+           
+          
+            <controls:DropShadowPanel x:Name="InnerShadow"
+                                      HorizontalContentAlignment="Stretch"
+                                      BlurRadius="15"
+                                      ShadowOpacity="0.5" CornerRadius="20"
+                                      Color="Black" Margin="-20">
+                <Rectangle x:Name="BorderColor" 
+                           Stroke="LightGray"
+                           StrokeThickness="20" />
+            </controls:DropShadowPanel>
+        </Grid>
+    </Grid>
+</UserControl>

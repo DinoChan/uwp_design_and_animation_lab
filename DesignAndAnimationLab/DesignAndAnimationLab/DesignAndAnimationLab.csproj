@@ -142,6 +142,7 @@
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
     <Compile Include="Controls\GooeyButtonItemsPanel.cs" />
+    <Compile Include="Controls\InnerShadowBox.cs" />
     <Compile Include="Controls\ProgressButton.Constants.cs" />
     <Compile Include="Controls\ProgressButton.cs" />
     <Compile Include="Controls\ProgressButton.Properties.cs" />
@@ -207,6 +208,9 @@
     </Compile>
     <Compile Include="Demos\Gooey\TextMorph.xaml.cs">
       <DependentUpon>TextMorph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\InnerShadow\InnerShadowDemo.xaml.cs">
+      <DependentUpon>InnerShadowDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Demos\LikeButtons\LikeButtonsDemo.xaml.cs">
       <DependentUpon>LikeButtonsDemo.xaml</DependentUpon>
@@ -312,6 +316,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\InnerShadowBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Demos\AcrylicAndBlur\AcrylicAndBlurDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -387,6 +395,10 @@
     <Page Include="Demos\Gooey\TextMorph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Demos\InnerShadow\InnerShadowDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Demos\LikeButtons\LikeButtonsDemo.xaml">
       <SubType>Designer</SubType>

@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Controls/GooeyButton.xaml" />
         <ResourceDictionary Source="/Controls/GooeyButtonItem.xaml" />
+        <ResourceDictionary Source="/Controls/InnerShadowBox.xaml" />
         <ResourceDictionary Source="/Themes/BubbleButton.xaml" />
         <ResourceDictionary Source="/Themes/ProgressButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
