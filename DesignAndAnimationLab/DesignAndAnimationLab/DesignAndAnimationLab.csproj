@@ -139,6 +139,7 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Common\VisualExtensions.cs" />
+    <Compile Include="Controls\GeometryCreator.cs" />
     <Compile Include="Controls\GooeyButton.cs" />
     <Compile Include="Controls\GooeyButtonItem.cs" />
     <Compile Include="Controls\GooeyButtonItemsPanel.cs" />

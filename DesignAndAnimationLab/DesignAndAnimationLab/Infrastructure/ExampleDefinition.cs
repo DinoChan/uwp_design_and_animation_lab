@@ -5,6 +5,7 @@ using DesignAndAnimationLab.Demos.GalaxyShuttles;
 using DesignAndAnimationLab.Demos.GlitchArtDemo;
 using DesignAndAnimationLab.Demos.Gooey;
 using DesignAndAnimationLab.Demos.GooeyButtonDemo;
+using DesignAndAnimationLab.Demos.InnerShadow;
 using DesignAndAnimationLab.Demos.LikeButtons;
 
 namespace DesignAndAnimationLab
@@ -65,7 +66,8 @@ namespace DesignAndAnimationLab
             new ExampleDefinition("Transparent Cube", typeof(TransparentCube)),
             new ExampleDefinition("Acrylic and Blur", typeof(AcrylicAndBlurDemo)),
             new ExampleDefinition("Control Center", typeof(ControlCenterDemo)),
-            new ExampleDefinition("Galaxy Shuttle", typeof(GalaxyShuttleDemo))
+            new ExampleDefinition("Galaxy Shuttle", typeof(GalaxyShuttleDemo)),
+              new ExampleDefinition("Inner Shadow", typeof(InnerShadowDemo))
 
             //// Visual demos.
             //new ExampleDefinition("Burning Text", typeof(BurningTextExample)),

@@ -1,45 +1,27 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-                    xmlns:local="using:DesignAndAnimationLab">
+                    xmlns:local="using:DesignAndAnimationLab.Controls">
 
-    <ResourceDictionary.ThemeDictionaries>
-        <ResourceDictionary x:Name="Default">
-            <StaticResource x:Key="GooeyButtonItemBackgroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
-            <StaticResource x:Key="GooeyButtonItemForegroundBrush" ResourceKey="SystemControlForegroundAltHighBrush" />
-        </ResourceDictionary>
 
-        <ResourceDictionary x:Name="Light">
-            <StaticResource x:Key="GooeyButtonItemBackgroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
-            <StaticResource x:Key="GooeyButtonItemForegroundBrush" ResourceKey="SystemControlForegroundAltHighBrush" />
-        </ResourceDictionary>
-    </ResourceDictionary.ThemeDictionaries>
-
-    <Style TargetType="local:GooeyButtonItem">
-        <Setter Property="Background" Value="{ThemeResource GooeyButtonItemBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{ThemeResource GooeyButtonItemForegroundBrush}" />
-        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-        <Setter Property="Width" Value="60" />
-        <Setter Property="Height" Value="60" />
-        <Setter Property="TabFocusNavigation" Value="Once" />
-        <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-        <Setter Property="FocusVisualMargin" Value="0" />
+    <Style TargetType="local:InnerShadowBox">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:GooeyButtonItem">
-                    <Grid x:Name="LayoutRoot"
-                          Background="Transparent"
-                          BorderBrush="{TemplateBinding BorderBrush}"
-                          BorderThickness="{TemplateBinding BorderThickness}"
-                          Control.IsTemplateFocusTarget="True">
-                        <controls:DropShadowPanel Margin="36"
-                                                  VerticalAlignment="Top"
-                                                  HorizontalContentAlignment="Left"
-                                                  BlurRadius="7"
-                                                  Color="White">
-                            <TextBlock FontSize="36" Text="{TemplateBinding Content}" />
+                <ControlTemplate TargetType="local:InnerShadowBox">
+                    <Grid x:Name="LayoutRoot" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Rectangle x:Name="MaskElement" />
+                        <controls:DropShadowPanel x:Name="DropShadowPanel"
+                                                  Margin="-100"
+                                                  HorizontalContentAlignment="Stretch"
+                                                  BlurRadius="{TemplateBinding BlurRadius}"
+                                                  OffsetX="{TemplateBinding OffsetX}"
+                                                  OffsetY="{TemplateBinding OffsetY}"
+                                                  OffsetZ="{TemplateBinding OffsetZ}"
+                                                  ShadowOpacity="{TemplateBinding ShadowOpacity}"
+                                                  Color="{TemplateBinding Color}">
+                            <Path x:Name="RootElement"
+                                  Fill="Green"
+                                  Stretch="UniformToFill" />
                         </controls:DropShadowPanel>
                         <ContentPresenter x:Name="ContentPresenter"
                                           HorizontalAlignment="Center"
@@ -55,3 +37,4 @@
         </Setter>
     </Style>
 </ResourceDictionary>
+
